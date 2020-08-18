@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="%PUBLIC_URL%/logo512.png" />
+    
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="logo512.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Datatables -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/daterangepicker/daterangepicker.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/toastr/toastr.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- multi select -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/dist/css/multiselect.css">
+
+    <!-- summernote -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/summernote/summernote-bs4.min.css">
+
+    <style>
+        .file-upload input[type='file'] {
+            display: none;
+        }
+        
+        .rounded-lg {
+            border-radius: 1rem;
+        }
+        
+        .custom-file-label.rounded-pill {
+            border-radius: 50rem;
+        }
+        
+        .custom-file-label.rounded-pill::after {
+            border-radius: 0 50rem 50rem 0;
+        }
+    </style>
+   
+      <!--
+        Notice the use of %PUBLIC_URL% in the tags above.
+        It will be replaced with the URL of the `public` folder during the build.
+        Only files inside the `public` folder can be referenced from the HTML.
+
+        Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+        work correctly both with client-side routing and a non-root public URL.
+        Learn how to configure a non-root public URL by running `npm run build`.
+      -->
+      <script>
+        __DEV__ = '%NODE_ENV%' === 'development'
+        window.SHIPPING_ADDRESS = 'ASDF ASDFADSF'
+        window.FIRST_NAME = '_FIRST_NAME_'
+        window.LAST_NAME = '_LAST_NAME_'
+        window.CALLBACK_URL = '_CALLBACK_URL_'
+        window.CTRX_ID = '_CTRX_ID_'
+        window.STRX_ID = '_STRX_ID_'
+        window.PAR1 = '_PAR1_'
+        window.PAR2 = '_PAR2_'
+        window.PAR3 = '_PAR3_'
+        window.PAR4 = '_PAR4_'
+        window.PAR5 = '_PAR5_'
+        window.PAR6 = '_PAR6_'
+        window.PAR7 = '_PAR7_'
+        window.PAR8 = '_PAR8_'
+        window.PAR9 = '_PAR9_'
+        window.PAR10 = '_PAR10_'
+        window.PAR11 = '_PAR11_'
+        window.PAR12 = '_PAR12_'
+        window.MERCHANT_NAME = '_MERCHANT_NAME_'
+        window.PRODUCT_CODE = '_PRODUCT_CODE_'
+        window.PERIOD = '_PERIOD_'
+        window.LANG = document.documentElement.lang
+        // window.SHIPPING_ADDRESS = _SHIPPING_ADDRESS_
+        console.log('====>>>%NODE_ENV%', __DEV__)
+        console.log('backendBaseUrl====>>>%BACKEND_BASE_URL%')
+      </script>
+      <!-- <style>
+        #segment1{
+          /* background-color: blue; */
+          margin-top: 10px;
+          padding: 10px;
+          border-radius: 15px 15px 0px 0px;
+          /* border-color: black; */
+        }
+      #segment2{
+        padding: 0px;
+        background-color: transparent;
+        margin-bottom: 100px;
+        border: 0;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+        #inputkartupanel{
+          background-color: white;
+          /* border: solid black 1px; */
+          margin-bottom: 20px !important;
+        }
+        #transactiondetailpanel{
+          background-color: white;
+          /* border: solid black 1px; */
+          margin-bottom: 20px !important;
+        }
+        #transactiondetailpanel .list .item{
+          border-bottom: 1px solid #5899d3;
+        }
+        #transactiondetailpanel .list .item .header{
+          color: #7b7c7c;
+          margin-bottom: 5px;
+        }
+        #transactiondetailpanel .list .item .content{
+          margin-bottom: 5px;
+        }
+        #headerdetailtransaction{
+          color: #2d5697;
+        }
+        #footertitle{
+          color: white;
+        }
+
+        .main-wrap {
+          position: absolute;
+      top: calc(50vh - 30px);
+      left: calc(50% - 60px);
+  }
+
+        .loader{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    position: relative;
+    margin: 0 auto;
+  }
+
+    /* LOADER 1 */
+
+    #loader-1:before, #loader-1:after{
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      border: 10px solid transparent;
+      border-top-color: #3498db;
+    }
+
+    #loader-1:before{
+      z-index: 100;
+      animation: spin 1s infinite;
+    }
+
+    #loader-1:after{
+      border: 10px solid #ccc;
+    }
+
+    @keyframes spin{
+      0%{
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100%{
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+      </style>
+      <title>Plink Direct Debit Dashboard</title> -->
+  </head>
+  <body style="background-image: url('%PUBLIC_URL%/dist/img/bg-rayapay.png'); background-size: cover;">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <!-- <div class="main-wrap">
+        <div class="loader" id="loader-1">
+        </div>
+      </div> -->
+    </div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <!-- <script src="%PUBLIC_URL%/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="%PUBLIC_URL%/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="%PUBLIC_URL%/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="%PUBLIC_URL%/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script> -->
+
+
+    <!-- jQuery -->
+    <script src="%PUBLIC_URL%/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="%PUBLIC_URL%/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="%PUBLIC_URL%/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="%PUBLIC_URL%/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- Toastr -->
+    <script src="%PUBLIC_URL%/plugins/toastr/toastr.min.js"></script>
+
+    <script src="%PUBLIC_URL%/plugins/moment/moment.min.js"></script>
+    <!-- InputMask -->
+    <script src="%PUBLIC_URL%/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+    <!-- date-range-picker -->
+    <script src="%PUBLIC_URL%/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- AdminLTE App -->
+    <script src="%PUBLIC_URL%/dist/js/adminlte.min.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="%PUBLIC_URL%/dist/js/demo.js"></script>
+    
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="%PUBLIC_URL%/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="%PUBLIC_URL%/plugins/raphael/raphael.min.js"></script>
+    <script src="%PUBLIC_URL%/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="%PUBLIC_URL%/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    
+    <!-- ChartJS -->
+    <script src="%PUBLIC_URL%/plugins/chart.js/Chart.min.js"></script>
+
+    <!-- PAGE SCRIPTS -->
+    <script src="%PUBLIC_URL%/dist/js/pages/dashboard2.js"></script>
+    
+    <script src="%PUBLIC_URL%/dist/js/multiselect.js"></script>
+    <script src="https://bheem.erevnaraya.com/external_api.js"></script>
+    <!-- Summernote -->
+    <script src="%PUBLIC_URL%/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+      window.callModalTopup = function (i) {
+            $('#modal-topup-emoney').modal('show');
+        
+      }
+      window.callModalPayment = function (i) {
+            $('#modal-payment').modal('show');
+        
+      }
+      window.callModalLoader = function (i) {
+        console.log('call modal loader>>>')
+          $('#modal-loader').modal('show');
+      }
+      window.dismissModalLoader = function (i) {
+          $('#modal-loader').modal('dismiss');
+      }
+      window.callModalErrorDismissable= function(msg,type){
+        switch(type)
+        {
+          case 'error':
+          if(msg=='CLIENT_ERROR'){msg="System error failed to do the operation"}
+          else if(msg=='NETWORK_ERROR'){msg="Failed to connect to to server"}
+          toastr.error(msg)
+          console.log("error")
+          break;
+          case 'warning':
+          toastr.warning(msg)
+          console.log("warning")
+          break;
+          case 'success':
+          toastr.success(msg)
+          console.log("sucess")
+          break;
+        }
+      }
+      window.callErrorToast= function(msg,type){
+        if(msg=='ERROR_CLIENT'){ msg='System Error'; }
+        else if(msg=='NETWORK_ERROR'){ msg='Error connection to server'; }
+        switch(type)
+        {
+          case 'error':
+          $(document).Toasts('create', {
+            class: 'bg-danger', 
+            title: 'Something Error',
+            body: msg
+          })
+          break;
+          case 'warning':
+          $(document).Toasts('create', {
+              class: 'bg-warning', 
+              title: 'Warning',
+              body: msg
+            })
+          console.log("warning")
+          break;
+          case 'success':
+          $(document).Toasts('create', {
+              class: 'bg-success', 
+              title: 'Success',
+              body: msg
+            })
+          console.log("sucess")
+          break;
+        }
+      }
+      
+      window.callDaterangePicker = function(execute,start,end){
+        $( function () {
+          $('#rp-date-range').daterangepicker(
+            {
+                minYear: 1901,
+                "startDate":`${start}`,
+                "endDate":`${end}`
+            }, function(start, end, label) {
+              execute({f_date_start:start.format('DD-MM-YYYY'),f_date_end:end.format('DD-MM-YYYY')})
+              // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            }
+          )
+        })
+      }
+      window.callDataTable = function () {
+        $(function () {
+          $("#table-trx").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+          });
+        }); 
+      }
+      window.SignupPageComponent = function () {}
+      window.collapseBoxRefresh = function () {
+        // console.log('collapseBoxRefresh=====>>>>')
+        $('.myCardWidget').CardWidget()
+        // $('#my-card-widget').CardWidget('toggle') 
+        // $('#myCardWidget').CardWidget('toggle');
+        // $('div.card [data-card-widget]').parents('.card').CardWidget();
+      }
+      window.TransactionListPageComponent = function () {}
+      window.recallDatePicker = function (cb) {
+        //Date range picker
+        $('#transactionStartDate').daterangepicker({
+          // timePicker: true,
+          timePickerIncrement: 30,
+          autoUpdateInput: false,
+          locale: {
+              format: 'DD/MM/YYYY'
+          }
+        }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          })
+        // cb({})
+        // $("input[id^='datepicker']").daterangepicker({
+        //   // timePicker: true,
+        //   singleDatePicker: true,
+        //   showDropdowns: true,
+        //   // minYear: 1901,
+        //   // maxYear: parseInt(moment().format('YYYY'),10),
+        //   // timePickerIncrement: 30,
+        //   autoUpdateInput: false,
+        //   locale: {
+        //       format: 'DD/MM/YYYY'
+        //   }
+        // }, function (start, end, label) {
+        //   var startDate = ''+start
+        //   var endDate = ''+end
+        //   cb(startDate, endDate)
+        // })
+
+        // $("input[id^='datepicker']").each(function (i, el) {
+        //   console.log('i======', i)
+        //   console.log('el======', el)
+        //     //It'll be an array of elements
+
+        // });
+      }
+      window.singleDatePicker = function (domId, formatDate, cb) {
+        console.log('singleDatePicker====domId=', domId)
+        $(domId).daterangepicker({
+          // timePicker: true,
+          singleDatePicker: true,
+          showDropdowns: true,
+          // minYear: 1901,
+          // maxYear: parseInt(moment().format('YYYY'),10),
+          // timePickerIncrement: 30,
+          autoUpdateInput: false,
+          timePicker: true,
+          timePicker24Hour: true,
+          locale: {
+              format: formatDate
+          }
+        }, function (start, end, label) {
+          console.log('start====>', start)
+          // var startDate = parseInt(start)
+          var startDate = new Date(start.format(formatDate)).getTime()
+          var endDate = ''+end
+          cb(startDate, endDate)
+        })
+      }
+      window.pageReconReport = function () {}
+      window.jqueryBridge = function () {
+        return $
+      }
+      window.callBheem = function (xRoomName) {
+        const domain = 'bheem.erevnaraya.com';
+        const options = {
+            roomName: xRoomName,
+            width: 700,
+            height: 700,
+            parentNode: document.querySelector('#BheemMeet')
+        };
+        const api = new JitsiMeetExternalAPI(domain, options);
+      }
+      window.onClickUploadFile = function ({hostBackend, at, cb}) {
+        // fileUploadInput
+        var data = new FormData();
+        var files = $('#fileUploadInput')[0].files[0];
+        data.append('file',files);
+        $.ajax({
+            url: hostBackend + "/uploadfile",
+            type: "POST",
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            headers:{
+              'accesstoken': at
+            },
+            success: function(resp){
+              console.log('resp=', resp)
+              if(resp.error) {
+                if(resp.error.message === 'jwt expired') {
+                  // window.location.href = '/login'
+                  location.reload()
+                }
+                alert(resp.error.message)
+                return
+              }
+              var url = window.location.href
+              var arr = url.split("/");
+              var baseUrl = hostBackend
+              // console.log('baseUrl=', baseUrl)
+              var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
+              console.log('filename=', filename)
+              var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/renderfile/' + filename);
+              $('#fileUploadLabel').text('uploaded. Image Id: ' + resp.detail_data._id)
+              cb('' + resp.detail_data._id)
+                // if(resp != 0){
+                //     // $("#img").attr("src",resp); 
+                //     // $(".preview img").show(); // Display image element
+                // }else{
+                //     alert('file not uploaded');
+                // }
+            },
+            error: function(err) {
+              console.log('err===>', err)
+            }
+        });
+      }
+      window.onChangeUploadFile = function (e) {
+
+        // var data = new FormData();
+        // var files = $('#fileUploadInput')[0].files[0];
+
+        var input = $('#fileUploadInput')[0]
+        var url = $(input).val();
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+        {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+              $('#uploadImageDisplayPreview').attr('src', e.target.result);
+            }
+          reader.readAsDataURL(input.files[0]);
+          $('#fileUploadLabel').text('Click the upload button to upload the image.')
+        }
+        else
+        {
+          // $('#img').attr('src', '/assets/no_preview.png');
+          alert('no preview')
+        }
+
+
+        // // fileUploadInput
+        // var data = new FormData();
+        // var files = $('#fileUploadInput')[0].files[0];
+        // data.append('file',files);
+        // $.ajax({
+        //     url: "http://localhost:3000/uploadfile",
+        //     type: "POST",
+        //     data: data,
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     headers:{
+        //       'accesstoken': at
+        //     },
+        //     success: function(resp){
+        //       console.log('resp=', resp)
+        //       if(resp.error) {
+        //         if(resp.error.message === 'jwt expired') {
+        //           // window.location.href = '/login'
+        //         }
+        //         alert(resp.error.message)
+        //         return
+        //       }
+        //       var url = window.location.href
+        //       var arr = url.split("/");
+        //       var baseUrl = arr[0] + "//" + 'localhost:3000'
+        //       console.log('baseUrl=', baseUrl)
+        //       var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
+        //       console.log('filename=', filename)
+        //       var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/renderfile/' + filename);
+        //       $('#fileUploadLabel').text(resp.detail_data._id)
+        //       cb('' + resp.detail_data._id)
+        //         // if(resp != 0){
+        //         //     // $("#img").attr("src",resp); 
+        //         //     // $(".preview img").show(); // Display image element
+        //         // }else{
+        //         //     alert('file not uploaded');
+        //         // }
+        //     },
+        //     error: function(err) {
+        //       console.log('err===>', err)
+        //     }
+        // });
+      }
+      window.activateEditor = function (at, cb) {
+        function sendFile(file, editor, welEditable) {
+            console.log('ready to upload')
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "http://localhost:3000/uploadfile",
+                cache: false,
+                contentType: false,
+                processData: false,
+                headers:{
+                  'accesstoken': at
+                },
+                success: function(resp) {
+                  var url = window.location.href
+                  var arr = url.split("/");
+                  // var baseUrl = arr[0] + "//" + arr[2]
+                  var baseUrl = arr[0] + "//" + 'localhost:3000'
+                  console.log('baseUrl=', baseUrl)
+                  var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
+                  console.log('filename=', filename)
+                  var image = $('<img>').attr('src', baseUrl + '/renderfile/' + filename);
+
+                  $('.textarea').summernote("insertNode", image[0]);
+                  // $('.textarea').summernote("insertImage", url);
+                    // editor.insertImage(welEditable, url);
+                },
+                error: function(data) {
+                  console.log(data);
+                }
+            });
+        }
+        $('.textarea').summernote({
+          callbacks: {
+            onImageUpload: function(files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            },
+            onChange: function(contents, $editable) {
+              console.log('onChange:', contents, $editable);
+              cb(contents)
+            }
+          },
+          
+        })
+      }
+    </script>
+  </body>
+</html>
