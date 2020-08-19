@@ -67,6 +67,7 @@ function Comp (props) {
               return (
                 <dl>
                   {createRow('Name', paginationConfig, dataDetail, ['name'])}
+                  {createRow('Slug', paginationConfig, dataDetail, ['slug'])}
                   {createRow('Owner', paginationConfig, dataDetail, ['owner', 'full_name'])}
                   {createRow('Website', paginationConfig, dataDetail, ['website'])}
                   {createRow('Facebook', paginationConfig, dataDetail, ['facebook'])}
