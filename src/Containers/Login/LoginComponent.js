@@ -118,8 +118,8 @@ class LoginPageComponent extends React.Component {
         </div>
         <br />
         <center><Link to='/forget-password'>Forgot your password?</Link></center>
-        <center><b>OR</b></center>
-        <center>Don't have an account?<Link to='/signup'>Sign Up</Link></center>
+        {/* <center><b>OR</b></center>
+        <center>Don't have an account?<Link to='/signup'>Sign Up</Link></center> */}
 
       </form>
     )

@@ -68,9 +68,9 @@ export const lp = {
   // tag
   ...createPage({ entity: 'tag', entityTitle: 'Tag', ListAllComp: PageListTag, CreateComp: PageCreateTag, UpdateComp: PageUpdateTag, DetailComp: PageDetailTag, params: [':_id'] }),
   // product
-  ...createPage({ entity: 'product', entityTitle: 'Product', ListAllComp: PageListProduct, CreateComp: PageCreateProduct, UpdateComp: PageUpdateProduct, DetailComp: PageDetailProduct, params: [':_id'] }),
+  ...createPage({ entity: 'product', entityTitle: 'Produk', ListAllComp: PageListProduct, CreateComp: PageCreateProduct, UpdateComp: PageUpdateProduct, DetailComp: PageDetailProduct, params: [':_id'] }),
   // category
-  ...createPage({ entity: 'category', entityTitle: 'Category', ListAllComp: PageListCategory, CreateComp: PageCreateCategory, UpdateComp: PageUpdateCategory, DetailComp: PageDetailCategory, params: [':_id'] }),
+  ...createPage({ entity: 'category', entityTitle: 'Kategori', ListAllComp: PageListCategory, CreateComp: PageCreateCategory, UpdateComp: PageUpdateCategory, DetailComp: PageDetailCategory, params: [':_id'] }),
   // toko online
   ...createPage({ entity: 'tokoonline', entityTitle: 'Toko Online', ListAllComp: PageListTokoOnline, CreateComp: PageCreateTokoOnline, UpdateComp: PageUpdateTokoOnline, DetailComp: PageDetailTokoOnline, params: [':_id'] }),
   // role

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
+import _ from 'lodash'
 import AppActions from '../../Redux/AppRedux'
 import { Detail as Detaildata, Table } from '../../features/TablePagination'
 import { path } from 'ramda'
@@ -16,12 +17,12 @@ const basePath = AppConfig.basePath
 function createRow (title, paginationConfig, dataDetail, pathArr) {
   const val = path([paginationConfig.serviceName, pathArr[0]], dataDetail)
   let ddVal = ''
-  if (Array.isArray(val)) {
+  if (!_.isEmpty(val) && Array.isArray(val)) {
     ddVal = (val.map(v => {
       if (v) return v[pathArr[1]]
       else return '-'
     })).join(', ')
-  } else if (typeof val === 'object') {
+  } else if (!_.isEmpty(val) && typeof val === 'object') {
     ddVal = val[pathArr[1]]
   } else {
     ddVal = val

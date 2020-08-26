@@ -66,7 +66,8 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
-                  {createRow('Name', paginationConfig, dataDetail, ['name'])}
+                  {createRow('Nama Toko', paginationConfig, dataDetail, ['name'])}
+                  {createRow('Slug', paginationConfig, dataDetail, ['slug'])}
                   {createRow('Owner', paginationConfig, dataDetail, ['owner', 'full_name'])}
                   {createRow('Website', paginationConfig, dataDetail, ['website'])}
                   {createRow('Facebook', paginationConfig, dataDetail, ['facebook'])}

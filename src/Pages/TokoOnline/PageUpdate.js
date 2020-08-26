@@ -100,7 +100,8 @@ class Comp extends Component {
                 return (
                   <div className='row'>
                     <div className='col-sm-6'>
-                      {this.addField('name', 'Name', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      {this.addField('name', 'Nama Toko', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      {/* {this.addField('slug', 'Slug (url)', 'text', dataDetail, payload, tablepaginationOnChangeForm)} */}
                       {this.addField('website', 'Website', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('facebook', 'Facebook', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('instagram', 'Instagram', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
