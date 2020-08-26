@@ -85,8 +85,8 @@ class Sidebar extends Component {
               {this._getMenuLiSingle('/home', 'Dashboard', 'nav-icon fas fa-tachometer-alt')}
               <SidebarMainMenu name='main-menu-ecommerce-management' title='E-Commerce' userPrivileges={userPrivileges}>
                 {this._getMenuLi('/tokoonline', 'Toko Online Management')}
-                {this._getMenuLi('/product', 'Product Management')}
                 {this._getMenuLi('/category', 'Category Management')}
+                {this._getMenuLi('/product', 'Product Management')}
                 {/* {this._getMenuLi('/tag', 'Tag Management')} */}
               </SidebarMainMenu>
               <SidebarMainMenu name='main-menu-user-management' title='User Management' userPrivileges={userPrivileges}>
