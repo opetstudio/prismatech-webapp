@@ -5,7 +5,7 @@ import {path} from 'ramda'
 import AppConfig from '../../Config/AppConfig'
 const basePath = AppConfig.basePath
 
-const entityName = 'TokoOnline'
+const entityName = 'Plink Market'
 const entity = 'tokoonline'
 const collection = 'toko_toko_product'
 const serviceEntity = 'TokoTokoOnline'
@@ -15,9 +15,9 @@ export const redirectAfterDelete = '/' + entity
 export const detailPageUrl = (id) => (`/${entity}/detail/${id}`)
 export const updatePageUrl = (id) => (`/${entity}/update/${id}`)
 export const createPageUrl = () => (`/${entity}/create`)
-export const createNewButtonLabel = 'Create New ' + entityName
+export const createNewButtonLabel = 'Buat Toko Baru'
 export const createPageTitle = 'Create New ' + entityName
-export const listallPageTitle = entityName + 's'
+export const listallPageTitle = entityName
 export const detailPageTitle = entityName + ' Detail'
 export const updatePageTitle = 'Update ' + entityName
 export const updateService = 'update' + serviceEntity
