@@ -66,7 +66,7 @@ class Sidebar extends Component {
         <div className='sidebar'>
           <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
             <div className='info'>
-              <marquee style={{ color: '#fff' }}>Selamat Datang di Website Tokoonline</marquee>
+              <marquee style={{ color: '#fff' }}>Selamat Datang di Website Plink Market</marquee>
               <br />
               {/* <h5 style={{ color: 'white' }}><i className='icon fas fa-user' /> &nbsp;{profile.full_name}</h5> */}
               {/* <label style={{ color: 'white' }}><i className='icon fas fa-store-alt' /> &nbsp;{profile.business_name}</label> */}
