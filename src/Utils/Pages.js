@@ -49,6 +49,10 @@ import PageCreateTokoTeam from '../Pages/TokoTeam/PageCreate'
 import PageDetailTokoTeam from '../Pages/TokoTeam/PageDetail'
 import PageUpdateTokoTeam from '../Pages/TokoTeam/PageUpdate'
 
+// Toko Po
+import PageListTokoPo from '../Pages/TokoPo/PageList'
+import PageDetailTokoPo from '../Pages/TokoPo/PageDetail'
+
 const createPage = ({ entity, entityTitle, ListAllComp, CreateComp, DetailComp, UpdateComp, params }) => ({
   ['/' + entity]: { route: '/' + entity, path: `/${entity}${params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
   ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[1] ? '/' + params[1] : ''}`, title: entityTitle + ' Create', component: CreateComp },
@@ -78,7 +82,9 @@ export const lp = {
   // privilege
   ...createPage({ entity: 'privilege', entityTitle: 'Privilege', CreateComp: PageCreatePrivilege, UpdateComp: PageUpdatePrivilege, DetailComp: PageDetailPrivilege, params: [':_id', ':role_id'] }),
   // toko team
-  ...createPage({ entity: 'tokoteam', entityTitle: 'Toko Team', ListAllComp: PageListTokoTeam, CreateComp: PageCreateTokoTeam, UpdateComp: PageUpdateTokoTeam, DetailComp: PageDetailTokoTeam, params: [':_id', ':toko_id'] })
+  ...createPage({ entity: 'tokoteam', entityTitle: 'Toko Team', ListAllComp: PageListTokoTeam, CreateComp: PageCreateTokoTeam, UpdateComp: PageUpdateTokoTeam, DetailComp: PageDetailTokoTeam, params: [':_id', ':toko_id'] }),
+  // toko po
+  ...createPage({ entity: 'purchaseorder', entityTitle: 'Purchase Order', ListAllComp: PageListTokoPo, DetailComp: PageDetailTokoPo, params: [':_id'] })
 }
 console.log('lp====>', lp)
 export const pageList = _.map(lp, (v) => v)
