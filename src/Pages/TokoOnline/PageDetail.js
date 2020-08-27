@@ -66,6 +66,7 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
+                  {createRow('Toko Id', paginationConfig, dataDetail, ['_id'])}
                   {createRow('Nama Toko', paginationConfig, dataDetail, ['name'])}
                   {createRow('Slug', paginationConfig, dataDetail, ['slug'])}
                   {createRow('Owner', paginationConfig, dataDetail, ['owner', 'full_name'])}
@@ -75,6 +76,8 @@ function Comp (props) {
                   {createRow('Youtube', paginationConfig, dataDetail, ['youtube'])}
                   {createRow('Description', paginationConfig, dataDetail, ['description'])}
                   {createRow('Status', paginationConfig, dataDetail, ['status'])}
+                  {createRow('Plink Merchant Id', paginationConfig, dataDetail, ['plink_merchant_id'])}
+                  {createRow('Plink Merchant Key Id', paginationConfig, dataDetail, ['plink_merchant_key_id'])}
                 </dl>
               )
             }}
