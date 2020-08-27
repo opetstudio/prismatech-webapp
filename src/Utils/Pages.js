@@ -76,7 +76,7 @@ export const lp = {
   // category
   ...createPage({ entity: 'category', entityTitle: 'Kategori', ListAllComp: PageListCategory, CreateComp: PageCreateCategory, UpdateComp: PageUpdateCategory, DetailComp: PageDetailCategory, params: [':_id'] }),
   // toko online
-  ...createPage({ entity: 'tokoonline', entityTitle: 'Toko Online', ListAllComp: PageListTokoOnline, CreateComp: PageCreateTokoOnline, UpdateComp: PageUpdateTokoOnline, DetailComp: PageDetailTokoOnline, params: [':_id'] }),
+  ...createPage({ entity: 'tokoonline', entityTitle: 'Plink Market', ListAllComp: PageListTokoOnline, CreateComp: PageCreateTokoOnline, UpdateComp: PageUpdateTokoOnline, DetailComp: PageDetailTokoOnline, params: [':_id'] }),
   // role
   ...createPage({ entity: 'role', entityTitle: 'Role', ListAllComp: PageListRole, CreateComp: PageCreateRole, UpdateComp: PageUpdateRole, DetailComp: PageDetailRole, params: [':_id'] }),
   // privilege
