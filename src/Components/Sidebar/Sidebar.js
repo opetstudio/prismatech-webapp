@@ -61,7 +61,7 @@ class Sidebar extends Component {
         {/* Brand Logo */}
         <a href='/#' className='brand-link' style={{ background: 'white' }}>
           <img src={Images.LogoRp} alt='Rayapay' className='brand-image img-circle elevation-3' />
-          <span className='brand-text' style={{ color: ' #a00f0f' }}>Tokoonline</span>
+          <span className='brand-text' style={{ color: ' #a00f0f' }}>Plink Market</span>
         </a>
         <div className='sidebar'>
           <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
