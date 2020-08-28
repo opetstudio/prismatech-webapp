@@ -107,6 +107,8 @@ class Comp extends Component {
                       {this.addField('instagram', 'Instagram', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('youtube', 'Youtube', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('description', 'Description', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      {this.addField('plink_merchant_id', 'Plink Merchant Id', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      {this.addField('plink_merchant_key_id', 'Plink Merchant Key Id', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                     </div>
                   </div>
                 )

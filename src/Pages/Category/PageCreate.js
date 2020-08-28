@@ -25,14 +25,14 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: 'Buat Kategori Baru', link: null, isActive: true }]}
         contentHeaderTitle={createPageTitle}
         isNeedLoggedin
       >
         <div className='row'>
           <div className='col-md-12'>
             <Createform
-              formTitle={createPageTitle}
+              formTitle='Buat Kategori Baru'
               paginationConfig={paginationConfig}
               redirectAfterCreate={redirectAfterCreate}
               child={(tablepaginationOnChangeForm) => {
@@ -41,13 +41,13 @@ class Comp extends Component {
                   <div className='row'>
                     <div className='col-sm-6'>
                       <div className='form-group'>
-                        <label htmlFor='title'>title</label>
-                        <input type='text' className='form-control' id='title' placeholder='Enter title' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'title', fieldValue: e.target.value })} />
+                        <label htmlFor='title'>Judul</label>
+                        <input type='text' className='form-control' id='title' placeholder='Masukkan judul' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'title', fieldValue: e.target.value })} />
                       </div>
                       <div className='form-group'>
                         <Multiselect
                           isAutocomplete
-                          label='Toko Online'
+                          label='Pilih Beberapa Toko'
                           name='toko_id'
                           id='toko_id'
                           maxOptions={50}
@@ -62,10 +62,10 @@ class Comp extends Component {
                         />
                       </div>
                       <div className='form-group'>
-                        <label htmlFor='parent_id'>Parent Category</label>
+                        <label htmlFor='parent_id'>Pilih Kategori Induk</label>
                         {/* <input type='text' className='form-control' id='grading_id' placeholder='Enter grading code' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'grading_id', fieldValue: e.target.value })} /> */}
                         <Combobox
-                          label='Parent Category'
+                          label='pilih kategori induk'
                           name='parent_id'
                           id='parent_id'
                           maxOptions={50}
@@ -86,7 +86,7 @@ class Comp extends Component {
               footerCard={({ tablepaginationSubmitForm, payload }) => {
                 return (
                   <>
-                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
                     <button
                       style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
                         fields: paginationConfig.fields,
@@ -95,7 +95,7 @@ class Comp extends Component {
                         history,
                         redirectAfterCreate: redirectAfterCreate
                       })}
-                    >Submit
+                    >Kirim
                     </button>
                   </>
                 )

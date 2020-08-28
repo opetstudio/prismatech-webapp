@@ -33,7 +33,7 @@ class PageLogin extends Component {
         </Helmet>
         <div className='card'>
           <div className='card-body login-card-body'>
-            <p className='login-box-msg'><b>Tokoonline</b></p>
+            <p className='login-box-msg'><b>Plink Market</b></p>
             <LoginContainer location={this.props.location} />
           </div>
         </div>

@@ -41,7 +41,7 @@ function Comp (props) {
     <ContentWrapper
       pageTitle={detailPageTitle}
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Beranda', link: '/home' },
         // { title: 'Course', link: '/course', isActive: true },
         // { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         // { title: 'Subject Detail', link: `/subject/detail/${subjectId}`, isActive: true },
@@ -64,17 +64,27 @@ function Comp (props) {
               let updatedAt = Moment(path([paginationConfig.serviceName, 'updated_at'], dataDetail))
               if (updatedAt && updatedAt.isValid()) updatedAt = updatedAt.format('YYYY-MM-DD HH:mm:ss')
               else updatedAt = ''
+              let status = path([paginationConfig.serviceName, 'status'], dataDetail)
+
+              if (status === 'active') status = 'Aktif'
+              else if (status === 'inactive') status = 'Tidak Aktif'
+              else status = '-'
+
               return (
                 <dl>
+                  {createRow('Id Toko', paginationConfig, dataDetail, ['_id'])}
                   {createRow('Nama Toko', paginationConfig, dataDetail, ['name'])}
                   {createRow('Slug', paginationConfig, dataDetail, ['slug'])}
-                  {createRow('Owner', paginationConfig, dataDetail, ['owner', 'full_name'])}
+                  {createRow('Pemilik', paginationConfig, dataDetail, ['owner', 'full_name'])}
                   {createRow('Website', paginationConfig, dataDetail, ['website'])}
                   {createRow('Facebook', paginationConfig, dataDetail, ['facebook'])}
                   {createRow('Instagram', paginationConfig, dataDetail, ['instagram'])}
                   {createRow('Youtube', paginationConfig, dataDetail, ['youtube'])}
-                  {createRow('Description', paginationConfig, dataDetail, ['description'])}
-                  {createRow('Status', paginationConfig, dataDetail, ['status'])}
+                  {createRow('Deskripsi', paginationConfig, dataDetail, ['description'])}
+                  <dt>Status</dt>
+                  <dd>{status}</dd>
+                  {createRow('Plink Merchant Id', paginationConfig, dataDetail, ['plink_merchant_id'])}
+                  {createRow('Plink Merchant Key Id', paginationConfig, dataDetail, ['plink_merchant_key_id'])}
                 </dl>
               )
             }}
@@ -82,9 +92,9 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Edit</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Back</button>
+                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Hapus</button>
+                  <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Rubah</button>
+                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Kembali</button>
                 </>
               )
             }}
@@ -92,18 +102,18 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Cancel</button>
-                  <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id: match.params._id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete: redirectAfterDelete, history })}>Delete</button>
+                  <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Batal</button>
+                  <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id: match.params._id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete: redirectAfterDelete, history })}>Hapus</button>
                 </>
               )
             }}
           />
           <Table
-            cardTitle='Team Members'
+            cardTitle='Anggota Tim'
             paginationConfig={{ serviceName: 'getAllTokoTeamsByTokoId', fields: TokoTeamManifest.fields }}
             columns={TokoTeamManifest.getColumns({ history, tokoId: match.params._id })}
             createHref={`${TokoTeamManifest.createPageUrl()}/${match.params._id}`}
-            createNewButtonLabel='Add a team member'
+            createNewButtonLabel='Tambah anggota tim'
             whereCondition={{ toko_id: match.params._id }}
           />
         </div>

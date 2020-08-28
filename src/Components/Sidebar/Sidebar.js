@@ -61,12 +61,12 @@ class Sidebar extends Component {
         {/* Brand Logo */}
         <a href='/#' className='brand-link' style={{ background: 'white' }}>
           <img src={Images.LogoRp} alt='Rayapay' className='brand-image img-circle elevation-3' />
-          <span className='brand-text' style={{ color: ' #a00f0f' }}>Tokoonline</span>
+          <span className='brand-text' style={{ color: ' #a00f0f' }}>Plink Market</span>
         </a>
         <div className='sidebar'>
           <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
             <div className='info'>
-              <marquee style={{ color: '#fff' }}>Selamat Datang di Website Tokoonline</marquee>
+              <marquee style={{ color: '#fff' }}>Selamat Datang di Website Plink Market</marquee>
               <br />
               {/* <h5 style={{ color: 'white' }}><i className='icon fas fa-user' /> &nbsp;{profile.full_name}</h5> */}
               {/* <label style={{ color: 'white' }}><i className='icon fas fa-store-alt' /> &nbsp;{profile.business_name}</label> */}
@@ -87,6 +87,7 @@ class Sidebar extends Component {
                 {this._getMenuLi('/tokoonline', 'Toko Online Management')}
                 {this._getMenuLi('/category', 'Category Management')}
                 {this._getMenuLi('/product', 'Product Management')}
+                {this._getMenuLi('/purchaseorder', 'Purchase Order')}
                 {/* {this._getMenuLi('/tag', 'Tag Management')} */}
               </SidebarMainMenu>
               <SidebarMainMenu name='main-menu-user-management' title='User Management' userPrivileges={userPrivileges}>

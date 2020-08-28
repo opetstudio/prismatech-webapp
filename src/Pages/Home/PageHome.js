@@ -84,8 +84,8 @@ class PageHome extends Component {
     return (
       <ContentWrapper
         pageTitle='Home'
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Home', link: null, isActive: true }]}
-        contentHeaderTitle='Home'
+        breadcrumb={[{ title: 'Beranda' }]}
+        contentHeaderTitle='Beranda'
         isNeedLoggedin
       >
         <div className='row'>

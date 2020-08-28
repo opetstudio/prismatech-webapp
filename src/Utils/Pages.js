@@ -49,15 +49,19 @@ import PageCreateTokoTeam from '../Pages/TokoTeam/PageCreate'
 import PageDetailTokoTeam from '../Pages/TokoTeam/PageDetail'
 import PageUpdateTokoTeam from '../Pages/TokoTeam/PageUpdate'
 
+// Toko Po
+import PageListTokoPo from '../Pages/TokoPo/PageList'
+import PageDetailTokoPo from '../Pages/TokoPo/PageDetail'
+
 const createPage = ({ entity, entityTitle, ListAllComp, CreateComp, DetailComp, UpdateComp, params }) => ({
   ['/' + entity]: { route: '/' + entity, path: `/${entity}${params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
-  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[1] ? '/' + params[1] : ''}`, title: entityTitle + ' Create', component: CreateComp },
-  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + ' Detail', component: DetailComp },
+  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[1] ? '/' + params[1] : ''}`, title: 'Buat ' + entityTitle + '', component: CreateComp },
+  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + '', component: DetailComp },
   ['/' + entity + '/update']: { route: '/' + entity + '/update', path: `/${entity}/update${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + ' Update', component: UpdateComp }
 })
 
 export const lp = {
-  '/home': { route: '/home', path: '/home', title: 'Home', component: PageHome },
+  '/home': { route: '/home', path: '/home', title: 'Beranda', component: PageHome },
   '/login': { route: '/login', path: '/login', title: 'Login', component: LoginPageContainer, isPublic: true },
   '/signup': { route: '/signup', path: '/signup', title: 'Signup', component: PageSignup, isPublic: true },
   '/forget-password': { route: '/forget-password', path: '/forget-password', title: 'Forget Password', component: ForgetPassword, isPublic: true },
@@ -72,13 +76,15 @@ export const lp = {
   // category
   ...createPage({ entity: 'category', entityTitle: 'Kategori', ListAllComp: PageListCategory, CreateComp: PageCreateCategory, UpdateComp: PageUpdateCategory, DetailComp: PageDetailCategory, params: [':_id'] }),
   // toko online
-  ...createPage({ entity: 'tokoonline', entityTitle: 'Toko Online', ListAllComp: PageListTokoOnline, CreateComp: PageCreateTokoOnline, UpdateComp: PageUpdateTokoOnline, DetailComp: PageDetailTokoOnline, params: [':_id'] }),
+  ...createPage({ entity: 'tokoonline', entityTitle: 'Plink Market', ListAllComp: PageListTokoOnline, CreateComp: PageCreateTokoOnline, UpdateComp: PageUpdateTokoOnline, DetailComp: PageDetailTokoOnline, params: [':_id'] }),
   // role
   ...createPage({ entity: 'role', entityTitle: 'Role', ListAllComp: PageListRole, CreateComp: PageCreateRole, UpdateComp: PageUpdateRole, DetailComp: PageDetailRole, params: [':_id'] }),
   // privilege
   ...createPage({ entity: 'privilege', entityTitle: 'Privilege', CreateComp: PageCreatePrivilege, UpdateComp: PageUpdatePrivilege, DetailComp: PageDetailPrivilege, params: [':_id', ':role_id'] }),
   // toko team
-  ...createPage({ entity: 'tokoteam', entityTitle: 'Toko Team', ListAllComp: PageListTokoTeam, CreateComp: PageCreateTokoTeam, UpdateComp: PageUpdateTokoTeam, DetailComp: PageDetailTokoTeam, params: [':_id', ':toko_id'] })
+  ...createPage({ entity: 'tokoteam', entityTitle: 'Toko Team', ListAllComp: PageListTokoTeam, CreateComp: PageCreateTokoTeam, UpdateComp: PageUpdateTokoTeam, DetailComp: PageDetailTokoTeam, params: [':_id', ':toko_id'] }),
+  // toko po
+  ...createPage({ entity: 'purchaseorder', entityTitle: 'Data Pembelian', ListAllComp: PageListTokoPo, DetailComp: PageDetailTokoPo, params: [':_id'] })
 }
 console.log('lp====>', lp)
 export const pageList = _.map(lp, (v) => v)

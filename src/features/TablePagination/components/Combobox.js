@@ -26,7 +26,7 @@ function Combobox ({ label, onChange, defaultValue, name, id, child, optionColum
   // Render the UI for your table
   return (
     <select name={name} id={id} className='form-control' onChange={e => onChange(e)}>
-      <option key='-'> --select {label}-- </option>
+      <option key='-'>{label}</option>
       {data.map((v, i) => <option key={i} value={v[optionColumnValue]} selected={defaultValue === v[optionColumnValue]}>{v[optionColumnLabel]}</option>)}
     </select>
   )
