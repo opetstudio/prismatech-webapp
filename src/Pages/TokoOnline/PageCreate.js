@@ -20,11 +20,11 @@ class Comp extends Component {
     // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
   }
 
-  addField (name, title, type, tablepaginationOnChangeForm) {
+  addField (name, title, type, tablepaginationOnChangeForm, placeholder) {
     return (
       <div className='form-group'>
         <label htmlFor={name}>{title}</label>
-        <input type={type} className='form-control' id={name} placeholder={`Enter ${title}`} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />
+        <input type={type} className='form-control' id={name} placeholder={placeholder} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />
       </div>
     )
   }
@@ -34,7 +34,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
         contentHeaderTitle={createPageTitle}
         isNeedLoggedin
       >
@@ -49,15 +49,15 @@ class Comp extends Component {
                 return (
                   <div className='row'>
                     <div className='col-sm-6'>
-                      {this.addField('name', 'Nama Toko', 'text', tablepaginationOnChangeForm)}
+                      {this.addField('name', 'Nama Toko', 'text', tablepaginationOnChangeForm, 'Masukkan Nama Toko')}
                       {/* {this.addField('slug', 'Slug (url)', 'text', tablepaginationOnChangeForm)} */}
-                      {this.addField('website', 'Website', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('facebook', 'Facebook', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('instagram', 'Instagram', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('youtube', 'Youtube', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('description', 'Description', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('plink_merchant_id', 'Plink Merchant Id', 'text', tablepaginationOnChangeForm)}
-                      {this.addField('plink_merchant_key_id', 'Plink Merchant Key Id', 'text', tablepaginationOnChangeForm)}
+                      {this.addField('website', 'Website', 'text', tablepaginationOnChangeForm, 'Masukkan URL Website')}
+                      {this.addField('facebook', 'Facebook', 'text', tablepaginationOnChangeForm, 'Masukkan URL Facebook')}
+                      {this.addField('instagram', 'URL Instagram', 'text', tablepaginationOnChangeForm, 'Masukkan URL Instagram')}
+                      {this.addField('youtube', 'URL Youtube', 'text', tablepaginationOnChangeForm, 'Masukkan URL Youtube')}
+                      {this.addField('description', 'Deskripsi Toko', 'text', tablepaginationOnChangeForm, 'Deskripsi Toko')}
+                      {this.addField('plink_merchant_id', 'Plink Merchant Id', 'text', tablepaginationOnChangeForm, 'Masukkan Plink Merchant Id')}
+                      {this.addField('plink_merchant_key_id', 'Plink Merchant Key Id', 'text', tablepaginationOnChangeForm, 'Masukkan Plink Merchant Key Id')}
                     </div>
                   </div>
                 )
@@ -65,7 +65,7 @@ class Comp extends Component {
               footerCard={({ tablepaginationSubmitForm, payload }) => {
                 return (
                   <>
-                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
                     <button
                       style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
                         fields: paginationConfig.fields,
@@ -74,7 +74,7 @@ class Comp extends Component {
                         history,
                         redirectAfterCreate: redirectAfterCreate
                       })}
-                    >Submit
+                    >Kirim
                     </button>
                   </>
                 )

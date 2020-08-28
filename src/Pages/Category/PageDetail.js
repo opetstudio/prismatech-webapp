@@ -25,7 +25,7 @@ function Comp (props) {
     <ContentWrapper
       pageTitle={detailPageTitle}
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Beranda', link: '/home' },
         // { title: 'Course', link: '/course', isActive: true },
         // { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         // { title: 'Subject Detail', link: `/subject/detail/${subjectId}`, isActive: true },
@@ -51,19 +51,19 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
-                  <dt>Title</dt>
+                  <dt>Judul</dt>
                   <dd>{path([paginationConfig.serviceName, 'title'], dataDetail) || ''}</dd>
                   <dt>Toko Online</dt>
                   <dd>{(_.map(path([paginationConfig.serviceName, 'toko_id'], dataDetail) || [], (v, k) => v.name) || []).join(', ')}</dd>
-                  <dt>Parent Category</dt>
+                  <dt>Kategori Induk</dt>
                   <dd>{path([paginationConfig.serviceName, 'parent_id', 'title'], dataDetail) || '-'}</dd>
-                  <dt>Updated By</dt>
+                  <dt>Diperbaharui Oleh</dt>
                   <dd>{path([paginationConfig.serviceName, 'updated_by', 'full_name'], dataDetail) || ''}</dd>
-                  <dt>Created By</dt>
+                  <dt>Dibuat Oleh</dt>
                   <dd>{path([paginationConfig.serviceName, 'created_by', 'full_name'], dataDetail) || ''}</dd>
-                  <dt>Created By</dt>
+                  <dt>Tanggal Pembuatan</dt>
                   <dd>{createdAt}</dd>
-                  <dt>Updated By</dt>
+                  <dt>Tanggal Diperbaharui</dt>
                   <dd>{updatedAt}</dd>
                 </dl>
               )

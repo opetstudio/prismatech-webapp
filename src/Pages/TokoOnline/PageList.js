@@ -26,7 +26,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={listallPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: listallPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: listallPageTitle, link: null, isActive: true }]}
         contentHeaderTitle={listallPageTitle}
         isNeedLoggedin
       >

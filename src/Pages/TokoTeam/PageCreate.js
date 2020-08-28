@@ -29,8 +29,8 @@ class Comp extends Component {
     return (
       <div className='form-group'>
         {type !== 'hidden' && <label htmlFor={name}>{title}</label>}
-        {defaultValue && <input type={type} className='form-control' id={name} placeholder={`Enter ${title}`} value={defaultValue} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />}
-        {!defaultValue && <input type={type} className='form-control' id={name} placeholder={`Enter ${title}`} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />}
+        {defaultValue && <input type={type} className='form-control' id={name} placeholder={`Masukkan ${title}`} value={defaultValue} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />}
+        {!defaultValue && <input type={type} className='form-control' id={name} placeholder={`Masukkan ${title}`} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: name, fieldValue: e.target.value })} />}
       </div>
     )
   }
@@ -72,7 +72,7 @@ class Comp extends Component {
                         /> */}
                       </div>
                       {this.addField('toko_id', 'Toko Id', 'hidden', tablepaginationOnChangeForm, path([paginationConfig.serviceName, 'toko_id'], payload) || '')}
-                      {this.addField('email', 'User Email', 'email', tablepaginationOnChangeForm)}
+                      {this.addField('email', 'Email Pengguna', 'email', tablepaginationOnChangeForm)}
                       {/* {this.addField('name', 'Name', 'text', tablepaginationOnChangeForm)}
                       {this.addField('website', 'Website', 'text', tablepaginationOnChangeForm)}
                       {this.addField('facebook', 'Facebook', 'text', tablepaginationOnChangeForm)}
@@ -86,7 +86,7 @@ class Comp extends Component {
               footerCard={({ tablepaginationSubmitForm, payload }) => {
                 return (
                   <>
-                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
                     <button
                       style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
                         fields: paginationConfig.fields,
@@ -95,7 +95,7 @@ class Comp extends Component {
                         history,
                         redirectAfterCreate: redirectAfterCreate(match.params.toko_id)
                       })}
-                    >Submit
+                    >Kirim
                     </button>
                   </>
                 )
