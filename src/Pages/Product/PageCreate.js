@@ -29,9 +29,9 @@ class Comp extends Component {
     const { match, history, payload } = this.props
     return (
       <ContentWrapper
-        pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
-        contentHeaderTitle={createPageTitle}
+        pageTitle='Buat Produk'
+        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: 'Buat Produk Baru', link: null, isActive: true }]}
+        contentHeaderTitle='Buat Produk'
         isNeedLoggedin
       >
         <div className='row'>
@@ -46,32 +46,32 @@ class Comp extends Component {
                   <div className='row'>
                     <div className='col-sm-6'>
                       <div className='form-group'>
-                        <label htmlFor='title'>name</label>
+                        <label htmlFor='title'>Nama</label>
                         <input type='text' className='form-control' id='name' placeholder='Enter name' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'name', fieldValue: e.target.value })} />
                       </div>
                       <div className='form-group'>
-                        <label htmlFor='name'>code</label>
+                        <label htmlFor='name'>Kode</label>
                         <input type='text' className='form-control' id='code' placeholder='Enter name' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'code', fieldValue: e.target.value })} />
                       </div>
                       <div className='form-group'>
-                        <label htmlFor='entity'>price</label>
+                        <label htmlFor='entity'>Harga</label>
                         <input type='number' className='form-control' id='price' placeholder='Enter price' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'price', fieldValue: e.target.value })} />
                       </div>
                       
                       <div className='form-group'>
-                        <label htmlFor='description'>Short Description</label>
+                        <label htmlFor='description'>Deskripsi Singkat</label>
                         <input type='text' className='form-control' id='description' placeholder='Enter description' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'description', fieldValue: e.target.value })} />
                       </div>
 
                       <div className='form-group'>
-                        <label htmlFor='content1'>Long Description</label>
+                        <label htmlFor='content1'>Deskripsi Lengkap</label>
                         {/* <input type='text' className='form-control' id='content1' placeholder='Enter content 1' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} /> */}
                         <textarea className='textarea' id='content1' placeholder='Place some text here' style={{ width: '100%', height: 200, fontSize: 14, lineHeight: 18, border: '1px solid #dddddd', padding: 10 }} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} />
                       </div>
                       
                       <Multiselect
                         isAutocomplete
-                        label='Toko Online'
+                        label='Pilih Beberapa Toko'
                         name='toko_id'
                         id='toko_id'
                         maxOptions={50}
@@ -86,7 +86,7 @@ class Comp extends Component {
                       />
                       <Multiselect
                         isAutocomplete
-                        label='Category'
+                        label='Pilih Beberapa Kategori'
                         name='category_id'
                         id='category_id'
                         maxOptions={50}
@@ -103,7 +103,7 @@ class Comp extends Component {
                       <Multiselect
                         isCreatableSelect
                         isAutocomplete
-                        label='Tagging'
+                        label='Pilih Beberapa Tag'
                         name='tag_id'
                         id='tag_id'
                         maxOptions={50}
@@ -117,7 +117,7 @@ class Comp extends Component {
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'tag_id', fieldValue: val })}
                       />
                       <div className='form-group'>
-                        <label for='fileUploadInput'>File input</label>
+                        <label for='fileUploadInput'>Unggah Dokumen</label>
                         <div className='input-group' style={{ zIndex: 0 }}>
                           <div className='custom-file'>
                             <input
@@ -129,7 +129,7 @@ class Comp extends Component {
                                 }
                               })}
                             />
-                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Choose file</label>
+                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Pilih Dokumen</label>
                           </div>
                           {/* <div
                             className='input-group-append'
@@ -151,7 +151,7 @@ class Comp extends Component {
               footerCard={({ tablepaginationSubmitForm, payload }) => {
                 return (
                   <>
-                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
                     <button
                       style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
                         fields: paginationConfig.fields,
@@ -160,7 +160,7 @@ class Comp extends Component {
                         history,
                         redirectAfterCreate: redirectAfterCreate
                       })}
-                    >Submit
+                    >Kirim
                     </button>
                   </>
                 )

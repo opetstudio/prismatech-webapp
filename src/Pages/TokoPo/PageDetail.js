@@ -79,16 +79,16 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
-                  {createRow('Action', paginationConfig, dataDetail, ['action'])}
-                  {createRow('Name', paginationConfig, dataDetail, ['full_name'])}
-                  {createRow('Phone Number', paginationConfig, dataDetail, ['phone_number'])}
+                  {createRow('Tindakan', paginationConfig, dataDetail, ['action'])}
+                  {createRow('Nama', paginationConfig, dataDetail, ['full_name'])}
+                  {createRow('No Telepon', paginationConfig, dataDetail, ['phone_number'])}
                   {createRow('Email', paginationConfig, dataDetail, ['email'])}
-                  {createRow('Total Amount', paginationConfig, dataDetail, ['total_amount'])}
-                  {createRow('Session Id', paginationConfig, dataDetail, ['session_id'])}
-                  {createRow('Invoice Code', paginationConfig, dataDetail, ['invoice_code'])}
-                  <dt>Updated At</dt>
+                  {createRow('Total Pembayaran', paginationConfig, dataDetail, ['total_amount'])}
+                  {createRow('ID Sesi', paginationConfig, dataDetail, ['session_id'])}
+                  {createRow('Kode Invoice', paginationConfig, dataDetail, ['invoice_code'])}
+                  <dt>Tanggal Transaksi</dt>
                   <dd>{updatedAt}</dd>
-                  {createRow('Payment Page Url', paginationConfig, dataDetail, ['payment_page_url'])}
+                  {/* {createRow('Payment Page Url', paginationConfig, dataDetail, ['payment_page_url'])} */}
                 </dl>
               )
 

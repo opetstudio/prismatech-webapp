@@ -51,7 +51,7 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
     if (isCreatableSelect) {
       return (
         <div className='form-group'>
-          <label>Select Multiple {label}</label>
+          <label>{label}</label>
           <CreatableSelect
             defaultValue={optionsDefaultValue}
             isMulti
@@ -86,7 +86,7 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
     } else {
       return (
         <div className='form-group'>
-          <label>Select Multiple {label}</label>
+          <label>{label}</label>
           <Select
             defaultValue={optionsDefaultValue}
             isMulti
@@ -127,7 +127,7 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
 
   return (
     <div className='form-group'>
-      <label>Select Multiple {label}</label>
+      <label>{label}</label>
       <select
         multiple
         className='form-control'

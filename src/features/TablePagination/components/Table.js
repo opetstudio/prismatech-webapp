@@ -111,7 +111,7 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
             <a href='javascript:;' aria-controls='example1' data-dt-idx={7} tabIndex={0} className='page-link' onClick={() => gotoPage(pageCount - 1)}>{'>>'}</a>
           </li>
           <li>
-            <div>Page {' '} <strong>{pageIndex + 1} of {pageOptions.length}</strong></div>
+            <div>Halaman {' '} <strong>{pageIndex + 1} dari {pageOptions.length}</strong></div>
           </li>
           {/* <li className=''>
             <div>
@@ -137,7 +137,7 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
               >
                 {[10, 20, 30, 40, 50].map(pageSize => (
                   <option key={pageSize} value={pageSize}>
-              Show {pageSize}
+              Tampilkan {pageSize}
                   </option>
                 ))}
               </select>

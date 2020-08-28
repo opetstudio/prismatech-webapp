@@ -32,21 +32,21 @@ function Comp (props) {
 
   const title = (lp[window.location.pathname] || {}).title
   if (title) appPatch({ routeActive: window.location.pathname, pageTitle: title })
-  else appPatch({ routeActive: window.location.pathname, pageTitle: detailPageTitle })
+  else appPatch({ routeActive: window.location.pathname, pageTitle: 'Toko Tim' })
 
   // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
   // const courseId = path([paginationConfig.serviceName, 'subject_id', 'course_id', '_id'], dataDetail)
   return (
     <ContentWrapper
-      pageTitle={detailPageTitle}
+      pageTitle='Anggota Tim'
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Beranda', link: '/home' },
         // { title: 'Course', link: '/course', isActive: true },
         // { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         // { title: 'Subject Detail', link: `/subject/detail/${subjectId}`, isActive: true },
-        { title: detailPageTitle, link: null, isActive: true }
+        { title: 'Anggota Tim', link: null, isActive: true }
       ]}
-      contentHeaderTitle={detailPageTitle}
+      contentHeaderTitle='Anggota Tim'
       isNeedLoggedin
     >
       <div className='row'>
@@ -54,7 +54,7 @@ function Comp (props) {
           <Detaildata
             id={match.params._id}
             updateHref={updatePageUrl(match.params._id)}
-            formTitle={detailPageTitle}
+            formTitle='Anggota Tim'
             paginationConfig={paginationConfig}
             child={(dataDetail) => {
               let createdAt = Moment(path([paginationConfig.serviceName, 'created_at'], dataDetail))
@@ -65,13 +65,13 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
-                  {createRow('Name', paginationConfig, dataDetail, ['user_id', 'full_name'])}
+                  {createRow('Nama', paginationConfig, dataDetail, ['user_id', 'full_name'])}
                   {createRow('Toko', paginationConfig, dataDetail, ['toko_id', 'name'])}
-                  {createRow('Created By', paginationConfig, dataDetail, ['created_by', 'full_name'])}
-                  {createRow('Updated By', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
-                  <dt>Created At</dt>
+                  {createRow('Dibuat Oleh', paginationConfig, dataDetail, ['created_by', 'full_name'])}
+                  {createRow('Diperbaharui Oleh', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
+                  <dt>Tanggal Dibuat</dt>
                   <dd>{createdAt}</dd>
-                  <dt>Updated At</dt>
+                  <dt>Tanggal Diperbaharui</dt>
                   <dd>{updatedAt}</dd>
                   {/* {createRow('Website', paginationConfig, dataDetail, ['website'])}
                   {createRow('Facebook', paginationConfig, dataDetail, ['facebook'])}
@@ -86,7 +86,7 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button>
+                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Hapus</button>
                   <button style={{ width: 150, marginLeft: 5 }} onClick={() => history.push(`/tokoonline/detail/${match.params.toko_id}`)} type='button' className='btn bg-gradient-primary'>Toko Detail</button>
                 </>
               )
@@ -95,8 +95,8 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Cancel</button>
-                  <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id: match.params._id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete: redirectAfterDelete(match.params.toko_id), history })}>Delete</button>
+                  <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Batal</button>
+                  <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id: match.params._id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete: redirectAfterDelete(match.params.toko_id), history })}>Hapus</button>
                 </>
               )
             }}

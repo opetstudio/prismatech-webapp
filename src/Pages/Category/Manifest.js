@@ -14,10 +14,10 @@ export const redirectAfterDelete = '/' + entity
 export const detailPageUrl = (id) => (`/${entity}/detail/${id}`)
 export const updatePageUrl = (id) => (`/${entity}/update/${id}`)
 export const createPageUrl = () => (`/${entity}/create`)
-export const createNewButtonLabel = 'Create New ' + entityName
-export const createPageTitle = 'Create New ' + entityName
-export const listallPageTitle = entityName + 's'
-export const detailPageTitle = entityName + ' Detail'
+export const createNewButtonLabel = 'Buat Kategori Baru'
+export const createPageTitle = 'Buat Kategori'
+export const listallPageTitle = 'Kategori'
+export const detailPageTitle = 'Detail Kategori'
 export const updatePageTitle = 'Update ' + entityName
 export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
@@ -39,10 +39,10 @@ export const getColumns = (history) => [
         </div>
       </div>)
   },
-  { Header: 'title', accessor: 'title' },
-  { Header: 'parent', accessor: 'parent_id.title' },
+  { Header: 'Kategori', accessor: 'title' },
+  { Header: 'Induk', accessor: 'parent_id.title' },
   {
-    Header: 'created_at',
+    Header: 'Tanggal Dibuat',
     accessor: 'created_at',
     Cell: d => {
       let data = Moment(d.cell.value)
@@ -52,7 +52,7 @@ export const getColumns = (history) => [
     }
   },
   {
-    Header: 'updated_at',
+    Header: 'Tanggal Dirubah',
     accessor: 'updated_at',
     Cell: d => {
       let data = Moment(d.cell.value)
@@ -61,8 +61,8 @@ export const getColumns = (history) => [
       return (<span>{`${data}`}</span>)
     }
   },
-  { Header: 'created by', accessor: 'created_by.full_name' },
-  { Header: 'updated by', accessor: 'updated_by.full_name' }
+  { Header: 'Dibuat Oleh', accessor: 'created_by.full_name' },
+  { Header: 'Dirubah Oleh', accessor: 'updated_by.full_name' }
   // { Header: 'created at', accessor: 'created_at' },
   // { Header: 'updated at', accessor: 'updated_at' }
 ]

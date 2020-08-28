@@ -18,7 +18,7 @@ export const updatePageUrl = (id) => (`/${entity}/update/${id}`)
 export const createPageUrl = () => (`/${entity}/create`)
 export const createNewButtonLabel = 'Create New ' + entityName
 export const createPageTitle = 'Create New ' + entityName
-export const listallPageTitle = entityName + 's'
+export const listallPageTitle = 'Data Pembelian'
 export const detailPageTitle = entityName + ' Detail'
 export const updatePageTitle = 'Update ' + entityName
 export const updateService = 'update' + serviceEntity
@@ -41,13 +41,13 @@ export const getColumns = (history) => [
         </div>
       </div>)
   },
-  { Header: 'action', accessor: 'action' },
-  { Header: 'full_name', accessor: 'full_name' },
-  { Header: 'phone_number', accessor: 'phone_number' },
-  { Header: 'email', accessor: 'email' },
-  { Header: 'total_amount', accessor: 'total_amount' },
-  { Header: 'session_id', accessor: 'session_id' },
-  { Header: 'invoice_code', accessor: 'invoice_code' },
+  { Header: 'Tindakan', accessor: 'action' },
+  { Header: 'Nama Lengkap', accessor: 'full_name' },
+  { Header: 'No Telepon', accessor: 'phone_number' },
+  { Header: 'Email', accessor: 'email' },
+  { Header: 'Total Pembayaran', accessor: 'total_amount' },
+  { Header: 'ID Sesi', accessor: 'session_id' },
+  { Header: 'Kode Invoice', accessor: 'invoice_code' },
 //   { Header: 'category', accessor: p => (<span>{(_.map(p.category_id, v => v.title) || []).join(', ')}</span>) },
 //   { Header: 'toko', accessor: p => (<span>{(_.map(p.toko_id, v => v.name) || []).join(', ')}</span>) },
 // { Header: 'picture', accessor: p => (<span>{p.image_id.filename}.{p.image_id.file_type}</span>) },
@@ -62,7 +62,7 @@ export const getColumns = (history) => [
 //     }
 //   },
   {
-    Header: 'updated_at',
+    Header: 'Tanggal Transaksi',
     accessor: 'updated_at',
     Cell: d => {
       let data = Moment(d.cell.value)

@@ -56,7 +56,7 @@ function Filter (props) {
               serviceName: paginationConfig.serviceName,
               tablepaginationFetchData
             })}
-          >Submit
+          >Kirim
           </button>
         </div>
       </div>

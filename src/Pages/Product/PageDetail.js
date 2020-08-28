@@ -79,20 +79,20 @@ function Comp (props) {
               else updatedAt = ''
               return (
                 <dl>
-                  {createRow('Name', paginationConfig, dataDetail, ['name'])}
-                  {createRow('Code', paginationConfig, dataDetail, ['code'])}
-                  {createRow('Price', paginationConfig, dataDetail, ['price'])}
-                  {createRow('Category', paginationConfig, dataDetail, ['category_id', 'title'])}
+                  {createRow('Nama', paginationConfig, dataDetail, ['name'])}
+                  {createRow('Kode', paginationConfig, dataDetail, ['code'])}
+                  {createRow('Harga', paginationConfig, dataDetail, ['price'])}
+                  {createRow('Kategori', paginationConfig, dataDetail, ['category_id', 'title'])}
                   {createRow('Toko Online', paginationConfig, dataDetail, ['toko_id', 'name'])}
                   {createRow('Tagging', paginationConfig, dataDetail, ['tag_id', 'name'])}
-                  {createRow('Description', paginationConfig, dataDetail, ['description'])}
-                  {createRow('Updated By', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
-                  {createRow('Created By', paginationConfig, dataDetail, ['created_by', 'full_name'])}
-                  <dt>Created At</dt>
+                  {createRow('Deskripsi', paginationConfig, dataDetail, ['description'])}
+                  {createRow('Diperbaharui Oleh', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
+                  {createRow('Dibuat Oleh', paginationConfig, dataDetail, ['created_by', 'full_name'])}
+                  <dt>Tanggal Dibuat</dt>
                   <dd>{createdAt}</dd>
-                  <dt>Updated At</dt>
+                  <dt>Tanggal Diperbaharui</dt>
                   <dd>{updatedAt}</dd>
-                  <dt>Image</dt>
+                  <dt>Hambar</dt>
                   <dd><img src={`${AppConfig.hostBackend}/renderfile/${path([paginationConfig.serviceName, 'image_id', 'filename'], dataDetail) || ''}.${path([paginationConfig.serviceName, 'image_id', 'file_type'], dataDetail) || ''}`} /></dd>
                 </dl>
               )
@@ -102,9 +102,9 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Edit</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Back</button>
+                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Hapus</button>
+                  <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Ubah</button>
+                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Kembali</button>
                 </>
               )
             }}

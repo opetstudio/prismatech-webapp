@@ -16,7 +16,7 @@ export const detailPageUrl = (id) => (`/${entity}/detail/${id}`)
 export const updatePageUrl = (id) => (`/${entity}/update/${id}`)
 export const createPageUrl = () => (`/${entity}/create`)
 export const createNewButtonLabel = 'Buat Toko Baru'
-export const createPageTitle = 'Create New ' + entityName
+export const createPageTitle = 'Buat Toko Baru'
 export const listallPageTitle = entityName
 export const detailPageTitle = entityName + ' Detail'
 export const updatePageTitle = 'Update ' + entityName
@@ -40,14 +40,14 @@ export const getColumns = (history) => [
         </div>
       </div>)
   },
-  { Header: 'name', accessor: 'name' },
+  { Header: 'Nama', accessor: 'name' },
   { Header: 'website', accessor: 'website' },
   { Header: 'facebook', accessor: 'facebook' },
   { Header: 'instagram', accessor: 'instagram' },
   { Header: 'youtube', accessor: 'youtube' },
   { Header: 'status', accessor: 'status' },
   {
-    Header: 'updated_at',
+    Header: 'Tanggal Diperbaharui',
     accessor: 'updated_at',
     Cell: d => {
       let data = Moment(d.cell.value)
@@ -56,7 +56,7 @@ export const getColumns = (history) => [
       return (<span>{`${data}`}</span>)
     }
   },
-  { Header: 'owner', accessor: 'owner.full_name' }
+  { Header: 'Pemilik', accessor: 'owner.full_name' }
 //   { Header: 'updated by', accessor: 'updated_by.full_name' }
   // { Header: 'created at', accessor: 'created_at' },
   // { Header: 'updated at', accessor: 'updated_at' }

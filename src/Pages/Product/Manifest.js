@@ -16,8 +16,8 @@ export const redirectAfterDelete = '/' + entity
 export const detailPageUrl = (id) => (`/${entity}/detail/${id}`)
 export const updatePageUrl = (id) => (`/${entity}/update/${id}`)
 export const createPageUrl = () => (`/${entity}/create`)
-export const createNewButtonLabel = 'Create New ' + entityName
-export const createPageTitle = 'Create New ' + entityName
+export const createNewButtonLabel = 'Buat Produk Baru'
+export const createPageTitle = 'Buat Produk Baru'
 export const listallPageTitle = entityName + 's'
 export const detailPageTitle = entityName + ' Detail'
 export const updatePageTitle = 'Update ' + entityName
@@ -41,12 +41,12 @@ export const getColumns = (history) => [
         </div>
       </div>)
   },
-  { Header: 'name', accessor: 'name' },
-  { Header: 'code', accessor: 'code' },
-  { Header: 'price', accessor: 'price' },
-  { Header: 'category', accessor: p => (<span>{(_.map(p.category_id, v => v.title) || []).join(', ')}</span>) },
-  { Header: 'toko', accessor: p => (<span>{(_.map(p.toko_id, v => v.name) || []).join(', ')}</span>) },
-{ Header: 'picture', accessor: p => (<span>{p.image_id.filename}.{p.image_id.file_type}</span>) },
+  { Header: 'Nama', accessor: 'name' },
+  { Header: 'Kode', accessor: 'code' },
+  { Header: 'Harga', accessor: 'price' },
+  { Header: 'Kategori', accessor: p => (<span>{(_.map(p.category_id, v => v.title) || []).join(', ')}</span>) },
+  { Header: 'Toko', accessor: p => (<span>{(_.map(p.toko_id, v => v.name) || []).join(', ')}</span>) },
+{ Header: 'Gambar', accessor: p => (<span>{p.image_id.filename}.{p.image_id.file_type}</span>) },
 //   {
 //     Header: 'created_at',
 //     accessor: 'created_at',
@@ -58,7 +58,7 @@ export const getColumns = (history) => [
 //     }
 //   },
   {
-    Header: 'updated_at',
+    Header: 'Tanggal Diperbaharui',
     accessor: 'updated_at',
     Cell: d => {
       let data = Moment(d.cell.value)
@@ -67,7 +67,7 @@ export const getColumns = (history) => [
       return (<span>{`${data}`}</span>)
     }
   },
-  { Header: 'created by', accessor: 'created_by.full_name' }
+  { Header: 'Dibuat Oleh', accessor: 'created_by.full_name' }
 //   { Header: 'updated by', accessor: 'updated_by.full_name' }
   // { Header: 'created at', accessor: 'created_at' },
   // { Header: 'updated at', accessor: 'updated_at' }
