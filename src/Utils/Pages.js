@@ -53,11 +53,35 @@ import PageUpdateTokoTeam from '../Pages/TokoTeam/PageUpdate'
 import PageListTokoPo from '../Pages/TokoPo/PageList'
 import PageDetailTokoPo from '../Pages/TokoPo/PageDetail'
 
+// lms course
+import PageListCourse from '../Pages/Course/PageCourse'
+import PageCreateCourse from '../Pages/Course/CreateCourse'
+import PageUpdateCourse from '../Pages/Course/UpdateCourse'
+import PageDetailCourse from '../Pages/Course/DetailCourse'
+import PagePublishedCourse from '../Pages/Course/PagePublishedCourse'
+// lms student
+import PageListStudent from '../Pages/Student/PageStudent'
+
+// lms subject
+import PageCreateSubject from '../Pages/Subject/CreateSubject'
+import PageDetailSubject from '../Pages/Subject/DetailSubject'
+import PageUpdateSubject from '../Pages/Subject/UpdateSubject'
+
+// lms subject unit
+import PageCreateSubjectUnit from '../Pages/SubjectUnit/CreateSubjectUnit'
+import PageDetailSubjectUnit from '../Pages/SubjectUnit/DetailSubjectUnit'
+import PageUpdateSubjectUnit from '../Pages/SubjectUnit/UpdateSubjectUnit'
+
+// lms grading
+import PageCreateGrading from '../Pages/Grading/PageCreateGrading'
+import PageDetailGrading from '../Pages/Grading/PageDetailGrading'
+import PageUpdateGrading from '../Pages/Grading/PageUpdateGrading'
+
 const createPage = ({ entity, entityTitle, ListAllComp, CreateComp, DetailComp, UpdateComp, params }) => ({
-  ['/' + entity]: { route: '/' + entity, path: `/${entity}${params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
-  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[1] ? '/' + params[1] : ''}`, title: 'Buat ' + entityTitle + '', component: CreateComp },
-  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + '', component: DetailComp },
-  ['/' + entity + '/update']: { route: '/' + entity + '/update', path: `/${entity}/update${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + ' Update', component: UpdateComp }
+  ['/' + entity]: { route: '/' + entity, path: `/${entity}${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
+  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}`, title: 'Buat ' + entityTitle + '', component: CreateComp },
+  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + '', component: DetailComp },
+  ['/' + entity + '/update']: { route: '/' + entity + '/update', path: `/${entity}/update${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + ' Update', component: UpdateComp }
 })
 
 export const lp = {
@@ -69,9 +93,20 @@ export const lp = {
   '/my-profile': { route: '/my-profile', path: '/my-profile', title: 'My Profile', component: MyProfile },
   '/user': { route: '/user', path: '/user', title: 'User', component: PageUser },
   '/use/detail': { route: '/user/detail', path: '/user/detail/:_id', title: 'User Detail', component: PageDetailUser },
+  // lms course
+  ...createPage({ entity: 'course', entityTitle: 'Course', ListAllComp: PageListCourse, CreateComp: PageCreateCourse, UpdateComp: PageUpdateCourse, DetailComp: PageDetailCourse, params: [':_id'] }),
+  // lms grading
+  ...createPage({ entity: 'grading', entityTitle: 'Grading', CreateComp: PageCreateGrading, UpdateComp: PageUpdateGrading, DetailComp: PageDetailGrading, params: [':_id'] }),
+  '/published-course': { route: '/published-course', path: '/published-course', component: PagePublishedCourse },
+  // lms subject
+  ...createPage({ entity: 'subject', entityTitle: 'Subject', CreateComp: PageCreateSubject, UpdateComp: PageUpdateSubject, DetailComp: PageDetailSubject, params: [':_id', ':course_id'] }),
+  // lms subject unit
+  ...createPage({ entity: 'subject-unit', entityTitle: 'Subject Unit', CreateComp: PageCreateSubjectUnit, UpdateComp: PageUpdateSubjectUnit, DetailComp: PageDetailSubjectUnit, params: [':_id', ':subject_id', ':course_id'] }),
+  // lms student
+  ...createPage({ entity: 'student', entityTitle: 'Student', ListAllComp: PageListStudent, params: [':_id'] }),
   // tag
   ...createPage({ entity: 'tag', entityTitle: 'Tag', ListAllComp: PageListTag, CreateComp: PageCreateTag, UpdateComp: PageUpdateTag, DetailComp: PageDetailTag, params: [':_id'] }),
-  // product
+  // toko product
   ...createPage({ entity: 'product', entityTitle: 'Produk', ListAllComp: PageListProduct, CreateComp: PageCreateProduct, UpdateComp: PageUpdateProduct, DetailComp: PageDetailProduct, params: [':_id'] }),
   // category
   ...createPage({ entity: 'category', entityTitle: 'Kategori', ListAllComp: PageListCategory, CreateComp: PageCreateCategory, UpdateComp: PageUpdateCategory, DetailComp: PageDetailCategory, params: [':_id'] }),

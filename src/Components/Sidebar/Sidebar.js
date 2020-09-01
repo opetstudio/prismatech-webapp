@@ -83,6 +83,12 @@ class Sidebar extends Component {
           <nav className='mt-2'>
             <ul className='nav nav-pills nav-sidebar flex-column' data-widget='treeview' role='menu' data-accordion='false'>
               {this._getMenuLiSingle('/home', 'Dashboard', 'nav-icon fas fa-tachometer-alt')}
+              <SidebarMainMenu name='main-menu-elearning-management' title='E-Learning' userPrivileges={userPrivileges}>
+                {this._getMenuLi('/course', 'Course Management')}
+                {/* {this.props.getMenuLi('/published-course', 'Published Course')} */}
+                {this._getMenuLi('/student', 'Student')}
+                {/* {this._getMenuLi('/tag', 'Tag Management')} */}
+              </SidebarMainMenu>
               <SidebarMainMenu name='main-menu-ecommerce-management' title='E-Commerce' userPrivileges={userPrivileges}>
                 {this._getMenuLi('/tokoonline', 'Toko Online Management')}
                 {this._getMenuLi('/category', 'Category Management')}

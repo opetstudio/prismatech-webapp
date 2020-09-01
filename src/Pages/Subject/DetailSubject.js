@@ -4,9 +4,11 @@ import { Detail as Detaildata, Table } from '../../features/TablePagination'
 import { path } from 'ramda'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
+import AppActions from '../../Redux/AppRedux'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import Moment from 'moment'
 import AppConfig from '../../Config/AppConfig'
+import { lp } from '../../Utils/Pages'
 import AbsensiConfirmation from './components/AbsensiConfirmation'
 const basePath = AppConfig.basePath
 
@@ -36,12 +38,15 @@ const getColumns = ({ history, courseId, subjectId }) => [
 ]
 
 function DetailCourse (props) {
-  const { match, history, dataDetail } = props
+  const { match, history, dataDetail, appPatch } = props
   const paginationConfig = {
     serviceName: 'getDetailSubject',
     serviceDeleteName: 'deleteSubject',
     fields: 'title,_id,start_date,end_date,content1,created_at,updated_at,course_id{_id},created_by{full_name},updated_by{full_name}'
   }
+  const title = (lp[window.location.pathname] || {}).title
+  if (title) appPatch({ routeActive: window.location.pathname, pageTitle: title })
+  else appPatch({ routeActive: window.location.pathname, pageTitle: 'Subject Detail' })
   const columns = getColumns({ history, courseId: match.params.course_id, subjectId: match.params._id })
   const courseId = path([paginationConfig.serviceName, 'course_id', '_id'], dataDetail)
   return (
@@ -128,7 +133,10 @@ const mapStateToProps = (state, ownProps) => {
     dataDetail: state.tablepagination.dataDetail
   }
 }
+const mapDispatchToProps = dispatch => ({
+  appPatch: data => dispatch(AppActions.appPatch(data))
+})
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(injectIntl(DetailCourse))
