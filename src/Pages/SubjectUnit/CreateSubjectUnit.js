@@ -72,6 +72,7 @@ class CreateSubjectUnit extends Component {
                           optionColumnValue='_id'
                           optionColumnLabel='title'
                           defaultValue=''
+                          onChange={() => {}}
                         />
                       </div>
                       <div className='form-group'>
@@ -93,7 +94,7 @@ class CreateSubjectUnit extends Component {
                         payload,
                         serviceName: paginationConfig.serviceName,
                         history,
-                        redirectAfterCreate: '/subject-unit/detail'
+                        redirectAfterCreate: '/subject-unit/detail/' + match.params.course_id + '/' + match.params.subject_id
                       })}
                     >Submit
                     </button>

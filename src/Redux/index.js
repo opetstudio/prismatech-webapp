@@ -11,6 +11,7 @@ export default () => {
     app: require('./AppRedux').reducer,
     // begin Ignite-Entity-Login
     privilege: require('../features/Privilege/redux').reducer,
+    purchaseorder: require('../features/PurchaseOrder/redux').reducer,
     myprofile: require('../Containers/Myprofile/redux').reducer,
     courseenrollment: require('../features/CourseEnrollment/redux').reducer,
     tablepagination: require('../features/TablePagination/redux').reducer,
