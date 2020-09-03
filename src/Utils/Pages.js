@@ -3,6 +3,7 @@ import _ from 'lodash'
 // import { merge } from 'ramda'
 import PageHome from '../Pages/Home/PageHome'
 import LoginPageContainer from '../Pages/Login/PageLogin'
+import PageCheckStatusPayment from '../Pages/CheckStatusPayment/PageCheckStatusPayment'
 import ForgetPassword from '../Pages/ForgetPassword/ForgetPassword'
 import MyAccount from '../Pages/MyAccount/PageMyAccount'
 import MyProfile from '../Pages/MyProfile/PageMyProfile'
@@ -93,6 +94,7 @@ export const lp = {
   '/my-profile': { route: '/my-profile', path: '/my-profile', title: 'My Profile', component: MyProfile },
   '/user': { route: '/user', path: '/user', title: 'User', component: PageUser },
   '/use/detail': { route: '/user/detail', path: '/user/detail/:_id', title: 'User Detail', component: PageDetailUser },
+  '/cek-satus-pembayaran': { route: '/cek-satus-pembayaran', path: '/cek-satus-pembayaran', title: 'Cek Status Pembayaran', component: PageCheckStatusPayment, isPublic: true },
   // lms course
   ...createPage({ entity: 'course', entityTitle: 'Course', ListAllComp: PageListCourse, CreateComp: PageCreateCourse, UpdateComp: PageUpdateCourse, DetailComp: PageDetailCourse, params: [':_id'] }),
   // lms grading

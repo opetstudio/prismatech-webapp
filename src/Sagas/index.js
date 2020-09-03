@@ -51,6 +51,11 @@ import { startup } from './StartupSagas'
 // changepassword
 import { ChangepasswordTypes } from '../features/ChangePassword/redux'
 import { changepasswordSubmit } from '../features/ChangePassword/sagas'
+
+// Purchase Order
+import { PurchaseorderTypes } from '../features/PurchaseOrder/redux'
+import { purchaseorderCheckStatusRequestOtp, purchaseorderCheckStatus } from '../features/PurchaseOrder/sagas'
+
 /* ------------- API ------------- */
 
 const hostBackend = process.env.REACT_APP_BACKEND_BASE_URL
@@ -63,6 +68,9 @@ const apiDashboardPy = DebugConfig.useFixtures ? FixtureAPI : API.create(hostBac
 
 export default function * root () {
   yield all([
+    // purchase order
+    takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS_REQUEST_OTP, purchaseorderCheckStatusRequestOtp, apiDashboard),
+    takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS, purchaseorderCheckStatus, apiDashboard),
     // privilege
     takeLatest(PrivilegeTypes.PRIVILEGE_CHECKBOX_SUBMIT, privilegeCheckboxSubmit, apiDashboard),
     // Courseenrollment

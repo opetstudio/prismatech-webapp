@@ -6,7 +6,7 @@ import {setSession, getSession} from '../Utils/Utils'
 // More info here:  https://shift.infinite.red/shipping-persistant-reducers-7341691232b1
 const REDUX_PERSIST = {
   active: true,
-  reducerVersion: '307',
+  reducerVersion: '308',
   storeConfig: {
     key: 'root',
     storage: storage, // Come back and replace this at some point
@@ -28,7 +28,8 @@ const REDUX_PERSIST = {
       'modal',
       'tablepagination',
       'courseenrollment',
-      'privilege'
+      'privilege',
+      'purchaseorder'
     ], // reducer keys that you do NOT want stored to persistence here
     // whitelist: [], Optionally, just specify the keys you DO want stored to
     // persistence. An empty array means 'don't store any reducers' -> infinitered/ignite#409
