@@ -70,7 +70,7 @@ function Comp (props) {
             formTitle={detailPageTitle}
             paginationConfig={paginationConfig}
             child={(dataDetail) => {
-              let isNeedOngkir = path([paginationConfig.serviceName, 'created_at'], dataDetail)
+              let isNeedOngkir = path([paginationConfig.serviceName, 'isneed_shipping'], dataDetail)
               if (isNeedOngkir === 'Y') isNeedOngkir = 'Butuh'
               else isNeedOngkir = 'Tidak Butuh'
               let createdAt = Moment(path([paginationConfig.serviceName, 'created_at'], dataDetail))
