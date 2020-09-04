@@ -82,6 +82,8 @@ function Comp (props) {
                   {createRow('Nama', paginationConfig, dataDetail, ['name'])}
                   {createRow('Kode', paginationConfig, dataDetail, ['code'])}
                   {createRow('Harga', paginationConfig, dataDetail, ['price'])}
+                  {createRow('Berat', paginationConfig, dataDetail, ['weight'])}
+                  {createRow('Apakah Butuh Ongkir', paginationConfig, dataDetail, ['isneed_shipping'])}
                   {createRow('Kategori', paginationConfig, dataDetail, ['category_id', 'title'])}
                   {createRow('Toko Online', paginationConfig, dataDetail, ['toko_id', 'name'])}
                   {createRow('Tagging', paginationConfig, dataDetail, ['tag_id', 'name'])}
