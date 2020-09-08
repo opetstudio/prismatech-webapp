@@ -26,11 +26,19 @@ const paginationConfig = {
 class Comp extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      isLoaded: false,
+      provinces: [],
+      cities: [],
+      subcities: [],
+      error: null
+    }
+    this.fetchCity = this.fetchCity.bind(this)
+    this.fetchSubCity = this.fetchSubCity.bind(this)
   }
 
   componentDidMount () {
-    const { match, appPatch } = this.props
+    const { match, appPatch, payload, dataDetail } = this.props
     const title = (lp[window.location.pathname] || {}).title
     if (title) appPatch({ routeActive: window.location.pathname, pageTitle: title })
     else appPatch({ routeActive: window.location.pathname, pageTitle: updatePageTitle })
@@ -48,6 +56,75 @@ class Comp extends Component {
     //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
     // })
     // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
+    fetch('http://dev.plink.co.id:8081/plink/v1/province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: false,
+            provinces: ((result || {}).rajaongkir || {}).results || []
+          })
+          const province = path([paginationConfig.serviceName, 'province'], payload) || path([paginationConfig.serviceName, 'province'], dataDetail) || ''
+          this.fetchCity(province)
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: false,
+            error
+          })
+        }
+      )
+  }
+
+  fetchCity (provinceId) {
+    const { match, appPatch, payload, dataDetail } = this.props
+    fetch('http://dev.plink.co.id:8081/plink/v1/city?province=' + provinceId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: false,
+            cities: ((result || {}).rajaongkir || {}).results || []
+          })
+          const city = path([paginationConfig.serviceName, 'city'], payload) || path([paginationConfig.serviceName, 'city'], dataDetail) || ''
+          this.fetchSubCity(city)
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: false,
+            error
+          })
+        }
+      )
+  }
+
+  fetchSubCity (cityId) {
+    const { match, appPatch, payload, dataDetail } = this.props
+    fetch('http://dev.plink.co.id:8081/plink/v1/subcity?city=' + cityId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: false,
+            subcities: ((result || {}).rajaongkir || {}).results || []
+          })
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: false,
+            error
+          })
+        }
+      )
   }
 
   addField (name, title, type, dataDetail, payload, tablepaginationOnChangeForm) {
@@ -61,6 +138,7 @@ class Comp extends Component {
 
   render () {
     const { match } = this.props
+    const { provinces, cities, subcities } = this.state
 
     return (
       <ContentWrapper
@@ -97,6 +175,10 @@ class Comp extends Component {
                 // if (endDate && endDate.isValid()) endDate = endDate.format('YYYY-MM-DD HH:mm:ss')
                 // else endDate = ''
 
+                const province = path([paginationConfig.serviceName, 'province'], payload) || path([paginationConfig.serviceName, 'province'], dataDetail) || ''
+                const city = path([paginationConfig.serviceName, 'city'], payload) || path([paginationConfig.serviceName, 'city'], dataDetail) || ''
+                const subcity = path([paginationConfig.serviceName, 'subcity'], payload) || path([paginationConfig.serviceName, 'subcity'], dataDetail) || ''
+
                 return (
                   <div className='row'>
                     <div className='col-sm-6'>
@@ -109,6 +191,27 @@ class Comp extends Component {
                       {this.addField('description', 'Description', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('plink_merchant_id', 'Plink Merchant Id', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('plink_merchant_key_id', 'Plink Merchant Key Id', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      <div className='form-group'>
+                        <label htmlFor='province'>Provinsi</label>
+                        <select name='province' id='province' class='custom-select' onChange={e => { this.fetchCity(e.target.value); tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'province', fieldValue: e.target.value }) }}>
+                          <option value='-'>pilih</option>
+                          {provinces.map((v, i) => (<option key={i} value={v.province_id} selected={province === v.province_id}>{v.province}</option>))}
+                        </select>
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='city'>Kota/Kabupaten</label>
+                        <select name='city' id='city' class='custom-select' onChange={e => { this.fetchSubCity(e.target.value); tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'city', fieldValue: e.target.value }) }}>
+                          <option value='-'>pilih</option>
+                          {cities.map((v, i) => (<option key={i} value={v.city_id} selected={city === v.city_id}>{v.city_name}</option>))}
+                        </select>
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='subcity'>Kecamatan</label>
+                        <select name='subcity' id='subcity' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'subcity', fieldValue: e.target.value })}>
+                          <option value='-'>pilih</option>
+                          {subcities.map((v, i) => (<option key={i} value={v.subdistrict_id} selected={subcity === v.subdistrict_id}>{v.subdistrict_name}</option>))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 )
@@ -122,7 +225,8 @@ class Comp extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    dataDetail: state.tablepagination.dataDetail
+    dataDetail: state.tablepagination.dataDetail,
+    payload: state.tablepagination.payload
   }
 }
 const mapDispatchToProps = dispatch => ({
