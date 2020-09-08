@@ -25,7 +25,7 @@ export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAll' + serviceEntity + 's'
 export const deleteService = 'delete' + serviceEntity
-export const fields = '_id,name,slug,plink_merchant_id,plink_merchant_key_id,status,website,facebook,instagram,youtube,description,created_at,updated_at,owner{full_name},created_by{full_name},updated_by{full_name}'
+export const fields = '_id,name,province,city,subcity,slug,plink_merchant_id,plink_merchant_key_id,status,website,facebook,instagram,youtube,description,created_at,updated_at,owner{full_name},created_by{full_name},updated_by{full_name}'
 export const getColumns = (history) => [
   {
     Header: 'Act',
