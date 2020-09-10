@@ -56,7 +56,7 @@ class Comp extends Component {
     //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
     // })
     // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
-    fetch('http://dev.plink.co.id:8081/plink/v1/province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
       .then(res => res.json())
       .then(
         (result) => {
@@ -81,7 +81,7 @@ class Comp extends Component {
 
   fetchCity (provinceId) {
     const { match, appPatch, payload, dataDetail } = this.props
-    fetch('http://dev.plink.co.id:8081/plink/v1/city?province=' + provinceId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-city?province=' + provinceId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
       .then(res => res.json())
       .then(
         (result) => {
@@ -106,7 +106,7 @@ class Comp extends Component {
 
   fetchSubCity (cityId) {
     const { match, appPatch, payload, dataDetail } = this.props
-    fetch('http://dev.plink.co.id:8081/plink/v1/subcity?city=' + cityId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-subcity?city=' + cityId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
       .then(res => res.json())
       .then(
         (result) => {
