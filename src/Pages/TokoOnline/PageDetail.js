@@ -52,13 +52,13 @@ function Comp (props) {
   console.log('city====>', city)
   React.useEffect(() => {
     if (province) {
-      fetch('http://dev.plink.co.id:8081/plink/v1/province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+      fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
         .then(res => res.json())
         .then(
           (result) => {
             const provinceItem = _.find(((result || {}).rajaongkir || {}).results || [], { province_id: '' + province }) || {}
             setProvinceItemName(provinceItem.province)
-            fetch('http://dev.plink.co.id:8081/plink/v1/city?province=' + province, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+            fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-city?province=' + province, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
               .then(res => res.json())
               .then(
                 (result) => {
