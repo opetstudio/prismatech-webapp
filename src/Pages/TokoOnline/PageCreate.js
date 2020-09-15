@@ -53,7 +53,7 @@ class Comp extends Component {
   }
 
   fetchCity (provinceId) {
-    fetch('http://dev.plink.co.id:8081/plink/v1/city?province=' + provinceId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-city?province=' + provinceId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
       .then(res => res.json())
       .then(
         (result) => {
@@ -75,7 +75,7 @@ class Comp extends Component {
   }
 
   fetchSubCity (cityId) {
-    fetch('http://dev.plink.co.id:8081/plink/v1/subcity?city=' + cityId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-subcity?city=' + cityId, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
       .then(res => res.json())
       .then(
         (result) => {
