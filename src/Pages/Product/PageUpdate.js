@@ -92,6 +92,7 @@ class Comp extends Component {
                 // let endDate = moment(path([paginationConfig.serviceName, 'end_date'], payload) || path([paginationConfig.serviceName, 'end_date'], dataDetail))
                 // if (endDate && endDate.isValid()) endDate = endDate.format('YYYY-MM-DD HH:mm:ss')
                 // else endDate = ''
+                const isNeedOngkirValue = path([paginationConfig.serviceName, 'isneed_shipping'], payload) || path([paginationConfig.serviceName, 'isneed_shipping'], dataDetail) || ''
 
                 return (
                   <div className='row'>
@@ -107,6 +108,18 @@ class Comp extends Component {
                       <div className='form-group'>
                         <label htmlFor='price'>price</label>
                         <input type='number' className='form-control' id='price' placeholder='Enter price' value={path([paginationConfig.serviceName, 'price'], payload) || path([paginationConfig.serviceName, 'price'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'price', fieldValue: e.target.value })} />
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='weight'>Berat (Kg)</label>
+                        <input type='number' className='form-control' id='weight' placeholder='Enter weight' value={path([paginationConfig.serviceName, 'weight'], payload) || path([paginationConfig.serviceName, 'weight'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'weight', fieldValue: e.target.value })} />
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='parent_id'>Butuh Ongkir?</label>
+                        <select name='isneed_shipping' id='isneed_shipping' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'isneed_shipping', fieldValue: e.target.value })}>
+                          <option key='-'>pilih</option>
+                          <option value='Y' selected={isNeedOngkirValue === 'Y'}>Butuh</option>
+                          <option value='N' selected={isNeedOngkirValue === 'N'}>Tidak Butuh</option>
+                        </select>
                       </div>
                       <div className='form-group'>
                         <label htmlFor='description'>Short Description</label>

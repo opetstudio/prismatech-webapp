@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
+import _ from 'lodash'
 import AppActions from '../../Redux/AppRedux'
 import { Detail as Detaildata, Table } from '../../features/TablePagination'
 import { path } from 'ramda'
@@ -30,13 +31,45 @@ function Comp (props) {
     serviceDeleteName: deleteService,
     fields: fields
   }
+  const [provinceRequest, setProvinceRequest] = React.useState({
+    isLoaded: false,
+    isRequest: false,
+    error: '',
+    provinces: [],
+    cities: [],
+    cityCount: 0
+  })
+  const [cityItemName, setCityItemName] = React.useState('')
+  const [provinceItemName, setProvinceItemName] = React.useState('')
 
   const title = (lp[window.location.pathname] || {}).title
   if (title) appPatch({ routeActive: window.location.pathname, pageTitle: title })
   else appPatch({ routeActive: window.location.pathname, pageTitle: detailPageTitle })
 
-  // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
-  // const courseId = path([paginationConfig.serviceName, 'subject_id', 'course_id', '_id'], dataDetail)
+  const province = path([paginationConfig.serviceName, 'province'], dataDetail) || ''
+  const city = path([paginationConfig.serviceName, 'city'], dataDetail) || ''
+  console.log('province====>', province)
+  console.log('city====>', city)
+  React.useEffect(() => {
+    if (province) {
+      fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-province', { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            const provinceItem = _.find(((result || {}).rajaongkir || {}).results || [], { province_id: '' + province }) || {}
+            setProvinceItemName(provinceItem.province)
+            fetch(process.env.REACT_APP_BACKEND_BASE_URL + '/api/v1/fetchdata-city?province=' + province, { method: 'GET', headers: { key: 'a6d84c88b9fc6cbdf502972c57885da1' } })
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  const cityItem = _.find(((result || {}).rajaongkir || {}).results || [], { city_id: city }) || {}
+                  setCityItemName(cityItem.city_name)
+                }
+              )
+          }
+        )
+    }
+  }, [province])
   return (
     <ContentWrapper
       pageTitle={detailPageTitle}
@@ -81,6 +114,11 @@ function Comp (props) {
                   {createRow('Instagram', paginationConfig, dataDetail, ['instagram'])}
                   {createRow('Youtube', paginationConfig, dataDetail, ['youtube'])}
                   {createRow('Deskripsi', paginationConfig, dataDetail, ['description'])}
+                  <dt>Provinsi</dt>
+                  <dd>{provinceItemName}</dd>
+                  <dt>Kota/Kabupaten</dt>
+                  <dd>{cityItemName}</dd>
+                  {/* <RenderCity cities={provinceRequest.cities} city={city} /> */}
                   <dt>Status</dt>
                   <dd>{status}</dd>
                   {createRow('Plink Merchant Id', paginationConfig, dataDetail, ['plink_merchant_id'])}

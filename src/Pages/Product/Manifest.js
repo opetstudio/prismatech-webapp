@@ -26,7 +26,7 @@ export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAll' + serviceEntity + 's'
 export const deleteService = 'delete' + serviceEntity
-export const fields = '_id,content1,name,code,description,price,tag_id{_id, name},toko_id{_id, name},category_id{_id, title},image_id{_id, filename, filenameorigin, file_type},created_at,updated_at,created_by{full_name},updated_by{full_name}'
+export const fields = '_id,content1,weight,isneed_shipping,name,code,description,price,tag_id{_id, name},toko_id{_id, name},category_id{_id, title},image_id{_id, filename, filenameorigin, file_type},created_at,updated_at,created_by{full_name},updated_by{full_name}'
 export const getColumns = (history) => [
   {
     Header: 'Act',
@@ -46,7 +46,7 @@ export const getColumns = (history) => [
   { Header: 'Harga', accessor: 'price' },
   { Header: 'Kategori', accessor: p => (<span>{(_.map(p.category_id, v => v.title) || []).join(', ')}</span>) },
   { Header: 'Toko', accessor: p => (<span>{(_.map(p.toko_id, v => v.name) || []).join(', ')}</span>) },
-{ Header: 'Gambar', accessor: p => (<span>{p.image_id.filename}.{p.image_id.file_type}</span>) },
+{ Header: 'Gambar', accessor: p => (<span>{(p.image_id || {}).filename}.{(p.image_id || {}).file_type}</span>) },
 //   {
 //     Header: 'created_at',
 //     accessor: 'created_at',
