@@ -106,9 +106,10 @@ class Comp extends Component {
   }
 
   render () {
-    const { match, history, payload } = this.props
+    const { match, history, payload, userPrivileges } = this.props
     const { provinces, cities, subcities } = this.state
     console.log('state===>', this.state)
+    // if (!userPrivileges.includes(name)) return null
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
@@ -128,6 +129,7 @@ class Comp extends Component {
                   <div className='row'>
                     <div className='col-sm-6'>
                       {this.addField('name', 'Nama Toko', 'text', tablepaginationOnChangeForm, 'Masukkan Nama Toko')}
+                      {userPrivileges.includes('FIELD-TOKO-OWNER-EMAIL') && this.addField('owner_email', 'Email pemilik Toko', 'text', tablepaginationOnChangeForm, 'Masukkan Email Pemilik Toko')}
                       {/* {this.addField('slug', 'Slug (url)', 'text', tablepaginationOnChangeForm)} */}
                       {this.addField('website', 'Website', 'text', tablepaginationOnChangeForm, 'Masukkan URL Website')}
                       {this.addField('facebook', 'Facebook', 'text', tablepaginationOnChangeForm, 'Masukkan URL Facebook')}
@@ -189,7 +191,8 @@ class Comp extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    payload: state.tablepagination.payload
+    payload: state.tablepagination.payload,
+    userPrivileges: state.myprofile.user_privileges
   }
 }
 export default connect(

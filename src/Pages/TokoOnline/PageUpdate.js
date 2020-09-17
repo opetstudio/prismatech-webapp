@@ -137,7 +137,7 @@ class Comp extends Component {
   }
 
   render () {
-    const { match } = this.props
+    const { match, userPrivileges } = this.props
     const { provinces, cities, subcities } = this.state
 
     return (
@@ -183,6 +183,7 @@ class Comp extends Component {
                   <div className='row'>
                     <div className='col-sm-6'>
                       {this.addField('name', 'Nama Toko', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
+                      {userPrivileges.includes('FIELD-TOKO-OWNER-EMAIL') && this.addField('owner_email', 'Email pemilik Toko', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {/* {this.addField('slug', 'Slug (url)', 'text', dataDetail, payload, tablepaginationOnChangeForm)} */}
                       {this.addField('website', 'Website', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
                       {this.addField('facebook', 'Facebook', 'text', dataDetail, payload, tablepaginationOnChangeForm)}
@@ -226,7 +227,8 @@ class Comp extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     dataDetail: state.tablepagination.dataDetail,
-    payload: state.tablepagination.payload
+    payload: state.tablepagination.payload,
+    userPrivileges: state.myprofile.user_privileges
   }
 }
 const mapDispatchToProps = dispatch => ({
