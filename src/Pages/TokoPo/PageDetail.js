@@ -8,6 +8,7 @@ import { Detail as Detaildata, Table } from '../../features/TablePagination'
 import { path } from 'ramda'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import { detailService, fields, deleteService, detailPageTitle, updatePageUrl, redirectAfterDelete } from './Manifest'
+import TokoCartManifest from '../TokoCart/Manifest'
 // import moment from 'moment'
 import Moment from 'moment'
 import AppConfig from '../../Config/AppConfig'
@@ -49,6 +50,9 @@ function Comp (props) {
 
   // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
   // const courseId = path([paginationConfig.serviceName, 'subject_id', 'course_id', '_id'], dataDetail)
+  const sessionId = (dataDetail[detailService] || {}).session_id
+  console.log('sessionId====>', sessionId)
+  console.log('dataDetail======>', dataDetail[detailService])
   return (
     <ContentWrapper
       pageTitle={detailPageTitle}
@@ -70,7 +74,6 @@ function Comp (props) {
             formTitle={detailPageTitle}
             paginationConfig={paginationConfig}
             child={(dataDetail) => {
-
               let createdAt = Moment(path([paginationConfig.serviceName, 'created_at'], dataDetail))
               if (createdAt && createdAt.isValid()) createdAt = createdAt.format('YYYY-MM-DD HH:mm:ss')
               else createdAt = ''
@@ -83,15 +86,14 @@ function Comp (props) {
                   {createRow('Nama', paginationConfig, dataDetail, ['full_name'])}
                   {createRow('No Telepon', paginationConfig, dataDetail, ['phone_number'])}
                   {createRow('Email', paginationConfig, dataDetail, ['email'])}
-                  {createRow('Total Pembayaran', paginationConfig, dataDetail, ['total_amount'])}
                   {createRow('ID Sesi', paginationConfig, dataDetail, ['session_id'])}
                   {createRow('Kode Invoice', paginationConfig, dataDetail, ['invoice_code'])}
+
                   <dt>Tanggal Transaksi</dt>
                   <dd>{updatedAt}</dd>
                   {/* {createRow('Payment Page Url', paginationConfig, dataDetail, ['payment_page_url'])} */}
                 </dl>
               )
-
             }}
             footerCard={dataDetail => {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
@@ -113,6 +115,45 @@ function Comp (props) {
               )
             }}
           />
+          <div className='card'>
+            <div className='card-header'>
+              <h3 className='card-title'>Alamat Pengiriman</h3>
+              <div className='card-tools'>
+                <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'><i className='fas fa-minus' /></button>
+              </div>
+            </div>
+            <div className='card-body'>
+              <dl>
+                {createRow('Provinsi', paginationConfig, dataDetail, ['shipping_province'])}
+                {createRow('Kota/Kabupaten', paginationConfig, dataDetail, ['shipping_city'])}
+                {createRow('Kecamatan', paginationConfig, dataDetail, ['shipping_subcity'])}
+                {createRow('Kode Pos', paginationConfig, dataDetail, ['shipping_postal_code'])}
+                {createRow('Alamat', paginationConfig, dataDetail, ['shipping_address'])}
+              </dl>
+            </div>
+          </div>
+          <Table
+            cardTitle='Keranjang Belanja'
+            paginationConfig={{ serviceName: 'getAllTokoCartsBySessionId', fields: TokoCartManifest.fields }}
+            columns={TokoCartManifest.getColumns({ history, tokoId: match.params._id })}
+            whereCondition={{ session_id: sessionId, status: '*' }}
+          />
+          <div className='card'>
+            <div className='card-header'>
+              <h3 className='card-title'>Total Pembayaran</h3>
+              <div className='card-tools'>
+                <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'><i className='fas fa-minus' /></button>
+              </div>
+            </div>
+            <div className='card-body'>
+              <dl>
+                {createRow('Total Harga Product', paginationConfig, dataDetail, ['total_product_amount'])}
+                {createRow('Kode Unik', paginationConfig, dataDetail, ['unique_code'])}
+                {createRow('Ongkos Kirim', paginationConfig, dataDetail, ['shipping_amount'])}
+                {createRow('Total Pembayaran', paginationConfig, dataDetail, ['total_amount'])}
+              </dl>
+            </div>
+          </div>
         </div>
       </div>
 

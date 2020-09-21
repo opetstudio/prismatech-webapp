@@ -19,14 +19,14 @@ export const createPageUrl = () => (`/${entity}/create`)
 export const createNewButtonLabel = 'Create New ' + entityName
 export const createPageTitle = 'Create New ' + entityName
 export const listallPageTitle = 'Data Pembelian'
-export const detailPageTitle = entityName + ' Detail'
+export const detailPageTitle = 'Data Detail Pembelian'
 export const updatePageTitle = 'Update ' + entityName
 export const updateService = 'update' + serviceEntity
 export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAll' + serviceEntity + 's'
 export const deleteService = 'delete' + serviceEntity
-export const fields = '_id,action,payment_page_url,full_name,phone_number,invoice_code,email,session_id,device_id,shipping_address,total_product_amount,total_amount,shipping_amount,cart_id{_id},toko_id{_id},created_at,updated_at,created_by{full_name},updated_by{full_name}'
+export const fields = '_id,action,payment_page_url,full_name,phone_number,unique_code,invoice_code,email,session_id,device_id,shipping_subcity,shipping_city,shipping_province,shipping_address,total_product_amount,total_amount,shipping_amount,cart_id{_id},toko_id{_id},created_at,updated_at,created_by{full_name},updated_by{full_name}'
 export const getColumns = (history) => [
   {
     Header: 'Act',
