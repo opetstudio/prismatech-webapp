@@ -25,8 +25,12 @@ class CreateSubject extends Component {
       x.value = moment(par).format('YYYY-MM-DD HH:mm:ss')
       tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'end_date', fieldValue: new Date(par).getTime() })
     })
-    window.activateEditor(getAccessToken(), (content) => {
-      tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+    window.activateEditor({
+      hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
+      at: getAccessToken(),
+      cb: (content) => {
+        tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+      }
     })
     tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'course_id', fieldValue: match.params.course_id })
   }

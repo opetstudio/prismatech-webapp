@@ -20,8 +20,12 @@ class Comp extends Component {
   componentDidMount () {
     const { match } = this.props
     // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
-    window.activateEditor(getAccessToken(), (content) => {
-      tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+    window.activateEditor({
+      hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
+      at: getAccessToken(),
+      cb: (content) => {
+        tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+      }
     })
   }
 
@@ -57,7 +61,7 @@ class Comp extends Component {
                         <label htmlFor='entity'>price</label>
                         <input type='number' className='form-control' id='price' placeholder='Enter price' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'price', fieldValue: e.target.value })} />
                       </div>
-                      
+
                       <div className='form-group'>
                         <label htmlFor='description'>Short Description</label>
                         <input type='text' className='form-control' id='description' placeholder='Enter description' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'description', fieldValue: e.target.value })} />
@@ -68,7 +72,7 @@ class Comp extends Component {
                         {/* <input type='text' className='form-control' id='content1' placeholder='Enter content 1' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} /> */}
                         <textarea className='textarea' id='content1' placeholder='Place some text here' style={{ width: '100%', height: 200, fontSize: 14, lineHeight: 18, border: '1px solid #dddddd', padding: 10 }} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} />
                       </div>
-                      
+
                       <Multiselect
                         isAutocomplete
                         label='Toko Online'
@@ -99,7 +103,7 @@ class Comp extends Component {
                         defaultValue={[]}
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'category_id', fieldValue: val })}
                       />
-                      
+
                       <Multiselect
                         isCreatableSelect
                         isAutocomplete
