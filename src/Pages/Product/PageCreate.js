@@ -20,8 +20,12 @@ class Comp extends Component {
   componentDidMount () {
     const { match } = this.props
     // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
-    window.activateEditor(getAccessToken(), (content) => {
-      tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+    window.activateEditor({
+      hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
+      at: getAccessToken(),
+      cb: (content) => {
+        tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
+      }
     })
   }
 

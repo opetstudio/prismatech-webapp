@@ -562,7 +562,7 @@
         //     }
         // });
       }
-      window.activateEditor = function (at, cb) {
+      window.activateEditor = function ({hostBackend, at, cb}) {
         function sendFile(file, editor, welEditable) {
             console.log('ready to upload')
             data = new FormData();
@@ -570,7 +570,7 @@
             $.ajax({
                 data: data,
                 type: "POST",
-                url: "http://localhost:3000/uploadfile",
+                url: hostBackend + "/uploadfile",
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -581,7 +581,7 @@
                   var url = window.location.href
                   var arr = url.split("/");
                   // var baseUrl = arr[0] + "//" + arr[2]
-                  var baseUrl = arr[0] + "//" + 'localhost:3000'
+                  var baseUrl = hostBackend
                   console.log('baseUrl=', baseUrl)
                   var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
                   console.log('filename=', filename)
