@@ -9,6 +9,7 @@ import TablepaginationActions from '../redux'
 import Immutable from 'seamless-immutable'
 import config from '../config'
 import { fetchData } from '../functions'
+import _ from 'lodash'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -17,9 +18,10 @@ const Styles = styled.div`
   }
 `
 
-function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCount, count, filter }) {
+function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCount, count, filter, whereCondition }) {
   console.log('dataaa=====>', data)
   console.log('filter=====>', filter)
+  console.log('TablewhereCondition=====>', whereCondition)
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -51,10 +53,11 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
 
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
+    console.log('react effect========TablewhereCondition=====', whereCondition)
     // console.log('react effect========pageIndex=', pageIndex)
     // console.log('react effect========pageSize=', pageSize)
-    fetchData({ pageIndex, pageSize, filter })
-  }, [fetchData, pageIndex, pageSize])
+    fetchData({ pageIndex, pageSize, filter, whereCondition })
+  }, [fetchData, pageIndex, pageSize, whereCondition])
 
   // Render the UI for your table
   return (
@@ -176,8 +179,15 @@ function App (props) {
   console.log('App begeeeeeeiinnn')
   const filter = path(['filter', paginationConfig.serviceName], props) || {}
 
-  const doFetchData = React.useCallback(({ pageSize, pageIndex, filter }) => {
+  const doFetchData = React.useCallback(({ pageSize, pageIndex, filter, whereCondition }) => {
     console.log('doFetchData filter===>', filter)
+    for (var param in whereCondition) {
+      console.log('paramssss=>' + param + '====>' + whereCondition[param])
+      if (_.isEmpty(whereCondition[param])) {
+        // jika salah satu dari parameter where condition nya kosong, maka jangan dihit
+        return null
+      }
+    }
 
     fetchData({
       fields: paginationConfig.fields,
@@ -193,7 +203,7 @@ function App (props) {
     })
   }, [])
 
-  console.log('renderrrrrrrr')
+  console.log('renderrrrrrrr whereCondition====>', whereCondition)
   return (
     <>
       <div className='card'>
@@ -217,6 +227,7 @@ function App (props) {
               pageCount={pageCount}
               count={count}
               filter={filter}
+              whereCondition={whereCondition}
             />
           </Styles>
         </div>

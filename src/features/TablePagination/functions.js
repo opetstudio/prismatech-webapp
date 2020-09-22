@@ -12,5 +12,5 @@ export const fetchData = ({ history, fields, filter, loading, pageSize, pageInde
     whereCondition,
     distinct
   })
-  console.log('fetchData invoked')
+  console.log('fetchData invoked whereCondition', whereCondition)
 }
