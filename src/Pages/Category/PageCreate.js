@@ -7,6 +7,7 @@ import { path } from 'ramda'
 import { connect } from 'react-redux'
 import { createService, fields, createPageTitle, redirectAfterCreate, listallService } from './Manifest'
 import TokoOnlineManifest from '../TokoOnline/Manifest'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: createService,
@@ -25,7 +26,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: 'Buat Kategori Baru', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: AppConfig.appHomePage }, { title: 'Buat Kategori Baru', link: null, isActive: true }]}
         contentHeaderTitle={createPageTitle}
         isNeedLoggedin
       >

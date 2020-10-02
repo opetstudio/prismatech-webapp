@@ -4,6 +4,7 @@ import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import moment from 'moment'
 import { path } from 'ramda'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: 'createSubject',
@@ -41,7 +42,7 @@ class CreateSubject extends Component {
       <ContentWrapper
         pageTitle='Create Subject'
         breadcrumb={[
-          { title: 'Home', link: '/home' },
+          { title: 'Home', link: AppConfig.appHomePage },
           { title: 'Course', link: '/course', isActive: true },
           { title: 'Course Detail', link: `/course/detail/${match.params.course_id}`, isActive: true },
           { title: 'Create New Subject', link: null, isActive: true }

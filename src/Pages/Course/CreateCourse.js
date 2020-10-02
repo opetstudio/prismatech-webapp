@@ -6,6 +6,7 @@ import Helmet from 'react-helmet'
 import _ from 'lodash'
 import moment from 'moment'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: 'createCourse',
@@ -59,7 +60,7 @@ class CreateCourse extends Component {
         <div className='content-wrapper'>
           <ContentHeader
             title='Course'
-            breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Create Course', link: null, isActive: true }]}
+            breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Create Course', link: null, isActive: true }]}
           />
           <section className='content'>
             <div className='container-fluid'>

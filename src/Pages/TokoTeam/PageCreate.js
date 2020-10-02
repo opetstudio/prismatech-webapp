@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import AppActions from '../../Redux/AppRedux'
 import { createService, fields, createPageTitle, redirectAfterCreate } from './Manifest'
 import TokoManifest from '../TokoOnline/Manifest'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: createService,
@@ -40,7 +41,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: createPageTitle, link: null, isActive: true }]}
         contentHeaderTitle={createPageTitle}
         isNeedLoggedin
       >

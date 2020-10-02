@@ -9,6 +9,7 @@ import { createService, fields, createPageTitle, redirectAfterCreate } from './M
 import CategoryManifest from '../Category/Manifest'
 import TokoOnlineManifest from '../TokoOnline/Manifest'
 import TagManifest from '../Tag/Manifest'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: createService,
@@ -34,7 +35,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle='Buat Produk'
-        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: 'Buat Produk Baru', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: AppConfig.appHomePage }, { title: 'Buat Produk Baru', link: null, isActive: true }]}
         contentHeaderTitle='Buat Produk'
         isNeedLoggedin
       >

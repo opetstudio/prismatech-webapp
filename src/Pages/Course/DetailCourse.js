@@ -94,7 +94,7 @@ function DetailCourse (props) {
       <div className='content-wrapper'>
         <ContentHeader
           title='Course'
-          breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Course', link: '/course' }, { title: 'Course Detail', link: null, isActive: true }]}
+          breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Course', link: '/course' }, { title: 'Course Detail', link: null, isActive: true }]}
         />
         <section className='content'>
           <div className='container-fluid'>

@@ -9,6 +9,7 @@ import ContentHeader from '../../Components/ContentHeader'
 import LoginCheck from '../../Containers/Login/LoginCheck'
 import { Table, Filter } from '../../features/TablePagination'
 import { listallService, fields, listallPageTitle, createPageUrl, createNewButtonLabel, getColumns } from './Manifest'
+import AppConfig from '../../Config/AppConfig'
 class Comp extends Component {
   constructor (props) {
     super(props)
@@ -26,7 +27,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={listallPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: listallPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: listallPageTitle, link: null, isActive: true }]}
         contentHeaderTitle={listallPageTitle}
         isNeedLoggedin
       >

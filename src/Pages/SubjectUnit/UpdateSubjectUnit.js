@@ -8,6 +8,7 @@ import moment from 'moment'
 import { path } from 'ramda'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: 'getDetailLmsSubjectUnit',
@@ -37,7 +38,7 @@ class UpdateSubjectUnit extends Component {
     return (
       <ContentWrapper
         pageTitle='Update Subject Unit'
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Update Subject Unit', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Update Subject Unit', link: null, isActive: true }]}
         contentHeaderTitle='Update Subject Unit'
         isNeedLoggedin
       >
