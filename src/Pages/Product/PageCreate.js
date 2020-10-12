@@ -132,7 +132,7 @@ class Comp extends Component {
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'tag_id', fieldValue: val })}
                       />
                       <div className='form-group'>
-                        <label for='fileUploadInput'>Unggah Dokumen</label>
+                        <label for='fileUploadInput'>Unggah Gambar</label>
                         <div className='input-group' style={{ zIndex: 0 }}>
                           <div className='custom-file'>
                             <input
@@ -144,7 +144,7 @@ class Comp extends Component {
                                 }
                               })}
                             />
-                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Pilih Dokumen</label>
+                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Pilih Gambar</label>
                           </div>
                           {/* <div
                             className='input-group-append'
