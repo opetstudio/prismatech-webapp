@@ -18,7 +18,12 @@
 .env.test.local
 .env.production.local
 .env.development
-
+.env.production
+.env.ecomm-development
+.env.lms-development
+.env.production
+.env.rp-development
+.env.rp-production
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
