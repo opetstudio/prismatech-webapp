@@ -61,12 +61,12 @@ class Sidebar extends Component {
         {/* Brand Logo */}
         <a href='/#' className='brand-link' style={{ background: 'white' }}>
           <img src={Images.LogoRp} alt='Rayapay' className='brand-image img-circle elevation-3' />
-          <span className='brand-text' style={{ color: ' #a00f0f' }}>Plink Market</span>
+          <span className='brand-text' style={{ color: ' #a00f0f' }}>{AppConfig.appName}</span>
         </a>
         <div className='sidebar'>
           <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
             <div className='info'>
-              <marquee style={{ color: '#fff' }}>Selamat Datang di Website Plink Market</marquee>
+              <marquee style={{ color: '#fff' }}>Selamat Datang di Website {AppConfig.appName}</marquee>
               <br />
               {/* <h5 style={{ color: 'white' }}><i className='icon fas fa-user' /> &nbsp;{profile.full_name}</h5> */}
               {/* <label style={{ color: 'white' }}><i className='icon fas fa-store-alt' /> &nbsp;{profile.business_name}</label> */}
@@ -82,20 +82,37 @@ class Sidebar extends Component {
 
           <nav className='mt-2'>
             <ul className='nav nav-pills nav-sidebar flex-column' data-widget='treeview' role='menu' data-accordion='false'>
-              {this._getMenuLiSingle('/home', 'Dashboard', 'nav-icon fas fa-tachometer-alt')}
-              <SidebarMainMenu name='main-menu-elearning-management' title='E-Learning' userPrivileges={userPrivileges}>
-                {this._getMenuLi('/course', 'Course Management')}
+              {/* {this._getMenuLiSingle(AppConfig.appHomePage, 'Dashboard', 'nav-icon fas fa-tachometer-alt')} */}
+              <SidebarMainMenu name='main-menu-dashboard' title='Dashboard' userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
+                {AppConfig.appCode === 'LMS' && this._getMenuLi('/dashboard-lms', 'LMS Dashboard')}
+                {AppConfig.appCode === 'PM' && this._getMenuLi('/dashboard-ecomm', 'Plink Market Dashboard')}
+                {AppConfig.appCode === 'RP' && this._getMenuLi('/dashboard-rpay', 'Rayapay Dashboard')}
                 {/* {this.props.getMenuLi('/published-course', 'Published Course')} */}
-                {this._getMenuLi('/student', 'Student')}
+                {/* {this._getMenuLi('/student', 'Student')} */}
                 {/* {this._getMenuLi('/tag', 'Tag Management')} */}
               </SidebarMainMenu>
-              <SidebarMainMenu name='main-menu-ecommerce-management' title='E-Commerce' userPrivileges={userPrivileges}>
-                {this._getMenuLi('/tokoonline', 'Toko Online Management')}
-                {this._getMenuLi('/category', 'Category Management')}
-                {this._getMenuLi('/product', 'Product Management')}
-                {this._getMenuLi('/purchaseorder', 'Purchase Order')}
-                {/* {this._getMenuLi('/tag', 'Tag Management')} */}
-              </SidebarMainMenu>
+              {AppConfig.appCode === 'LMS' &&
+                <SidebarMainMenu name='main-menu-elearning-management' title='E-Learning' userPrivileges={userPrivileges}>
+                  {this._getMenuLi('/course', 'Course Management')}
+                  {/* {this.props.getMenuLi('/published-course', 'Published Course')} */}
+                  {this._getMenuLi('/student', 'Student')}
+                  {/* {this._getMenuLi('/tag', 'Tag Management')} */}
+                </SidebarMainMenu>}
+              {AppConfig.appCode === 'PM' &&
+                <SidebarMainMenu name='main-menu-ecommerce-management' title='E-Commerce' userPrivileges={userPrivileges}>
+                  {this._getMenuLi('/tokoonline', 'Toko Online Management')}
+                  {this._getMenuLi('/category', 'Category Management')}
+                  {this._getMenuLi('/product', 'Product Management')}
+                  {this._getMenuLi('/purchaseorder', 'Purchase Order')}
+                  {/* {this._getMenuLi('/tag', 'Tag Management')} */}
+                </SidebarMainMenu>}
+              {AppConfig.appCode === 'RP' &&
+                <SidebarMainMenu name='main-menu-xpay-management' title='XPay' userPrivileges={userPrivileges}>
+                  {this._getMenuLi('/tokoonline', 'History Transaction')}
+                  {this._getMenuLi('/category', 'Topup E-Wallet')}
+                  {this._getMenuLi('/product', 'My Settlement')}
+                  {/* {this._getMenuLi('/tag', 'Tag Management')} */}
+                </SidebarMainMenu>}
               <SidebarMainMenu name='main-menu-user-management' title='User Management' userPrivileges={userPrivileges}>
                 {this._getMenuLi('/user', 'User')}
                 {this._getMenuLi('/role', 'Role')}

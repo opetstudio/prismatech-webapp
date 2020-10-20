@@ -8,6 +8,7 @@ import moment from 'moment'
 import { path } from 'ramda'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 let tablepaginationOnChangeFormFunc = null
 const paginationConfig = {
@@ -48,7 +49,7 @@ function UpdateCourse (props) {
     <ContentWrapper
       pageTitle='Update Subject'
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Home', link: AppConfig.appHomePage },
         { title: 'Course', link: '/course', isActive: true },
         { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         { title: 'Subject Detail', link: `/subject/detail/${match.params._id}`, isActive: true },

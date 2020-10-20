@@ -25,8 +25,8 @@ class TheComponent extends React.PureComponent {
     if (isLoggedIn(this.props.isLoggedIn) !== true) return (<LoginComponent {...this.props} />)
     // if (isLoggedIn(this.props.isLoggedIn) !== true) return null
     // else return null
-    else return window.open(`${basePath}/home`, '_self', true)
-    // else return window.open(`${basePath}/home/${getAccessToken(this.props.sessionToken)}`, '_self', true)
+    else return window.open(`${basePath}${AppConfig.appHomePage}`, '_self', true)
+    // else return window.open(`${basePath}${AppConfig.appHomePage}/${getAccessToken(this.props.sessionToken)}`, '_self', true)
   }
 }
 

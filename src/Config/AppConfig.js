@@ -1,4 +1,4 @@
-const env = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'development' : 'production'
+// console.log('process.env===>', process.env)
 export default {
   // font scaling override - RN default is on
   allowTextFontScaling: true,
@@ -9,13 +9,16 @@ export default {
   // },
   backendURL: '',
   basePath: '',
-  env,
+  env: process.env.NODE_ENV,
   minDesktopScreenWidth: 770,
-  authHeader: env === 'development' ? 'Authorization' : 'Authorization',
+  authHeader: 'Authorization',
   authTokenType: 'Bearer',
   publicToken: 'publicToken',
   sessionToken: 'st',
   loginFlag: 'il',
   sessionData: 'ssst',
-  hostBackend: process.env.REACT_APP_BACKEND_BASE_URL
+  hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
+  appName: process.env.REACT_APP_APP_NAME,
+  appCode: process.env.REACT_APP_APP_CODE,
+  appHomePage: process.env.REACT_APP_HOMEPAGE_PATH
 }

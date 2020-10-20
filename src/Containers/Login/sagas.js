@@ -82,7 +82,7 @@ export function * loginDoLogin (api, action) {
         formSubmitMessage: 'success login'
       })
     )
-    window.location.replace(`${AppConfig.basePath}/Home`)
+    window.location.replace(`${AppConfig.basePath}${AppConfig.appHomePage}`)
   } else {
     const responseCode = status
     let responseMessage = ''
