@@ -7,6 +7,7 @@ import { Images } from '../../Themes'
 import { getSession } from '../../Utils/Utils'
 import RelatedActions from '../../Containers/RpMerchant/MerchantRelatedInstitution/redux'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
+import AppConfig from '../../Config/AppConfig'
 
 class PageMerchantMyprofile extends Component {
   componentWillMount () {
@@ -20,7 +21,7 @@ class PageMerchantMyprofile extends Component {
     return (
       <ContentWrapper
         pageTitle='My Profile'
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'My Profile', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'My Profile', link: null, isActive: true }]}
         contentHeaderTitle='My Profile'
         isNeedLoggedin
       >

@@ -53,7 +53,7 @@ function DetailCourse (props) {
     <ContentWrapper
       pageTitle='Detail Subject'
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Home', link: AppConfig.appHomePage },
         { title: 'Course', link: '/course', isActive: true },
         { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         { title: 'Detail Subject', link: null, isActive: true }

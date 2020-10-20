@@ -5,6 +5,7 @@ import moment from 'moment'
 import { getAccessToken } from '../../Utils/Utils'
 import { path } from 'ramda'
 import { connect } from 'react-redux'
+import AppConfig from '../../Config/AppConfig'
 import { createService, fields, createPageTitle, redirectAfterCreate } from './Manifest'
 
 const paginationConfig = {
@@ -24,7 +25,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: createPageTitle, link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: createPageTitle, link: null, isActive: true }]}
         contentHeaderTitle={createPageTitle}
         isNeedLoggedin
       >

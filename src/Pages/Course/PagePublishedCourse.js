@@ -81,7 +81,7 @@ class PageCourse extends Component {
     return (
       <ContentWrapper
         pageTitle='Published Course'
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Published Course', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Published Course', link: null, isActive: true }]}
         contentHeaderTitle='Published Course'
         isNeedLoggedin
       >

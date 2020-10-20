@@ -8,6 +8,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { path } from 'ramda'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 const columns = [
   { Header: 'code', accessor: 'code' },
@@ -57,7 +58,7 @@ class UpdateCourse extends Component {
       <ContentWrapper
         pageTitle='Update Course'
         breadcrumb={[
-          { title: 'Home', link: '/home' },
+          { title: 'Home', link: AppConfig.appHomePage },
           { title: 'Course', link: '/course', isActive: true },
           { title: 'Course Detail', link: `/course/detail/${match.params._id}`, isActive: true },
           { title: 'Update Course', link: null, isActive: true }

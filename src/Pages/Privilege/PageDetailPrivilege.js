@@ -23,7 +23,7 @@ function PageDetailPrivilege (props) {
     <ContentWrapper
       pageTitle='Privilege Detail'
       breadcrumb={[
-        { title: 'Home', link: '/home' },
+        { title: 'Home', link: AppConfig.appHomePage },
         // { title: 'Course', link: '/course', isActive: true },
         // { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         // { title: 'Subject Detail', link: `/subject/detail/${subjectId}`, isActive: true },

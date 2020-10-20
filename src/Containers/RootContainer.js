@@ -59,7 +59,7 @@ class RootContainer extends Component {
     console.log('root')
     setAuthorizedRouters([
       '/merchant/info/:allMerchantId',
-      '/home',
+      AppConfig.appHomePage,
       '/virtual-account/report', '/bank/info/:sessionToken'
     ])
   }

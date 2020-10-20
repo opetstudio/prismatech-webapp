@@ -9,6 +9,7 @@ import { createService, fields, createPageTitle, redirectAfterCreate } from './M
 import CategoryManifest from '../Category/Manifest'
 import TokoOnlineManifest from '../TokoOnline/Manifest'
 import TagManifest from '../Tag/Manifest'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: createService,
@@ -34,7 +35,7 @@ class Comp extends Component {
     return (
       <ContentWrapper
         pageTitle='Buat Produk'
-        breadcrumb={[{ title: 'Beranda', link: '/home' }, { title: 'Buat Produk Baru', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Beranda', link: AppConfig.appHomePage }, { title: 'Buat Produk Baru', link: null, isActive: true }]}
         contentHeaderTitle='Buat Produk'
         isNeedLoggedin
       >
@@ -132,7 +133,7 @@ class Comp extends Component {
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'tag_id', fieldValue: val })}
                       />
                       <div className='form-group'>
-                        <label for='fileUploadInput'>Unggah Dokumen</label>
+                        <label for='fileUploadInput'>Unggah Gambar</label>
                         <div className='input-group' style={{ zIndex: 0 }}>
                           <div className='custom-file'>
                             <input
@@ -144,7 +145,7 @@ class Comp extends Component {
                                 }
                               })}
                             />
-                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Pilih Dokumen</label>
+                            <label id='fileUploadLabel' className='custom-file-label' htmlFor='fileUploadInput'>Pilih Gambar</label>
                           </div>
                           {/* <div
                             className='input-group-append'

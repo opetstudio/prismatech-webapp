@@ -66,7 +66,7 @@ class Comp extends Component {
       <ContentWrapper
         pageTitle={updatePageTitle}
         breadcrumb={[
-          { title: 'Home', link: '/home' },
+          { title: 'Home', link: AppConfig.appHomePage },
           { title: detailPageTitle, link: detailPageUrl(match.params._id), isActive: true },
           { title: updatePageTitle, link: null, isActive: true }
         ]}

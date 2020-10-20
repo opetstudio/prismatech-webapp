@@ -3,6 +3,7 @@ import LoginCheck from '../../Containers/Login/LoginCheck'
 import ContentHeader from '../../Components/ContentHeader'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
+import AppConfig from '../../Config/AppConfig'
 import { Images } from '../../Themes'
 import { getSession } from '../../Utils/Utils'
 import RelatedActions from '../../Containers/RpMerchant/MerchantRelatedInstitution/redux'
@@ -31,7 +32,7 @@ class PageMerchantMyprofile extends Component {
           breadcrumb={[
             {
               title: 'Home',
-              link: '/home',
+              link: AppConfig.appHomePage,
               active: true
             }, {
               title: 'Profil Saya',
