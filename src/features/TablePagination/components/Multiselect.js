@@ -37,6 +37,13 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
     fetchData({ filter })
   }, [fetchData, inputValue])
 
+  console.log('loading===>', loading)
+  console.log('serviceName===>', serviceName)
+  if (typeof loading === 'undefined' || loading === 'undefined' || loading) {
+    console.log('jangan render')
+    return null
+  }
+  console.log('silahkan render')
   if (isAutocomplete) {
     const options = (data.concat(defaultValue) || []).map((v, i) => {
       if (v) {
@@ -48,7 +55,11 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
     const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
     console.log('options=====>', options)
     console.log('defaultValue=====>', defaultValue)
+    console.log('isCreatableSelect===>', isCreatableSelect)
+    console.log('label===>', label)
+    
     if (isCreatableSelect) {
+      console.log('optionsDefaultValue===>', optionsDefaultValue)
       return (
         <div className='form-group'>
           <label>{label}</label>
@@ -203,6 +214,7 @@ function App (props) {
   return (
     <>
       <Multiselect
+        loading={loading}
         defaultValue={Immutable.asMutable(defaultValue, { deep: true })}
         name={name}
         id={id}
