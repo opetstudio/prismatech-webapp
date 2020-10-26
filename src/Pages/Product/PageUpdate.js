@@ -79,6 +79,7 @@ function Comp (props) {
             formTitle={updatePageTitle}
             paginationConfig={paginationConfig}
             redirectAfterCreate={redirectAfterCreate}
+            isNeedValidation
             child={(tablepaginationOnChangeForm, dataDetail, payload) => {
               console.log('loading======>', loading)
               console.log('serviceName===>', paginationConfig.serviceName)

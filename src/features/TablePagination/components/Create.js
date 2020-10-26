@@ -16,7 +16,9 @@ function Createform (props) {
     payload,
     redirectAfterCreate,
     footerCard,
-    tablepaginationResetForm
+    tablepaginationResetForm,
+    onSubmit,
+    isNeedValidation
   } = props
   const loading = path(['loading', paginationConfig.serviceName], props)
   //   const dataDetail = path(['dataDetail', paginationConfig.serviceName], props) || {}
@@ -24,6 +26,9 @@ function Createform (props) {
   // Similar to componentDidMount
   useEffect(() => {
     console.log('useEffect=========')
+
+    // window.loadValidator({})
+
     // Update the document title using the browser API
     return () => {
       tablepaginationResetForm({ serviceName: paginationConfig.serviceName })
@@ -37,7 +42,30 @@ function Createform (props) {
         <div className='card-header'>
           <h3 className='card-title'>{formTitle}</h3>
         </div>
-        <form role='form'>
+        <form
+          id={paginationConfig.serviceName} role='form' onSubmit={(e) => {
+            const theForm = document.getElementById(paginationConfig.serviceName)
+            if (e) e.preventDefault()
+            if (isNeedValidation) {
+              if (theForm.checkValidity() === false) {
+                e.stopPropagation()
+              }
+              theForm.classList.add('was-validated')
+            }
+            if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
+            else {
+              tablepaginationSubmitForm({
+                fields: paginationConfig.fields,
+                payload,
+                serviceName: paginationConfig.serviceName,
+                history,
+                redirectAfterCreate: redirectAfterCreate
+              })
+            }
+          }}
+          novalidate
+          className={isNeedValidation && 'needs-validation'}
+        >
           <div className='card-body'>
             {child(tablepaginationOnChangeForm)}
           </div>
@@ -46,16 +74,7 @@ function Createform (props) {
             {!footerCard && (
               <>
                 <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
-                <button
-                  style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
-                    fields: paginationConfig.fields,
-                    payload,
-                    serviceName: paginationConfig.serviceName,
-                    history,
-                    redirectAfterCreate: redirectAfterCreate
-                  })}
-                >Submit
-                </button>
+                <button style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
               </>
             )}
 

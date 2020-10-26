@@ -28,7 +28,9 @@ function Updateform (props) {
     tablepaginationFetchDataDetail,
     tablepaginationResetForm,
     payload,
-    redirectAfterCreate
+    redirectAfterCreate,
+    isNeedValidation,
+    onSubmit
   } = props
   const loading = path(['loading', paginationConfig.serviceName], props)
   const errors = path(['errors', paginationConfig.serviceName], props) || []
@@ -59,7 +61,33 @@ function Updateform (props) {
           </div>
         )
       }
-      <form role='form'>
+      <form
+        id={paginationConfig.serviceName}
+        role='form'
+        onSubmit={(e) => {
+          const theForm = document.getElementById(paginationConfig.serviceName)
+          if (e) e.preventDefault()
+          if (isNeedValidation) {
+            if (theForm.checkValidity() === false) {
+              e.stopPropagation()
+            }
+            theForm.classList.add('was-validated')
+          }
+          if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
+          else {
+            tablepaginationSubmitForm({
+              fields: paginationConfig.fields,
+              payload,
+              serviceName: paginationConfig.serviceName,
+              history,
+              redirectAfterCreate: redirectAfterCreate,
+              isUpdate: true,
+              updateServiceName: paginationConfig.updateServiceName,
+              id: id
+            })
+          }
+        }}
+      >
         <div className='card'>
           <div className='card-header'>
             <h3 className='card-title'>{formTitle}</h3>
@@ -77,16 +105,7 @@ function Updateform (props) {
           <div className='card-footer'>
             <button style={{ width: 100 }} type='button' onClick={() => history.goBack()} className='btn bg-gradient-warning'>Cancel</button>
             <button
-              style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
-                fields: paginationConfig.fields,
-                payload,
-                serviceName: paginationConfig.serviceName,
-                history,
-                redirectAfterCreate: redirectAfterCreate,
-                isUpdate: true,
-                updateServiceName: paginationConfig.updateServiceName,
-                id: id
-              })}
+              style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'
             >Submit
             </button>
           </div>

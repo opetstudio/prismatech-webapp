@@ -44,6 +44,16 @@ function Comp (props) {
             formTitle={createPageTitle}
             paginationConfig={paginationConfig}
             redirectAfterCreate={redirectAfterCreate}
+            isNeedValidation
+            onSubmit={({ tablepaginationSubmitForm, payload }) => {
+              tablepaginationSubmitForm({
+                fields: paginationConfig.fields,
+                payload,
+                serviceName: paginationConfig.serviceName,
+                history,
+                redirectAfterCreate: redirectAfterCreate
+              })
+            }}
             child={(tablepaginationOnChangeForm) => {
               tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
               return (
@@ -67,7 +77,17 @@ function Comp (props) {
                     </div>
                     <div className='form-group'>
                       <label htmlFor='parent_id'>Butuh Ongkir?</label>
-                      <select name='isneed_shipping' id='isneed_shipping' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'isneed_shipping', fieldValue: e.target.value })}>
+                      <select
+                        name='isneed_shipping'
+                        id='isneed_shipping'
+                        class='custom-select'
+                        onChange={e => {
+                          const weightField = document.getElementById('weight')
+                          if (e.target.value === 'Y') weightField.setAttribute('required', true)
+                          else weightField.removeAttribute('required')
+                          tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'isneed_shipping', fieldValue: e.target.value })
+                        }}
+                      >
                         <option key='-'>pilih</option>
                         <option value='Y'>Butuh</option>
                         <option value='N'>Tidak Butuh</option>
@@ -165,19 +185,13 @@ function Comp (props) {
             }}
             footerCard={({ tablepaginationSubmitForm, payload }) => {
               return (
-                  <>
-                    <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
-                    <button
-                      style={{ width: 100, marginLeft: 5 }} type='button' className='btn bg-gradient-primary' onClick={(e) => tablepaginationSubmitForm({
-                        fields: paginationConfig.fields,
-                        payload,
-                        serviceName: paginationConfig.serviceName,
-                        history,
-                        redirectAfterCreate: redirectAfterCreate
-                      })}
-                    >Kirim
-                    </button>
-                  </>
+                <>
+                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Batal</button>
+                  <button
+                    style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'
+                  >Kirim
+                  </button>
+                </>
               )
             }}
           />
