@@ -61,10 +61,13 @@
     "universal-cookie": "4.0.2"
   },
   "scripts": {
+    "start:ecomm-localhost": "cp .env.ecomm-localhost .env; PORT=3001 react-scripts start",
     "start:ecomm-development": "cp .env.ecomm-development .env; PORT=3001 react-scripts start",
     "start:ecomm-production": "cp .env.ecomm-production .env; PORT=3001 react-scripts start",
+    "start:lms-localhost": "cp .env.lms-localhost .env; PORT=3001 react-scripts start",
     "start:lms-development": "cp .env.lms-development .env; PORT=3001 react-scripts start",
     "start:lms-production": "cp .env.lms-production .env; PORT=3001 react-scripts start",
+    "start:rp-localhost": "cp .env.rp-localhost .env; PORT=3001 react-scripts start",
     "start:rp-development": "cp .env.rp-development .env; PORT=3001 react-scripts start",
     "start:rp-production": "cp .env.rp-production .env; PORT=3001 react-scripts start",
     "build:ecomm-production": "cp .env.ecomm-production .env;react-scripts build",
