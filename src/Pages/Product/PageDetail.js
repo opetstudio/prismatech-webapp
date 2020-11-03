@@ -98,7 +98,7 @@ function Comp (props) {
                   <dd>{createdAt}</dd>
                   <dt>Tanggal Diperbaharui</dt>
                   <dd>{updatedAt}</dd>
-                  <dt>Hambar</dt>
+                  <dt>Gambar</dt>
                   <dd><img src={`${AppConfig.hostBackend}/renderfile/${path([paginationConfig.serviceName, 'image_id', 'filename'], dataDetail) || ''}.${path([paginationConfig.serviceName, 'image_id', 'file_type'], dataDetail) || ''}`} /></dd>
                 </dl>
               )
