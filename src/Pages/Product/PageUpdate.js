@@ -102,6 +102,7 @@ function Comp (props) {
               // if (endDate && endDate.isValid()) endDate = endDate.format('YYYY-MM-DD HH:mm:ss')
               // else endDate = ''
               const isNeedOngkirValue = path([paginationConfig.serviceName, 'isneed_shipping'], payload) || path([paginationConfig.serviceName, 'isneed_shipping'], dataDetail) || ''
+              const productAvailability = path([paginationConfig.serviceName, 'product_availability'], payload) || path([paginationConfig.serviceName, 'product_availability'], dataDetail) || ''
 
               return (
                 <div className='row'>
@@ -190,7 +191,7 @@ function Comp (props) {
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'tag_id', fieldValue: val })}
                       />}
                     <div className='form-group'>
-                      <label for='fileUploadInput'>File input</label>
+                      <label for='fileUploadInput'>Unggah Gambar</label>
                       <div className='input-group' style={{ zIndex: 0 }}>
                         <div className='custom-file'>
                           <input
@@ -212,9 +213,26 @@ function Comp (props) {
                           <span className='input-group-text'>Upload</span>
                         </div> */}
                       </div>
+                      <hr />
+                      <img width='100%' id='uploadImageDisplayPreview' src={`${AppConfig.hostBackend}/renderfile/${path([paginationConfig.serviceName, 'image_id', 'filename'], dataDetail) || ''}.${path([paginationConfig.serviceName, 'image_id', 'file_type'], dataDetail) || ''}`} />
                     </div>
-                    <hr />
-                    <img width='100%' id='uploadImageDisplayPreview' src={`${AppConfig.hostBackend}/renderfile/${path([paginationConfig.serviceName, 'image_id', 'filename'], dataDetail) || ''}.${path([paginationConfig.serviceName, 'image_id', 'file_type'], dataDetail) || ''}`} />
+                    <div className='form-group'>
+                      <label htmlFor='product_availability'>Ketersediaan Produk</label>
+                      <select name='product_availability' id='product_availability' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })}>
+                        <option key='-'>pilih</option>
+                        <option value='always_ready' selected={productAvailability === 'always_ready'}>Selalu ada stok</option>
+                        <option value='use_stock' selected={productAvailability === 'use_stock'}>Gunakan stok</option>
+                      </select>
+                    </div>
+                    <div className='form-group'>
+                      <label htmlFor='stock_amount'>Jumlah Stok</label>
+                      <input type='number' className='form-control' id='stock_amount' placeholder='Masukan jumlah stok' value={path([paginationConfig.serviceName, 'stock_amount'], payload) || path([paginationConfig.serviceName, 'stock_amount'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'stock_amount', fieldValue: e.target.value })} />
+                    </div>
+                    <div className='form-group'>
+                      <label htmlFor='instock_label'>Label ketika stock masih ada</label>
+                      <input type='text' className='form-control' id='instock_label' placeholder='contoh: Ada stok' value={path([paginationConfig.serviceName, 'instock_label'], payload) || path([paginationConfig.serviceName, 'instock_label'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'instock_label', fieldValue: e.target.value })} />
+                    </div>
+                    
                   </div>
                 </div>
               )
