@@ -44,6 +44,8 @@ function Comp (props) {
   //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
   // }})
   // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
+  const [stateProductAvailability, setStateProductAvailability] = React.useState('')
+  const [statePreorderPolicy, setStatePreorderPolicy] = React.useState('')
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -103,6 +105,10 @@ function Comp (props) {
               // else endDate = ''
               const isNeedOngkirValue = path([paginationConfig.serviceName, 'isneed_shipping'], payload) || path([paginationConfig.serviceName, 'isneed_shipping'], dataDetail) || ''
               const productAvailability = path([paginationConfig.serviceName, 'product_availability'], payload) || path([paginationConfig.serviceName, 'product_availability'], dataDetail) || ''
+              const preorderPolicy = path([paginationConfig.serviceName, 'preorder_policy'], payload) || path([paginationConfig.serviceName, 'preorder_policy'], dataDetail) || ''
+
+              setStateProductAvailability(productAvailability)
+              setStatePreorderPolicy(preorderPolicy)
 
               return (
                 <div className='row'>
@@ -218,21 +224,55 @@ function Comp (props) {
                     </div>
                     <div className='form-group'>
                       <label htmlFor='product_availability'>Ketersediaan Produk</label>
-                      <select name='product_availability' id='product_availability' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })}>
+                      <select
+                        name='product_availability'
+                        id='product_availability' class='custom-select' onChange={e => {
+                          tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })
+                          setStateProductAvailability(productAvailability)
+                        }}
+                      >
                         <option key='-'>pilih</option>
                         <option value='always_ready' selected={productAvailability === 'always_ready'}>Selalu ada stok</option>
                         <option value='use_stock' selected={productAvailability === 'use_stock'}>Gunakan stok</option>
                       </select>
                     </div>
-                    <div className='form-group'>
-                      <label htmlFor='stock_amount'>Jumlah Stok</label>
-                      <input type='number' className='form-control' id='stock_amount' placeholder='Masukan jumlah stok' value={path([paginationConfig.serviceName, 'stock_amount'], payload) || path([paginationConfig.serviceName, 'stock_amount'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'stock_amount', fieldValue: e.target.value })} />
-                    </div>
+
                     <div className='form-group'>
                       <label htmlFor='instock_label'>Label ketika stock masih ada</label>
                       <input type='text' className='form-control' id='instock_label' placeholder='contoh: Ada stok' value={path([paginationConfig.serviceName, 'instock_label'], payload) || path([paginationConfig.serviceName, 'instock_label'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'instock_label', fieldValue: e.target.value })} />
                     </div>
-                    
+                    <div className='form-group'>
+                      <label htmlFor='estimated_delivery_time_instock'>Setelah customer melakukan pembayaran, produk akan dikirim dalam berapa jam:</label>
+                      <input type='number' className='form-control' id='estimated_delivery_time_instock' placeholder='Masukan jumlah jam' value={path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], payload) || path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_time_instock', fieldValue: e.target.value })} />
+                    </div>
+                    {
+                      stateProductAvailability === 'use_stock' &&
+                        <>
+                          <div className='form-group'>
+                            <label htmlFor='stock_amount'>Jumlah Stok</label>
+                            <input type='number' className='form-control' id='stock_amount' placeholder='Masukan jumlah stok' value={path([paginationConfig.serviceName, 'stock_amount'], payload) || path([paginationConfig.serviceName, 'stock_amount'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'stock_amount', fieldValue: e.target.value })} />
+                          </div>
+                          <div className='form-group'>
+                            <label htmlFor='preorder_policy'>Ketika tidak ada stok</label>
+                            <select
+                              name='preorder_policy' id='preorder_policy' class='custom-select' onChange={e => {
+                                tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'preorder_policy', fieldValue: e.target.value })
+                                setStatePreorderPolicy(preorderPolicy)
+                              }}
+                            >
+                              <option key='-'>pilih</option>
+                              <option value='preorder' selected={preorderPolicy === 'preorder'}>Pre-Order</option>
+                              <option value='unavailable' selected={preorderPolicy === 'unavailable'}>Unavailable</option>
+                            </select>
+                          </div>
+                          {statePreorderPolicy === 'preorder' &&
+                            <div className='form-group'>
+                              <label htmlFor='estimated_delivery_time_preorder'>Produk Pre-order biasanya dikirimkan dalam berapa jam:</label>
+                              <input type='number' className='form-control' id='estimated_delivery_time_preorder' placeholder='Masukan jumlah jam' value={path([paginationConfig.serviceName, 'estimated_delivery_time_preorder'], payload) || path([paginationConfig.serviceName, 'estimated_delivery_time_preorder'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_time_preorder', fieldValue: e.target.value })} />
+                            </div>}
+                        </>
+                    }
+
                   </div>
                 </div>
               )
