@@ -67,10 +67,11 @@ export function * tablepaginationSubmitForm (api, { data }) {
   const errors = path(['data', 'errors'], response) || []
   if (!_.isEmpty(response.problem)) errors.push({ message: response.problem })
   //   const statusBody = parseInt(path(['data', 'data', 'tablepaginationFetchData', 'status'], response) || 0)
-  const errorBody = path(['data', 'data', serviceName, 'error'], response)
+  const errorBody = path(['data', 'data', `${isUpdate ? updateServiceName : serviceName}`, 'error'], response)
   const detailData = path(['data', 'data', `${isUpdate ? updateServiceName : serviceName}`, 'detail_data'], response)
   if (!_.isEmpty(errorBody)) errors.push({ message: errorBody })
   yield put(TablepaginationActions.tablepaginationSubmitFormDone({ detailData, errors, serviceName }))
+  console.log('errors========>', errors)
   // const history = yield call(useHistory)
   if (!_.isEmpty(errors) && (_.isEqual((errors[0] || {}).message, 'Invalid Access Token') || _.isEqual((errors[0] || {}).message, 'jwt expired'))) {
     console.log('do logout karena at exp')

@@ -8,6 +8,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { path } from 'ramda'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 let tablepaginationOnChangeFormFunc = null
 const paginationConfig = {
@@ -44,7 +45,7 @@ class PageUpdateGrading extends Component {
       <ContentWrapper
         pageTitle='Update Grading'
         breadcrumb={[
-          { title: 'Home', link: '/home' },
+          { title: 'Home', link: AppConfig.appHomePage },
           { title: 'Grading Detail', link: `/grading/detail/${match.params._id}`, isActive: true },
           { title: 'Update Grading', link: null, isActive: true }
         ]}

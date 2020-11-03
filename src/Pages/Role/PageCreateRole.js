@@ -8,6 +8,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { path } from 'ramda'
 import { getAccessToken } from '../../Utils/Utils'
+import AppConfig from '../../Config/AppConfig'
 
 let tablepaginationOnChangeFormFunc = null
 const paginationConfig = {
@@ -43,7 +44,7 @@ class CreateRole extends Component {
       <ContentWrapper
         pageTitle='Create Role'
         breadcrumb={[
-          { title: 'Home', link: '/home' },
+          { title: 'Home', link: AppConfig.appHomePage },
           { title: 'Role', link: '/role', isActive: true },
           { title: 'Create Role', link: null, isActive: true }
         ]}

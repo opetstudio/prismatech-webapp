@@ -91,7 +91,7 @@ function DetailRole (props) {
       <div className='content-wrapper'>
         <ContentHeader
           title='Detail Role'
-          breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Role', link: '/role' }, { title: 'Role Detail', link: null, isActive: true }]}
+          breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Role', link: '/role' }, { title: 'Role Detail', link: null, isActive: true }]}
         />
         <section className='content'>
           <div className='container-fluid'>

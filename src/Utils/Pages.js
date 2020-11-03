@@ -86,7 +86,10 @@ const createPage = ({ entity, entityTitle, ListAllComp, CreateComp, DetailComp, 
 })
 
 export const lp = {
-  '/home': { route: '/home', path: '/home', title: 'Beranda', component: PageHome },
+  '/dashboard-ecomm': { route: '/dashboard-ecomm', path: '/dashboard-ecomm', title: 'Plink Market Dashboard', component: PageHome },
+  '/dashboard-lms': { route: '/dashboard-lms', path: '/dashboard-lms', title: 'LMS Dashboard', component: PageHome },
+  '/dashboard-rpay': { route: '/dashboard-rpay', path: '/dashboard-rpay', title: 'RP Dashboard', component: PageHome },
+  // '/home': { route: '/home', path: '/home', title: 'Beranda', component: PageHome },
   '/login': { route: '/login', path: '/login', title: 'Login', component: LoginPageContainer, isPublic: true },
   '/signup': { route: '/signup', path: '/signup', title: 'Signup', component: PageSignup, isPublic: true },
   '/forget-password': { route: '/forget-password', path: '/forget-password', title: 'Forget Password', component: ForgetPassword, isPublic: true },
@@ -98,7 +101,7 @@ export const lp = {
   // lms course
   ...createPage({ entity: 'course', entityTitle: 'Course', ListAllComp: PageListCourse, CreateComp: PageCreateCourse, UpdateComp: PageUpdateCourse, DetailComp: PageDetailCourse, params: [':_id'] }),
   // lms grading
-  ...createPage({ entity: 'grading', entityTitle: 'Grading', CreateComp: PageCreateGrading, UpdateComp: PageUpdateGrading, DetailComp: PageDetailGrading, params: [':_id'] }),
+  ...createPage({ entity: 'grading', entityTitle: 'Grading', CreateComp: PageCreateGrading, UpdateComp: PageUpdateGrading, DetailComp: PageDetailGrading, params: [':_id', ':course_id'] }),
   '/published-course': { route: '/published-course', path: '/published-course', component: PagePublishedCourse },
   // lms subject
   ...createPage({ entity: 'subject', entityTitle: 'Subject', CreateComp: PageCreateSubject, UpdateComp: PageUpdateSubject, DetailComp: PageDetailSubject, params: [':_id', ':course_id'] }),

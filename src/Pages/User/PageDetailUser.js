@@ -45,7 +45,7 @@ function DetailUser (props) {
       <div className='content-wrapper'>
         <ContentHeader
           title='Detail User'
-          breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'User', link: '/user' }, { title: 'User Detail', link: null, isActive: true }]}
+          breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'User', link: '/user' }, { title: 'User Detail', link: null, isActive: true }]}
         />
         <section className='content'>
           <div className='container-fluid'>

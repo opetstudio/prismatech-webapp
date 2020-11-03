@@ -25,7 +25,7 @@ function Comp (props) {
     <ContentWrapper
       pageTitle={detailPageTitle}
       breadcrumb={[
-        { title: 'Beranda', link: '/home' },
+        { title: 'Beranda', link: AppConfig.appHomePage },
         // { title: 'Course', link: '/course', isActive: true },
         // { title: 'Course Detail', link: `/course/detail/${courseId}`, isActive: true },
         // { title: 'Subject Detail', link: `/subject/detail/${subjectId}`, isActive: true },

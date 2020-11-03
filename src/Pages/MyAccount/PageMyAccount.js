@@ -7,6 +7,7 @@ import ModalChangePassword from './components/ModalChangePassword'
 import MyAccountAction from '../../Containers/RpMerchant/MyAccount/redux'
 import ContentHeader from '../../Components/ContentHeader'
 import Helmet from 'react-helmet'
+import AppConfig from '../../Config/AppConfig'
 import { connect } from 'react-redux'
 
 class PageMyAccount extends Component {
@@ -25,7 +26,7 @@ class PageMyAccount extends Component {
         <div className='content-wrapper'>
           <ContentHeader
             title='My account'
-            breadcrumb={[{ title: 'Home', link: '/home', active: true }, { title: 'My account', active: true }]}
+            breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage, active: true }, { title: 'My account', active: true }]}
           />
           <section className='content'>
             {/* <ChangePassword /> */}

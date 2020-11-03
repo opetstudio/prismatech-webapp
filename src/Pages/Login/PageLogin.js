@@ -7,6 +7,7 @@ import LoginContainer from '../../Containers/Login/LoginContainer'
 import { Colors } from '../../Themes'
 import Loader from '../../Components/Loader/Loader'
 import LoaderFull from '../../Components/Loader/LoaderFull'
+import AppConfig from '../../Config/AppConfig'
 
 class PageLogin extends Component {
   isEmptyOrNull (str) {
@@ -33,7 +34,7 @@ class PageLogin extends Component {
         </Helmet>
         <div className='card'>
           <div className='card-body login-card-body'>
-            <p className='login-box-msg'><b>Plink Market</b></p>
+            <p className='login-box-msg'><b>{AppConfig.appName}</b></p>
             <LoginContainer location={this.props.location} />
           </div>
         </div>

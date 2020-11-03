@@ -5,6 +5,7 @@ import moment from 'moment'
 import { getAccessToken } from '../../Utils/Utils'
 import { path } from 'ramda'
 import { connect } from 'react-redux'
+import AppConfig from '../../Config/AppConfig'
 
 const paginationConfig = {
   serviceName: 'createPrivilege',
@@ -23,7 +24,7 @@ class CreatePrivilege extends Component {
     return (
       <ContentWrapper
         pageTitle='Create New Privilege'
-        breadcrumb={[{ title: 'Home', link: '/home' }, { title: 'Create New Privilege', link: null, isActive: true }]}
+        breadcrumb={[{ title: 'Home', link: AppConfig.appHomePage }, { title: 'Create New Privilege', link: null, isActive: true }]}
         contentHeaderTitle='Create New Privilege'
         isNeedLoggedin
       >
