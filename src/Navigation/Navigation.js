@@ -55,9 +55,9 @@ const AppContainer = withRouter(App)
 class NavigationRouter extends Component {
   render () {
     const { userPrivileges } = this.props
-    console.log('userPrivileges========>', userPrivileges)
+    // console.log('userPrivileges========>', userPrivileges)
     const authorizedRoute = _.filter(pageList, v => (userPrivileges || []).includes(v.path) || v.isPublic)
-    console.log('authorizedRoute===>', authorizedRoute)
+    // console.log('authorizedRoute===>', authorizedRoute)
     return (
       <Router>
         <AppContainer checkLogedStatus={this.props.checkLogedStatus} appPatch={this.props.appPatch}>
