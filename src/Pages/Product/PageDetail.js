@@ -81,6 +81,7 @@ function Comp (props) {
               if (updatedAt && updatedAt.isValid()) updatedAt = updatedAt.format('YYYY-MM-DD HH:mm:ss')
               else updatedAt = ''
               let productAvailabilityLabel = { use_stock: 'Gunakan Stok', always_ready: 'Selalu Ada Stok' }
+              let estimatedDeliveryUnitTimeLabel = { hour: 'Jam', day: 'Hari', week: 'Minggu', month: 'Bulan' }
               return (
                 <dl>
                   {createRow('Nama', paginationConfig, dataDetail, ['name'])}
@@ -94,13 +95,29 @@ function Comp (props) {
                   {createRow('Toko Online', paginationConfig, dataDetail, ['toko_id', 'name'])}
                   {createRow('Tagging', paginationConfig, dataDetail, ['tag_id', 'name'])}
                   {createRow('Deskripsi', paginationConfig, dataDetail, ['description'])}
+
                   <dt>Ketersediaan Produk</dt>
                   <dd>{productAvailabilityLabel[path([paginationConfig.serviceName, 'product_availability'], dataDetail)]}</dd>
-                  {createRow('Label Jika Stok Ada', paginationConfig, dataDetail, ['instock_label'])}
-                  {createRow('Setelah customer melakukan pembayaran, produk akan dikirim dalam berapa jam:', paginationConfig, dataDetail, ['estimated_delivery_time_instock'])}
-                  {createRow('Jumlah Stok', paginationConfig, dataDetail, ['stock_amount'])}
-                  {createRow('Pre-Order Policy', paginationConfig, dataDetail, ['preorder_policy'])}
-                  {createRow('Produk Pre-order biasanya dikirimkan dalam berapa jam:', paginationConfig, dataDetail, ['estimated_delivery_time_preorder'])}
+                  
+                  {createRow('Label ketika stok masih ada', paginationConfig, dataDetail, ['instock_label'])}
+                  <dt>Setelah customer melakukan pembayaran, produk akan dikirim dalam:</dt>
+                  <dd>{path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], dataDetail)} {estimatedDeliveryUnitTimeLabel[path([paginationConfig.serviceName, 'estimated_delivery_unit_time_instock'], dataDetail)] || ''}</dd>
+
+                  {
+                    path([paginationConfig.serviceName, 'product_availability'], dataDetail) === 'use_stock' &&
+                      <>
+                        {createRow('Jumlah Stok', paginationConfig, dataDetail, ['stock_amount'])}
+                        {createRow('Status produk jika stok habis', paginationConfig, dataDetail, ['preorder_policy'])}
+                        {
+                          path([paginationConfig.serviceName, 'preorder_policy'], dataDetail) === 'preorder' &&
+                            <>
+                              <dt>Produk Pre-order biasanya dikirimkan dalam:</dt>
+                              <dd>{path([paginationConfig.serviceName, 'estimated_delivery_time_preorder'], dataDetail)} {estimatedDeliveryUnitTimeLabel[path([paginationConfig.serviceName, 'estimated_delivery_unit_time_preorder'], dataDetail)] || ''}</dd>
+                            </>
+                        }
+                      </>
+                  }
+
                   {createRow('Diperbaharui Oleh', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
                   {createRow('Dibuat Oleh', paginationConfig, dataDetail, ['created_by', 'full_name'])}
                   <dt>Tanggal Dibuat</dt>
