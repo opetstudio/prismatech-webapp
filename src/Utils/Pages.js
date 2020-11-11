@@ -54,6 +54,10 @@ import PageUpdateTokoTeam from '../Pages/TokoTeam/PageUpdate'
 import PageListTokoPo from '../Pages/TokoPo/PageList'
 import PageDetailTokoPo from '../Pages/TokoPo/PageDetail'
 
+// Toko Inventory
+import PageListTokoInventory from '../Pages/TokoInventory/PageList'
+import PageDetailTokoInventory from '../Pages/TokoInventory/PageDetail'
+
 // lms course
 import PageListCourse from '../Pages/Course/PageCourse'
 import PageCreateCourse from '../Pages/Course/CreateCourse'
@@ -124,7 +128,9 @@ export const lp = {
   // toko team
   ...createPage({ entity: 'tokoteam', entityTitle: 'Toko Team', ListAllComp: PageListTokoTeam, CreateComp: PageCreateTokoTeam, UpdateComp: PageUpdateTokoTeam, DetailComp: PageDetailTokoTeam, params: [':_id', ':toko_id'] }),
   // toko po
-  ...createPage({ entity: 'purchaseorder', entityTitle: 'Data Pembelian', ListAllComp: PageListTokoPo, DetailComp: PageDetailTokoPo, params: [':_id'] })
+  ...createPage({ entity: 'purchaseorder', entityTitle: 'Data Pembelian', ListAllComp: PageListTokoPo, DetailComp: PageDetailTokoPo, params: [':_id'] }),
+  // toko inventory
+  ...createPage({ entity: 'inventory', entityTitle: 'Inventaris', ListAllComp: PageListTokoInventory, DetailComp: PageDetailTokoInventory, params: [':_id'] })
 }
 console.log('lp====>', lp)
 export const pageList = _.map(lp, (v) => v)

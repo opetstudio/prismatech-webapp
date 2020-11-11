@@ -89,7 +89,7 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
               return (
                 <tr key={i} {...row.getRowProps()}>
                   {row.cells.map((cell, j) => {
-                    return <td key={j} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    return <td key={j} {...cell.getCellProps()} className='align-middle'>{cell.render('Cell')}</td>
                   })}
                 </tr>
               )
