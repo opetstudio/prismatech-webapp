@@ -41,7 +41,7 @@ export default class Loader extends Component {
         <ClipLoader
         //   css={override}
           sizeUnit='px'
-          size={40}
+          size={this.props.size || 40}
           color='#123abc'
           loading={this.props.loading}
         />

@@ -103,6 +103,7 @@ class Sidebar extends Component {
                   {this._getMenuLi('/tokoonline', 'Toko Online Management')}
                   {this._getMenuLi('/category', 'Category Management')}
                   {this._getMenuLi('/product', 'Product Management')}
+                  {this._getMenuLi('/inventory', 'Inventaris')}
                   {this._getMenuLi('/purchaseorder', 'Purchase Order')}
                   {/* {this._getMenuLi('/tag', 'Tag Management')} */}
                 </SidebarMainMenu>}
