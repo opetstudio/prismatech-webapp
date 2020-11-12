@@ -10,25 +10,83 @@ import LoginCheck from '../../Containers/Login/LoginCheck'
 import { Table, Filter } from '../../features/TablePagination'
 import AppConfig from '../../Config/AppConfig'
 import { listallService, fields, listallPageTitle, createPageUrl, createNewButtonLabel, getColumns } from './Manifest'
+import Loader from '../../Components/Loader/Loader'
+
+import { generateHmac, getAccessToken } from '../../Utils/Utils'
+
+function formUpdateStock ({ dataDetail, stateParams: { stateStockProduct, setStateStockProduct, stateLoadingUpdateStock }, submitUpdateStock }) {
+  const p = dataDetail
+  const inventoryId = p.inventories[0]._id
+  return (
+    <div className='input-group mb-0'>
+      <input
+        id={`stock_field_${inventoryId}`} type='number' className='form-control rounded-0' value={(() => {
+          if (stateStockProduct['' + inventoryId] === undefined) return p.inventories[0].quantity
+          return stateStockProduct['' + inventoryId]
+        })()} onChange={(e) => setStateStockProduct({ ...stateStockProduct, ['' + inventoryId]: parseInt(e.target.value) })}
+      />
+      <span className='input-group-append'>
+        {(() => {
+          let isButtonDisabled = false
+          if (stateStockProduct['' + inventoryId] === undefined || (stateStockProduct['' + inventoryId] === p.inventories[0].quantity)) isButtonDisabled = true
+          if (stateLoadingUpdateStock['' + inventoryId]) {
+            return (
+              <button type='button' className='btn btn-info btn-flat' onClick={() => {}}>
+                <Loader size={15} loading type='rpmerah' />
+              </button>
+            )
+          }
+          return (
+            <button type='button' className='btn btn-info btn-flat' disabled={isButtonDisabled} onClick={() => submitUpdateStock({ value: stateStockProduct['' + inventoryId], id: inventoryId })}>
+              Simpan
+            </button>
+          )
+        })()}
+      </span>
+    </div>
+  )
+}
 
 function Comp (props) {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {
-  //     columns: getColumns({ history: props.history })
-  //   }
-  // }
-
   const [stateStockProduct, setStateStockProduct] = React.useState({})
-
-  // render () {
+  const [stateLoadingUpdateStock, setStateLoadingUpdateStock] = React.useState({})
+  const stateParams = { stateStockProduct, setStateStockProduct, stateLoadingUpdateStock, setStateLoadingUpdateStock }
   const paginationConfig = {
     serviceName: listallService,
     fields: fields
   }
-  // const { columns } = this.state
+
+  const submitUpdateStock = ({ value, id }) => {
+    console.log('submitUpdateStock===>', value)
+    console.log('submitUpdateStock id===>', id)
+    setStateLoadingUpdateStock({ ...stateLoadingUpdateStock, ['' + id]: true })
+    const graphqlData = `
+    mutation{
+      updateTokoInventory(_id: "${id}",  quantity: ${value}) {
+        error
+        status
+      }
+    }
+    `
+    // const graphqlData = `mutation{updateTokoInventory(_id: "${id}", quantity: 5){error,status})}`
+    const bodyQueryString = JSON.stringify({ query: graphqlData })
+    console.log('bodyQueryString=====>', bodyQueryString)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', hmac: generateHmac(bodyQueryString), AccessToken: getAccessToken() },
+      body: bodyQueryString
+    }
+    fetch(AppConfig.hostBackend + '/graphql', requestOptions)
+      .then(response => response.json())
+      .then(response => {
+        console.log('response updateTokoInventory===>', response)
+        setStateLoadingUpdateStock({ ...stateLoadingUpdateStock, ['' + id]: false })
+        // response.json()
+        // return response.data.getAllTokoCartsBySessionId
+      })
+  }
   console.log('renderrrrr table')
-  const columns = getColumns({ history: props.history, stateStockProduct, setStateStockProduct })
+  const columns = getColumns({ history: props.history, stateParams, formUpdateStock, submitUpdateStock })
   return (
     <ContentWrapper
       pageTitle={listallPageTitle}
@@ -38,19 +96,6 @@ function Comp (props) {
     >
       <div className='row'>
         <div className='col-md-12'>
-          {/* <Filter
-              paginationConfig={paginationConfig}
-              child={(tablepaginationOnChangeFilter, filter) => (
-                <div className='row'>
-                  <div className='col-sm-6'>
-                    <div className='form-group'>
-                      <label htmlFor='string_to_search'>Cari</label>
-                      <input type='text' className='form-control' value={path(['string_to_search'], filter) || ''} id='string_to_search' placeholder='' onChange={e => tablepaginationOnChangeFilter({ serviceName: paginationConfig.serviceName, fieldName: 'string_to_search', fieldValue: e.target.value })} />
-                    </div>
-                  </div>
-                </div>
-              )}
-            /> */}
           <Table
             paginationConfig={paginationConfig}
             columns={columns}

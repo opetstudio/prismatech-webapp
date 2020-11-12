@@ -27,7 +27,7 @@ export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAllTokoProductVariations'
 export const deleteService = 'delete' + serviceEntity
 export const fields = '_id,sku,product_id{_id,name,product_availability,preorder_policy,code,image_id{filename,file_type}},inventories{_id,quantity,created_at,updated_at,created_by{full_name},updated_by{full_name}},created_at,updated_at,created_by{full_name},updated_by{full_name}'
-export const getColumns = ({ history, stateStockProduct, setStateStockProduct }) => [
+export const getColumns = ({ history, stateParams, formUpdateStock, submitUpdateStock }) => [
   // {
   //   Header: 'Act',
   //   accessor: '_id',
@@ -44,30 +44,15 @@ export const getColumns = ({ history, stateStockProduct, setStateStockProduct })
   { Header: 'Sku', accessor: 'sku' },
   { Header: 'Nama Produk', accessor: 'product_id.name' },
   { Header: 'Status produk jika stok habis', accessor: 'product_id.preorder_policy' },
-  { Header: 'Stok', accessor: 'inventories[0].quantity' },
+  // {
+  //   Header: 'Stok',
+  //   accessor: p => {
+  //     return <span>{(formUpdateStock.stateStockProduct || {})['' + p.inventories[0]._id]}</span>
+  //   }
+  // },
   {
     Header: 'Ubah Stok',
-    accessor: p => {
-      return (
-        <div className='input-group mb-0'>
-          <input
-            id={`stock_field_${p._id}`} type='number' className='form-control rounded-0' value={(() => {
-              if (stateStockProduct['' + p._id] === undefined) return p.inventories[0].quantity
-              return stateStockProduct['' + p._id]
-            })()} onChange={(e) => setStateStockProduct({ ...stateStockProduct, ['' + p._id]: parseInt(e.target.value) })}
-          />
-          <span className='input-group-append'>
-            {(() => {
-              let isButtonDisabled = false
-              if (stateStockProduct['' + p._id] === undefined || (stateStockProduct['' + p._id] === p.inventories[0].quantity)) isButtonDisabled = true
-              return (
-                <button type='button' className='btn btn-info btn-flat' disabled={isButtonDisabled}>Simpan</button>
-              )
-            })()}
-          </span>
-        </div>
-      )
-    }
+    accessor: p => formUpdateStock({ dataDetail: p, stateParams, submitUpdateStock })
     // Cell: p => (
     //   <div className='input-group mb-3'>
     //     <input type='text' className='form-control rounded-0' />

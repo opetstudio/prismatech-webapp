@@ -113,8 +113,8 @@ class LoginPageComponent extends React.Component {
         <div className='col-12'>
           {/* <button type='submit' className='btn btn-block btn-primary btn-sm'>Sign In</button> */}
           {!this.props.isRequesting && <button type='submit' className='btn btn-block btn-primary btn-sm'>Sign In</button>}
-          {this.props.isRequesting && (<center>Please Wait</center>)}
-          {/* {this.props.isRequesting && (<center><Loader loading type='rpmerah' /></center>)} */}
+          {/* {this.props.isRequesting && (<center>Please Wait</center>)} */}
+          {this.props.isRequesting && (<center><Loader loading type='rpmerah' /></center>)}
         </div>
         <br />
         <center><Link to='/forget-password'>Forgot your password?</Link></center>
