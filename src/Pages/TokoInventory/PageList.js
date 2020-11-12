@@ -79,10 +79,16 @@ function Comp (props) {
     fetch(AppConfig.hostBackend + '/graphql', requestOptions)
       .then(response => response.json())
       .then(response => {
-        console.log('response updateTokoInventory===>', response)
+        // console.log('response updateTokoInventory===>', response.data.updateTokoInventory.status)
+        const status = path(['data', 'updateTokoInventory', 'status'], response)
         setStateLoadingUpdateStock({ ...stateLoadingUpdateStock, ['' + id]: false })
+        if (status === 200) window.callErrorToast('success', 'success')
+        else window.callErrorToast('rubah stok gagal', 'error')
         // response.json()
         // return response.data.getAllTokoCartsBySessionId
+
+        // window.callErrorToast(element.message, 'error')
+        // window.callErrorToast('success', 'success')
       })
   }
   console.log('renderrrrr table')
