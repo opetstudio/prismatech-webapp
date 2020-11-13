@@ -40,8 +40,8 @@ class Sidebar extends Component {
 
     const path = (page.path || '').replace(':merchantId', userMerchantCode || '*')
 
-    console.log('path====>', path)
-    console.log('userPrivileges====>', userPrivileges)
+    // console.log('path====>', path)
+    // console.log('userPrivileges====>', userPrivileges)
 
     const baseRoute = `${basePath}${path}`
     if (!userPrivileges.includes(path)) return null

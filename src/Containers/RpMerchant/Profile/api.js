@@ -20,7 +20,7 @@ export const create = api => ({
           }
         }
       }`
-    console.log("body fetch merchant>>>>>>>>>>",body)
+    // console.log("body fetch merchant>>>>>>>>>>",body)
     const query= { query:body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     api.setHeader('AccessToken', getAccessToken())

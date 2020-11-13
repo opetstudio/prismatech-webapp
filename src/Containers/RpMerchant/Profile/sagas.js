@@ -10,7 +10,7 @@ export function * fetchMerchantProfile (api, action) {
     const { data } = action
     
     const response = yield call(api.getMerchantInfo,data)
-    console.log("response fetch user =======>>>>",response)
+    // console.log("response fetch user =======>>>>",response)
     const err = path(['data','errors'], response)||[]
 
     if (!_.isEmpty(response.problem)) err.push({ message: response.problem })

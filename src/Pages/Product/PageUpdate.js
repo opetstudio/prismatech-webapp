@@ -110,6 +110,7 @@ function Comp (props) {
               const preorderPolicy = path([paginationConfig.serviceName, 'preorder_policy'], payload) || path([paginationConfig.serviceName, 'preorder_policy'], dataDetail) || ''
               const estimatedDeliveryUnitTimeInstock = path([paginationConfig.serviceName, 'estimated_delivery_unit_time_instock'], payload) || path([paginationConfig.serviceName, 'estimated_delivery_unit_time_instock'], dataDetail) || ''
               const estimatedDeliveryUnitTimePreorder = path([paginationConfig.serviceName, 'estimated_delivery_unit_time_preorder'], payload) || path([paginationConfig.serviceName, 'estimated_delivery_unit_time_preorder'], dataDetail) || ''
+              console.log('isNeedOngkirValue=====>', isNeedOngkirValue)
 
               setStateProductAvailability(productAvailability)
               setStatePreorderPolicy(preorderPolicy)
@@ -137,11 +138,11 @@ function Comp (props) {
                     </div>
                     <div className='form-group'>
                       <label htmlFor='parent_id'>Butuh Ongkir?</label>
-                      <select name='isneed_shipping' id='isneed_shipping' class='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'isneed_shipping', fieldValue: e.target.value })}>
-                        <option key='-'>pilih</option>
-                        <option value='Y' selected={isNeedOngkirValue === 'Y'}>Butuh</option>
-                        <option value='N' selected={isNeedOngkirValue === 'N'}>Tidak Butuh</option>
-                      </select>
+                      {isNeedOngkirValue &&
+                        <select defaultValue={isNeedOngkirValue} name='isneed_shipping' id='isneed_shipping' className='custom-select' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'isneed_shipping', fieldValue: e.target.value })}>
+                          <option value='Y'>Butuh</option>
+                          <option value='N'>Tidak Butuh</option>
+                        </select>}
                     </div>
                     <div className='form-group'>
                       <label htmlFor='description'>Short Description</label>
@@ -150,7 +151,7 @@ function Comp (props) {
                     {!(typeof loading === 'undefined' || loading === 'undefined' || loading) &&
                       <div className='form-group'>
                         <label htmlFor='content1'>Long Description</label>
-                        <textarea className='textarea' id='content1' placeholder='Place some text here' style={{ width: '100%', height: 200, fontSize: 14, lineHeight: 18, border: '1px solid #dddddd', padding: 10 }} value={path([paginationConfig.serviceName, 'content1'], payload) || path([paginationConfig.serviceName, 'content1'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} />
+                        <textarea className='textarea' id='content1' placeholder='Place some text here' style={{ width: '100%', height: 200, fontSize: 14, lineHeight: 18, border: '1px solid #dddddd', padding: 10 }} value={path([paginationConfig.serviceName, 'content1'], payload) || path([paginationConfig.serviceName, 'content1'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} />
                         {/* <input type='text' className='form-control' id='content1' placeholder='Enter content 1' value={path([paginationConfig.serviceName, 'content1'], payload) || path([paginationConfig.serviceName, 'content1'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: e.target.value })} /> */}
                       </div>}
                     {!(typeof loading === 'undefined' || loading === 'undefined' || loading) &&
@@ -203,7 +204,7 @@ function Comp (props) {
                         onChange={val => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'tag_id', fieldValue: val })}
                       />}
                     <div className='form-group'>
-                      <label for='fileUploadInput'>Unggah Gambar</label>
+                      <label htmlFor='fileUploadInput'>Unggah Gambar</label>
                       <div className='input-group' style={{ zIndex: 0 }}>
                         <div className='custom-file'>
                           <input
@@ -230,17 +231,18 @@ function Comp (props) {
                     </div>
                     <div className='form-group'>
                       <label htmlFor='product_availability'>Ketersediaan Produk</label>
-                      <select
-                        name='product_availability'
-                        id='product_availability' class='custom-select' onChange={e => {
-                          tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })
-                          setStateProductAvailability(productAvailability)
-                        }}
-                      >
-                        <option key='-'>pilih</option>
-                        <option value='always_ready' selected={productAvailability === 'always_ready'}>Selalu ada stok</option>
-                        <option value='use_stock' selected={productAvailability === 'use_stock'}>Gunakan stok</option>
-                      </select>
+                      {productAvailability &&
+                        <select
+                          name='product_availability'
+                          id='product_availability' className='custom-select' onChange={e => {
+                            tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })
+                            setStateProductAvailability(productAvailability)
+                          }}
+                          defaultValue={productAvailability}
+                        >
+                          <option value='always_ready'>Selalu ada stok</option>
+                          <option value='use_stock'>Gunakan stok</option>
+                        </select>}
                     </div>
 
                     <div className='form-group'>
@@ -253,11 +255,11 @@ function Comp (props) {
                       <div className='form-row'>
                         <input type='number' className='form-control' id='estimated_delivery_time_instock' placeholder='Masukan jumlah waktu' value={path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], payload) || path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_time_instock', fieldValue: e.target.value })} />
                         <div className='col-sm-10'>
-                          <div class='d-inline form-check'>
+                          <div className='d-inline form-check'>
                             <input className='form-check-input' type='radio' name='estimated_delivery_unit_time_instock' id='estimated_delivery_unit_time_instock_jam' defaultValue='hour' checked={estimatedDeliveryUnitTimeInstock === 'hour'} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_unit_time_instock', fieldValue: e.target.value })} />
                             <label className='form-check-label' htmlFor='estimated_delivery_unit_time_instock_jam'>Jam </label>
                           </div>
-                          <div class='d-inline form-check' style={{ marginLeft: 10 }}>
+                          <div className='d-inline form-check' style={{ marginLeft: 10 }}>
                             <input className='form-check-input' type='radio' name='estimated_delivery_unit_time_instock' id='estimated_delivery_unit_time_instock_hari' defaultValue='day' checked={estimatedDeliveryUnitTimeInstock === 'day'} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_unit_time_instock', fieldValue: e.target.value })} />
                             <label className='form-check-label' htmlFor='estimated_delivery_unit_time_instock_hari'>Hari </label>
                           </div>
@@ -281,16 +283,17 @@ function Comp (props) {
                           </div>
                           <div className='form-group'>
                             <label htmlFor='preorder_policy'>Status produk jika stok habis</label>
-                            <select
-                              name='preorder_policy' id='preorder_policy' class='custom-select' onChange={e => {
-                                tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'preorder_policy', fieldValue: e.target.value })
-                                setStatePreorderPolicy(preorderPolicy)
-                              }}
-                            >
-                              <option key='-'>pilih</option>
-                              <option value='preorder' selected={preorderPolicy === 'preorder'}>Pre-Order</option>
-                              <option value='unavailable' selected={preorderPolicy === 'unavailable'}>Unavailable</option>
-                            </select>
+                            {preorderPolicy &&
+                              <select
+                                name='preorder_policy' id='preorder_policy' className='custom-select' onChange={e => {
+                                  tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'preorder_policy', fieldValue: e.target.value })
+                                  setStatePreorderPolicy(preorderPolicy)
+                                }}
+                                defaultValue={preorderPolicy}
+                              >
+                                <option value='preorder'>Pre-Order</option>
+                                <option value='unavailable'>Unavailable</option>
+                              </select>}
                           </div>
                           {statePreorderPolicy === 'preorder' &&
                             <div className='form-group'>
@@ -299,11 +302,11 @@ function Comp (props) {
                               <div className='form-row'>
                                 {/* <input type='number' className='form-control' id='estimated_delivery_time_instock' placeholder='Masukan jumlah waktu' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_time_instock', fieldValue: e.target.value })} /> */}
                                 <div className='col-sm-10'>
-                                  <div class='d-inline form-check'>
+                                  <div className='d-inline form-check'>
                                     <input className='form-check-input' type='radio' name='estimated_delivery_unit_time_preorder' id='estimated_delivery_unit_time_preorder_jam' defaultValue='hour' checked={estimatedDeliveryUnitTimePreorder === 'hour'} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_unit_time_preorder', fieldValue: e.target.value })} />
                                     <label className='form-check-label' htmlFor='estimated_delivery_unit_time_preorder_jam'>Jam </label>
                                   </div>
-                                  <div class='d-inline form-check' style={{ marginLeft: 10 }}>
+                                  <div className='d-inline form-check' style={{ marginLeft: 10 }}>
                                     <input className='form-check-input' type='radio' name='estimated_delivery_unit_time_preorder' id='estimated_delivery_unit_time_preorder_hari' defaultValue='day' checked={estimatedDeliveryUnitTimePreorder === 'day'} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'estimated_delivery_unit_time_preorder', fieldValue: e.target.value })} />
                                     <label className='form-check-label' htmlFor='estimated_delivery_unit_time_preorder_hari'>Hari </label>
                                   </div>

@@ -189,8 +189,8 @@ function Comp (props) {
                           tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'product_availability', fieldValue: e.target.value })
                           setStateProductAvailability(e.target.value)
                         }}
+                        defaultValue='always_ready'
                       >
-                        <option key='-'>pilih</option>
                         <option value='always_ready'>Selalu ada stok</option>
                         <option value='use_stock'>Gunakan stok</option>
                       </select>
@@ -258,10 +258,10 @@ function Comp (props) {
                                 tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'preorder_policy', fieldValue: e.target.value })
                                 setStatePreorderPolicy(e.target.value)
                               }}
+                              defaultValue='unavailable'
                             >
-                              <option key='-'>pilih</option>
-                              <option value='preorder'>Pre-Order</option>
                               <option value='unavailable'>Unavailable</option>
+                              <option value='preorder'>Pre-Order</option>
                             </select>
                           </div>
                           {statePreorderPolicy === 'preorder' &&

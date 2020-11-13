@@ -8,19 +8,19 @@ import _ from 'lodash'
 import ResponsiveContainer from '../Containers/ResponsiveContainer'
 import { pageList, lp } from '../Utils/Pages'
 
-import { loadScript, getSession } from '../Utils/Utils'
+import { loadScript } from '../Utils/Utils'
 import AppConfig from '../Config/AppConfig'
 const basePath = AppConfig.basePath
 const loginPath = basePath + '/login'
 
-const publicRoutes = ['/login', '/signup']
+// const publicRoutes = ['/login', '/signup']
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.checkLogin(window.location.pathname)
     this.unlisten = this.props.history.listen((location, action) => {
-      console.log('halooooooooo', window.location.pathname)
+      // console.log('halooooooooo', window.location.pathname)
       const title = (lp[window.location.pathname] || {}).title
       if (title) this.props.appPatch({ routeActive: window.location.pathname, pageTitle: title })
       this.checkLogin(window.location.pathname)
@@ -29,12 +29,12 @@ class App extends Component {
 
   checkLogin (pathName) {
     // console.log('checkLogin statussssss')
-    console.log(pathName, 'pathnem', this.props)
+    // console.log(pathName, 'pathnem', this.props)
     
     if (loginPath === pathName) {
-      console.log('path = ' + pathName + '|no need check status')
+      // console.log('path = ' + pathName + '|no need check status')
     } else {
-      console.log('path = ' + pathName + '|need check status')
+      // console.log('path = ' + pathName + '|need check status')
       // this.props.checkLogedStatus({})
     }
   }

@@ -61,7 +61,7 @@ export const tablepaginationResetFilter = (state, { data }) => state.merge({
   filter: { ...state.filter, [data.serviceName]: {} }
 })
 export const tablepaginationOnChangeForm = (state, { data }) => state.merge({
-  loading: { ...state.loading, [data.serviceName]: true },
+  // loading: { ...state.loading, [data.serviceName]: true },
   payload: { ...state.payload, [data.serviceName]: { ...state.payload[data.serviceName], [data.fieldName]: data.fieldValue } }
 })
 export const tablepaginationSubmitFormDone = (state, { data }) => {
