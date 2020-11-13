@@ -26,7 +26,7 @@ export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAll' + serviceEntity + 's'
 export const deleteService = 'delete' + serviceEntity
-export const fields = '_id,action,payment_page_url,full_name,phone_number,unique_code,invoice_code,email,session_id,device_id,shipping_subcity,shipping_city,shipping_province,shipping_address,total_product_amount,total_amount,shipping_amount,cart_id{_id},toko_id{_id},created_at,updated_at,created_by{full_name},updated_by{full_name}'
+export const fields = '_id,action,payment_date,shipping_currier,payment_page_url,full_name,phone_number,unique_code,invoice_code,email,session_id,device_id,shipping_subcity,shipping_city,shipping_province,shipping_address,total_product_amount,total_amount,shipping_amount,cart_id{_id},toko_id{_id},created_at,updated_at,created_by{full_name},updated_by{full_name}'
 export const getColumns = (history) => [
   {
     Header: 'Act',
@@ -48,6 +48,7 @@ export const getColumns = (history) => [
   { Header: 'Total Pembayaran', accessor: 'total_amount' },
   { Header: 'ID Sesi', accessor: 'session_id' },
   { Header: 'Kode Invoice', accessor: 'invoice_code' },
+  { Header: 'Jasa Pengiriman', accessor: 'shipping_currier' },
 //   { Header: 'category', accessor: p => (<span>{(_.map(p.category_id, v => v.title) || []).join(', ')}</span>) },
 //   { Header: 'toko', accessor: p => (<span>{(_.map(p.toko_id, v => v.name) || []).join(', ')}</span>) },
 // { Header: 'picture', accessor: p => (<span>{p.image_id.filename}.{p.image_id.file_type}</span>) },
@@ -64,6 +65,16 @@ export const getColumns = (history) => [
   {
     Header: 'Tanggal Transaksi',
     accessor: 'updated_at',
+    Cell: d => {
+      let data = Moment(d.cell.value)
+      if (data && data.isValid()) data = data.format('YYYY-MM-DD HH:mm:ss')
+      else data = ''
+      return (<span>{`${data}`}</span>)
+    }
+  },
+  {
+    Header: 'Tanggal Pembayaran',
+    accessor: 'payment_date',
     Cell: d => {
       let data = Moment(d.cell.value)
       if (data && data.isValid()) data = data.format('YYYY-MM-DD HH:mm:ss')
