@@ -45,7 +45,7 @@ export default class ModalQrMerchant extends Component {
     {
 
         const wdw=this._windowsWidth()
-        console.log("width=",wdw.width," | heigth=",wdw.height)
+        // console.log("width=",wdw.width," | heigth=",wdw.height)
         return(
             <div className="container" id="qr-code-merchant-rp" style={{overflow:'visible',position:'relative'}} ref={ref}>
                 <center style={{position:'relative'}}>

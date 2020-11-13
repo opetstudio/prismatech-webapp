@@ -13,7 +13,7 @@ class TheComponent extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('state.myprofile===>', state.myprofile)
+  // console.log('state.myprofile===>', state.myprofile)
   return {
     userPrivileges: state.myprofile.user_privileges,
     profile: state.login.user,

@@ -5,11 +5,11 @@ import RootContainer from './RootContainer'
 import createStore from '../Redux'
 // import ReduxPersist from '../Config/ReduxPersist'
 import { ApolloProvider } from '@apollo/react-hooks'
-import ApolloClient from 'apollo-boost'
+// import ApolloClient from 'apollo-boost'
 
-const client = new ApolloClient({
-  uri: 'http://localhost:8280/graphql'
-})
+// const client = new ApolloClient({
+//   uri: 'http://localhost:8280/graphql'
+// })
 
 // create our store
 export const { store } = createStore()
@@ -38,9 +38,9 @@ class Adminlte extends Component {
     // }
     return (
       <Provider store={store}>
-        <ApolloProvider client={client}>
-          <RootContainer />
-        </ApolloProvider>
+        {/* <ApolloProvider client={client}> */}
+        <RootContainer />
+        {/* </ApolloProvider> */}
       </Provider>
     )
     // return (

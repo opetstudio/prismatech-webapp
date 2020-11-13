@@ -132,6 +132,6 @@ export const lp = {
   // toko inventory
   ...createPage({ entity: 'inventory', entityTitle: 'Inventaris', ListAllComp: PageListTokoInventory, DetailComp: PageDetailTokoInventory, params: [':_id'] })
 }
-console.log('lp====>', lp)
+// console.log('lp====>', lp)
 export const pageList = _.map(lp, (v) => v)
 export const getPage = (pageId) => lp[pageId] || {}

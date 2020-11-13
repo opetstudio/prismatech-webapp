@@ -41,7 +41,7 @@ export const getColumns = ({ history, stateParams, formUpdateStock, submitUpdate
   //       </div>
   //     </div>)
   // },
-  { Header: 'Sku', accessor: 'sku' },
+  { Header: 'Kode Produk', accessor: 'product_id.code' },
   { Header: 'Nama Produk', accessor: 'product_id.name' },
   { Header: 'Status produk jika stok habis', accessor: 'product_id.preorder_policy' },
   // {

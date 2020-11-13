@@ -37,13 +37,13 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
     fetchData({ filter })
   }, [fetchData, inputValue])
 
-  console.log('loading===>', loading)
-  console.log('serviceName===>', serviceName)
+  // console.log('loading===>', loading)
+  // console.log('serviceName===>', serviceName)
   if (typeof loading === 'undefined' || loading === 'undefined' || loading) {
     console.log('jangan render')
     return null
   }
-  console.log('silahkan render')
+  // console.log('silahkan render')
   if (isAutocomplete) {
     const options = (data.concat(defaultValue) || []).map((v, i) => {
       if (v) {
@@ -53,13 +53,13 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
       return { value: '-', label: '-' }
     })
     const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
-    console.log('options=====>', options)
-    console.log('defaultValue=====>', defaultValue)
-    console.log('isCreatableSelect===>', isCreatableSelect)
-    console.log('label===>', label)
+    // console.log('options=====>', options)
+    // console.log('defaultValue=====>', defaultValue)
+    // console.log('isCreatableSelect===>', isCreatableSelect)
+    // console.log('label===>', label)
     
     if (isCreatableSelect) {
-      console.log('optionsDefaultValue===>', optionsDefaultValue)
+      // console.log('optionsDefaultValue===>', optionsDefaultValue)
       return (
         <div className='form-group'>
           <label>{label}</label>
@@ -84,8 +84,8 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
               onChange(selectedOption.map(v => v.value))
             }}
             onInputChange={(inputValue, actionMeta) => {
-              console.log('inputValue', inputValue)
-              console.log('actionMeta', actionMeta)
+              // console.log('inputValue', inputValue)
+              // console.log('actionMeta', actionMeta)
               // set filter string_to_search = inputValue
               setInputValue(inputValue)
               tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
@@ -122,8 +122,8 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
               }
             }}
             onInputChange={(inputValue, actionMeta) => {
-              console.log('inputValue', inputValue)
-              console.log('actionMeta', actionMeta)
+              // console.log('inputValue', inputValue)
+              // console.log('actionMeta', actionMeta)
               // set filter string_to_search = inputValue
               setInputValue(inputValue)
               tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
@@ -152,7 +152,7 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
             }
           }
           // this.props.someCallback(value)
-          console.log('valueeee=======>', value)
+          // console.log('valueeee=======>', value)
           onChange(value)
         }}
       >
@@ -194,7 +194,7 @@ function App (props) {
   const count = path(['count', serviceName], props) || []
   const pageCount = path(['pageCount', serviceName], props) || []
 
-  console.log('App begeeeeeeiinnn')
+  // console.log('App begeeeeeeiinnn')
   const filter = path(['filter', serviceName], props) || {}
 
   const doFetchData = React.useCallback(({ filter }) => {

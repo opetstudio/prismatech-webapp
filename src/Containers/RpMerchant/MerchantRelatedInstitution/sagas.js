@@ -11,7 +11,7 @@ export function * fetchMerchantRelatedInsitution (api, action) {
     const { data } = action
     
     const response = yield call(api.fetchMerchantRelatedInsitution,data)
-    console.log("response merchant institution =======>>>>",response)
+    // console.log("response merchant institution =======>>>>",response)
     const err = path(['data','errors'], response)||[]
 
     if (!_.isEmpty(response.problem)) err.push({ message: response.problem })
