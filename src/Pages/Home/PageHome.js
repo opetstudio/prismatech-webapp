@@ -72,6 +72,7 @@ class PageHome extends Component {
         <div className='card-body table-responsive p-0' style={{ height: 300 }}>
           {/* <table className="table table-head-fixed text-nowrap"> */}
           <center><Loader loading type='rpmerah' /> Fetching</center>
+          {/* <center><Loader loading type='rpmerah' /> Fetching</center> */}
           {/* </table> */}
         </div>
       )

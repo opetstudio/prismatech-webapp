@@ -40,8 +40,8 @@ class Sidebar extends Component {
 
     const path = (page.path || '').replace(':merchantId', userMerchantCode || '*')
 
-    console.log('path====>', path)
-    console.log('userPrivileges====>', userPrivileges)
+    // console.log('path====>', path)
+    // console.log('userPrivileges====>', userPrivileges)
 
     const baseRoute = `${basePath}${path}`
     if (!userPrivileges.includes(path)) return null
@@ -103,6 +103,7 @@ class Sidebar extends Component {
                   {this._getMenuLi('/tokoonline', 'Toko Online Management')}
                   {this._getMenuLi('/category', 'Category Management')}
                   {this._getMenuLi('/product', 'Product Management')}
+                  {this._getMenuLi('/inventory', 'Inventaris')}
                   {this._getMenuLi('/purchaseorder', 'Purchase Order')}
                   {/* {this._getMenuLi('/tag', 'Tag Management')} */}
                 </SidebarMainMenu>}

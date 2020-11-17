@@ -94,7 +94,7 @@ class AdminlteContainer extends React.PureComponent {
   }
 
   render () {
-    console.log('render window.location ', window.location.pathname)
+    // console.log('render window.location ', window.location.pathname)
     const loc = window.location.pathname
     const { children } = this.props
     if (loc.startsWith(AppConfig.basePath + '/login-force'))

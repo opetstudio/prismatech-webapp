@@ -26,7 +26,7 @@ export const createService = 'create' + serviceEntity
 export const detailService = 'getDetail' + serviceEntity
 export const listallService = 'getAll' + serviceEntity + 's'
 export const deleteService = 'delete' + serviceEntity
-export const fields = '_id,content1,weight,isneed_shipping,name,code,description,price,tag_id{_id, name},toko_id{_id, name},category_id{_id, title},image_id{_id, filename, filenameorigin, file_type},created_at,updated_at,created_by{full_name},updated_by{full_name}'
+export const fields = '_id,content1,estimated_delivery_unit_time_instock,estimated_delivery_unit_time_preorder,estimated_delivery_time_instock,estimated_delivery_time_preorder,instock_label,preorder_policy,product_availability,stock_amount,weight,isneed_shipping,name,code,description,price,tag_id{_id, name},toko_id{_id, name},category_id{_id, title},image_id{_id, filename, filenameorigin, file_type},created_at,updated_at,created_by{full_name},updated_by{full_name}'
 export const getColumns = (history) => [
   {
     Header: 'Act',

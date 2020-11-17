@@ -5,11 +5,12 @@ import {setSession,getSession,destroySession} from '../../../Utils/Utils'
 import _ from 'lodash'
 import {path} from 'ramda'
 import {isNullOrUndefined} from 'util'
+import LoginActions from '../../../Containers/Login/redux'
 export function * fetchMerchantProfile (api, action) {
     const { data } = action
     
     const response = yield call(api.getMerchantInfo,data)
-    console.log("response fetch user =======>>>>",response)
+    // console.log("response fetch user =======>>>>",response)
     const err = path(['data','errors'], response)||[]
 
     if (!_.isEmpty(response.problem)) err.push({ message: response.problem })
@@ -24,6 +25,11 @@ export function * fetchMerchantProfile (api, action) {
     
     if (!_.isEmpty(errorbody)) err.push({ message: errorbody })
     const status = statusBody || response.status
+
+    if (!_.isEmpty(err) && (_.isEqual((err[0] || {}).message, 'Invalid Access Token') || _.isEqual((err[0] || {}).message, 'jwt expired'))) {
+      console.log('do logout karena at exp')
+      yield put(LoginActions.loginDoLogout({}))
+    }
     
     if (_.isEmpty(err)) {
       const status=statusBody

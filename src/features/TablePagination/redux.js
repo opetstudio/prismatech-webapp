@@ -57,11 +57,17 @@ export const tablepaginationFetchDataDone = (state, { data }) => state.merge({
 export const tablepaginationOnChangeFilter = (state, { data }) => state.merge({
   filter: { ...state.filter, [data.serviceName]: { ...state.filter[data.serviceName], [data.fieldName]: data.fieldValue } }
 })
-export const tablepaginationResetFilter = (state, { data }) => state.merge({
-  filter: { ...state.filter, [data.serviceName]: {} }
-})
+export const tablepaginationResetFilter = (state, { data }) => {
+  const x1 = document.getElementById('filter_start_date')
+  const x2 = document.getElementById('filter_end_date')
+  x1.value = ''
+  x2.value = ''
+  return state.merge({
+    filter: { ...state.filter, [data.serviceName]: {} }
+  })
+}
 export const tablepaginationOnChangeForm = (state, { data }) => state.merge({
-  loading: { ...state.loading, [data.serviceName]: true },
+  // loading: { ...state.loading, [data.serviceName]: true },
   payload: { ...state.payload, [data.serviceName]: { ...state.payload[data.serviceName], [data.fieldName]: data.fieldValue } }
 })
 export const tablepaginationSubmitFormDone = (state, { data }) => {
