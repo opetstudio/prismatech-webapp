@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 import AppConfig from '../../Config/AppConfig'
@@ -12,12 +12,9 @@ class LoginPage extends React.Component {
       formOnSubmit,
       responseMessage,
       isRequesting,
-      valueOnChange
+      valueOnChange,
+      history
     } = this.props
-    //   useEffect(() => {
-    //     // Update the document title using the browser API
-    //     // document.title = `You clicked ${count} times`;
-    //   })
     return (
       <div className='login-box'>
         <Helmet>
@@ -56,6 +53,9 @@ class LoginPage extends React.Component {
                 {!isRequesting && <button type='submit' className='btn btn-block btn-primary btn-sm'>Sign In</button>}
                 {isRequesting && (<center><Loader loading type='rpmerah' /></center>)}
               </div>
+              <br />
+              <center><a href='javascript:;' onClick={() => history.push('/forget-password')}>Forgot your password?</a></center>
+              {/* <center><Link to='/forget-password'>Forgot your password?</Link></center> */}
             </form>
           </div>
         </div>

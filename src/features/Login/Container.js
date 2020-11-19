@@ -6,12 +6,6 @@ import { isLoggedIn, getAccessToken } from '../../Utils/Utils'
 import AppConfig from '../../Config/AppConfig'
 const basePath = AppConfig.basePath
 
-const formOnSubmit = ({ e }) => {
-  if (e) e.preventDefault()
-  // const email = this.refs.email.value
-  // const pass = this.refs.pass.value
-}
-
 class Container extends React.Component {
   componentDidMount () {
     this.props.resetForm()
