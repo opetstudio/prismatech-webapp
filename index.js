@@ -1,17 +1,9 @@
-// import React from 'react'
-// import App from './src/Containers/Adminlte'
-
-import { modulePageLogin } from './src/Pages/Login/PageLogin'
-
-// const ProgressBar = props => {
-//     return <div><span>hallowww</span></div>
-// }
-
+import LoginContainer from './src/features/Login/Container'
 export default () => {
   return {
     feature: {
       login: {
-        loginPage: modulePageLogin
+        PageLogin: LoginContainer
       }
     }
   }

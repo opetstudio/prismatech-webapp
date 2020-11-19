@@ -103,6 +103,7 @@ export const failure = (state, action) => {
 export const reset = (state,action) =>state.merge(INITIAL_STATE)
 
 export const loginDoLogin = (state, { data }) => {
+  console.log('loginDoLogin====')
   data.isRequesting = true
   return loginPatch(state, { data })
 }
