@@ -15,7 +15,6 @@ import { lp } from '../../Utils/Pages'
 const basePath = AppConfig.basePath
 
 function createRow (title, paginationConfig, dataDetail, pathArr) {
-  console.log('dataDetail=====>', dataDetail)
   const val = path([paginationConfig.serviceName, pathArr[0]], dataDetail)
   let ddVal = ''
   if (!_.isEmpty(val) && Array.isArray(val)) {
@@ -50,6 +49,9 @@ function Comp (props) {
 
   // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
   // const courseId = path([paginationConfig.serviceName, 'subject_id', 'course_id', '_id'], dataDetail)
+  const sessionId = (dataDetail[detailService] || {}).session_id
+  console.log('sessionId====>', sessionId)
+  console.log('dataDetail======>', dataDetail[detailService])
   return (
     <ContentWrapper
       pageTitle={detailPageTitle}
@@ -71,61 +73,24 @@ function Comp (props) {
             formTitle={detailPageTitle}
             paginationConfig={paginationConfig}
             child={(dataDetail) => {
-              let isNeedOngkir = path([paginationConfig.serviceName, 'isneed_shipping'], dataDetail)
-              if (isNeedOngkir === 'Y') isNeedOngkir = 'Butuh'
-              else isNeedOngkir = 'Tidak Butuh'
               let createdAt = Moment(path([paginationConfig.serviceName, 'created_at'], dataDetail))
               if (createdAt && createdAt.isValid()) createdAt = createdAt.format('YYYY-MM-DD HH:mm:ss')
               else createdAt = ''
               let updatedAt = Moment(path([paginationConfig.serviceName, 'updated_at'], dataDetail))
               if (updatedAt && updatedAt.isValid()) updatedAt = updatedAt.format('YYYY-MM-DD HH:mm:ss')
               else updatedAt = ''
-              let productAvailabilityLabel = { use_stock: 'Gunakan Stok', always_ready: 'Selalu Ada Stok' }
-              let estimatedDeliveryUnitTimeLabel = { hour: 'Jam', day: 'Hari', week: 'Minggu', month: 'Bulan' }
               return (
                 <dl>
-                  {createRow('Nama', paginationConfig, dataDetail, ['name'])}
-                  {createRow('Kode', paginationConfig, dataDetail, ['code'])}
-                  {createRow('Harga', paginationConfig, dataDetail, ['price'])}
-                  {createRow('Berat', paginationConfig, dataDetail, ['weight'])}
-                  <dt>Apakah Butuh Ongkir?</dt>
-                  <dd>{isNeedOngkir}</dd>
-                  {/* {createRow('Apakah Butuh Ongkir', paginationConfig, dataDetail, ['isneed_shipping'])} */}
-                  {createRow('Kategori', paginationConfig, dataDetail, ['category_id', 'title'])}
-                  {createRow('Toko Online', paginationConfig, dataDetail, ['toko_id', 'name'])}
-                  {createRow('Tagging', paginationConfig, dataDetail, ['tag_id', 'name'])}
-                  {createRow('Deskripsi', paginationConfig, dataDetail, ['description'])}
+                  {createRow('Nama Produk', paginationConfig, dataDetail, ['product_id', 'name'])}
+                  {/* {createRow('Nama', paginationConfig, dataDetail, ['full_name'])}
+                  {createRow('No Telepon', paginationConfig, dataDetail, ['phone_number'])}
+                  {createRow('Email', paginationConfig, dataDetail, ['email'])}
+                  {createRow('ID Sesi', paginationConfig, dataDetail, ['session_id'])}
+                  {createRow('Kode Invoice', paginationConfig, dataDetail, ['invoice_code'])} */}
 
-                  <dt>Ketersediaan Produk</dt>
-                  <dd>{productAvailabilityLabel[path([paginationConfig.serviceName, 'product_availability'], dataDetail)]}</dd>
-                  
-                  {createRow('Label ketika stok masih ada', paginationConfig, dataDetail, ['instock_label'])}
-                  <dt>Setelah customer melakukan pembayaran, produk akan dikirim dalam:</dt>
-                  <dd>{path([paginationConfig.serviceName, 'estimated_delivery_time_instock'], dataDetail)} {estimatedDeliveryUnitTimeLabel[path([paginationConfig.serviceName, 'estimated_delivery_unit_time_instock'], dataDetail)] || ''}</dd>
-
-                  {
-                    path([paginationConfig.serviceName, 'product_availability'], dataDetail) === 'use_stock' &&
-                      <>
-                        {createRow('Jumlah Stok', paginationConfig, dataDetail, ['stock_amount'])}
-                        {createRow('Status produk jika stok habis', paginationConfig, dataDetail, ['preorder_policy'])}
-                        {
-                          path([paginationConfig.serviceName, 'preorder_policy'], dataDetail) === 'preorder' &&
-                            <>
-                              <dt>Produk Pre-order biasanya dikirimkan dalam:</dt>
-                              <dd>{path([paginationConfig.serviceName, 'estimated_delivery_time_preorder'], dataDetail)} {estimatedDeliveryUnitTimeLabel[path([paginationConfig.serviceName, 'estimated_delivery_unit_time_preorder'], dataDetail)] || ''}</dd>
-                            </>
-                        }
-                      </>
-                  }
-
-                  {createRow('Diperbaharui Oleh', paginationConfig, dataDetail, ['updated_by', 'full_name'])}
-                  {createRow('Dibuat Oleh', paginationConfig, dataDetail, ['created_by', 'full_name'])}
-                  <dt>Tanggal Dibuat</dt>
-                  <dd>{createdAt}</dd>
-                  <dt>Tanggal Diperbaharui</dt>
-                  <dd>{updatedAt}</dd>
-                  <dt>Gambar</dt>
-                  <dd><img src={`${AppConfig.hostBackend}/renderfile/${path([paginationConfig.serviceName, 'image_id', 'filename'], dataDetail) || ''}.${path([paginationConfig.serviceName, 'image_id', 'file_type'], dataDetail) || ''}`} /></dd>
+                  {/* <dt>Tanggal Transaksi</dt>
+                  <dd>{updatedAt}</dd> */}
+                  {/* {createRow('Payment Page Url', paginationConfig, dataDetail, ['payment_page_url'])} */}
                 </dl>
               )
             }}
@@ -133,9 +98,9 @@ function Comp (props) {
               // const subjectId = path([paginationConfig.serviceName, 'subject_id', '_id'], dataDetail)
               return (
                 <>
-                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Hapus</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Ubah</button>
-                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Kembali</button>
+                  {/* <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button> */}
+                  {/* <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updatePageUrl(match.params._id))} type='button' className='btn bg-gradient-primary'>Edit</button> */}
+                  <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Back</button>
                 </>
               )
             }}

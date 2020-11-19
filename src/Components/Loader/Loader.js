@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AppConfig from '../../Config/AppConfig'
 import ClipLoader from 'react-spinners/ClipLoader'
 import Lottie from 'react-lottie'
 import * as rpmerah from './Loader_asset/Loader-merah.json'
@@ -20,30 +21,31 @@ export default class Loader extends Component {
         preserveAspectRatio: 'xMidYMid slice'
       }
     }
-    if (this.props.type === 'rpmerah' || this.props.type === 'rpputih') {
-      console.log('Loading custom')
-      return (
-        // <div className='sweet-loading' style={{bottom:'100%'}}>
-        <Lottie
-          options={defaultOptions}
-          height={100}
-          width={100}
-        />
-        // </div>
-      )
-    } else {
-      console.log('Loading default')
-      return (
-        <div className='sweet-loading'>
-          <ClipLoader
-          //   css={override}
-            sizeUnit='px'
-            size={40}
-            color='#123abc'
-            loading={this.props.loading}
+    if (AppConfig.appCode === 'RP') {
+      if (this.props.type === 'rpmerah' || this.props.type === 'rpputih') {
+        console.log('Loading custom')
+        return (
+          // <div className='sweet-loading' style={{bottom:'100%'}}>
+          <Lottie
+            options={defaultOptions}
+            height={100}
+            width={100}
           />
-        </div>
-      )
+          // </div>
+        )
+      }
     }
+    console.log('Loading default')
+    return (
+      <div className='sweet-loading'>
+        <ClipLoader
+        //   css={override}
+          sizeUnit='px'
+          size={this.props.size || 40}
+          color='#123abc'
+          loading={this.props.loading}
+        />
+      </div>
+    )
   }
 }

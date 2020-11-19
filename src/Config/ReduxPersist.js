@@ -38,7 +38,7 @@ const REDUX_PERSIST = {
 }
 
 const currentReducerVersion = getSession('currentReducerVersion')
-console.log('currentReducerVersionSession===>', currentReducerVersion)
+// console.log('currentReducerVersionSession===>', currentReducerVersion)
 const nextReducerVersion = REDUX_PERSIST.reducerVersion
 if (currentReducerVersion !== nextReducerVersion) {
   setSession({currentReducerVersion: nextReducerVersion, [AppConfig.loginFlag]: false})
