@@ -58,7 +58,7 @@ class AdminlteContainer extends React.PureComponent {
           <body className='hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed' />
         </Helmet>
         {(isLoggedIn(this.props.isLoggedIn) === true) && <Header />}
-        {(isLoggedIn(this.props.isLoggedIn) === true) && <Sidebar />}
+        {(isLoggedIn(this.props.isLoggedIn) === true) && <Sidebar sidemenu={this.props.sidemenu} />}
         {children}
         <ModalLogout logout={this.props.doLogout} isRequesting={this.props.isRequesting} />
         <ModalQrMerchant />

@@ -40,7 +40,7 @@ class Adminlte extends Component {
     return (
       <Provider store={this.props.store}>
         {/* <ApolloProvider client={client}> */}
-        <RootContainer />
+        <RootContainer sidemenu={this.props.sidemenu} />
         {/* </ApolloProvider> */}
       </Provider>
     )
@@ -68,5 +68,5 @@ export default (params) => {
   // console.log('reducerreducerreducerreducerreducerreducer===>', reducer)
   const exApp = ExternalApp()
   const { store } = createStore({ externalApi: exApp.api, externalRedux: exApp.redux, externalSagas: exApp.sagas })
-  return <Adminlte store={store} />
+  return <Adminlte store={store} sidemenu={exApp.sidemenu} />
 }

@@ -8,7 +8,7 @@ class TheComponent extends React.PureComponent {
   render () {
     const { userMerchantCode } = this.props
     // console.log('render')
-    return (<Sidebar userMerchantCode={userMerchantCode} userRole={this.props.userRole} appPatch={this.props.appPatch} routeActive={this.props.routeActive} sessionToken={this.props.sessionToken} history={this.props.history} {...this.props} />)
+    return (<Sidebar sidemenu={this.props.sidemenu} userMerchantCode={userMerchantCode} userRole={this.props.userRole} appPatch={this.props.appPatch} routeActive={this.props.routeActive} sessionToken={this.props.sessionToken} history={this.props.history} {...this.props} />)
   }
 }
 

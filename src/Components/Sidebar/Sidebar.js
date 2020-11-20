@@ -45,7 +45,7 @@ class Sidebar extends Component {
 
     const baseRoute = `${basePath}${path}`
     if (!userPrivileges.includes(path)) return null
-    return (<li className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <p>{page.title || title}</p></Link></li>)
+    return (<li key={baseRoute} className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <p>{page.title || title}</p></Link></li>)
   }
 
   _getMenuLiSingle (route, title, liClass) {
@@ -55,7 +55,14 @@ class Sidebar extends Component {
   }
 
   render () {
-    const { profile, userPrivileges } = this.props
+    const { profile, userPrivileges, sidemenu } = this.props
+    const xm = sidemenu.map(v => {
+      return (
+        <SidebarMainMenu name={v.userPrivilegeCode} title={v.title} userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
+          { v.submenu.map(v2 => this._getMenuLi(v2.route, v2.title)) }
+        </SidebarMainMenu>
+      )
+    })
     return (
       <aside className='main-sidebar sidebar-dark-primary elevation-4' style={{ background: 'linear-gradient(to right bottom, #a00f0f,#ed2f2f )' }}>
         {/* Brand Logo */}
@@ -83,28 +90,12 @@ class Sidebar extends Component {
           <nav className='mt-2'>
             <ul className='nav nav-pills nav-sidebar flex-column' data-widget='treeview' role='menu' data-accordion='false'>
               {/* {this._getMenuLiSingle(AppConfig.appHomePage, 'Dashboard', 'nav-icon fas fa-tachometer-alt')} */}
-              <SidebarMainMenu name='main-menu-dashboard' title='Dashboard' userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
-                {AppConfig.appCode === 'LMS' && this._getMenuLi('/dashboard-lms', 'LMS Dashboard')}
-                {AppConfig.appCode === 'PM' && this._getMenuLi('/dashboard-ecomm', 'Plink Market Dashboard')}
-                {AppConfig.appCode === 'RP' && this._getMenuLi('/dashboard-rpay', 'Rayapay Dashboard')}
-                {/* {this.props.getMenuLi('/published-course', 'Published Course')} */}
-                {/* {this._getMenuLi('/student', 'Student')} */}
-                {/* {this._getMenuLi('/tag', 'Tag Management')} */}
-              </SidebarMainMenu>
+              {xm}
               {AppConfig.appCode === 'LMS' &&
                 <SidebarMainMenu name='main-menu-elearning-management' title='E-Learning' userPrivileges={userPrivileges}>
                   {this._getMenuLi('/course', 'Course Management')}
                   {/* {this.props.getMenuLi('/published-course', 'Published Course')} */}
                   {this._getMenuLi('/student', 'Student')}
-                  {/* {this._getMenuLi('/tag', 'Tag Management')} */}
-                </SidebarMainMenu>}
-              {AppConfig.appCode === 'PM' &&
-                <SidebarMainMenu name='main-menu-ecommerce-management' title='E-Commerce' userPrivileges={userPrivileges}>
-                  {this._getMenuLi('/tokoonline', 'Toko Online Management')}
-                  {this._getMenuLi('/category', 'Category Management')}
-                  {this._getMenuLi('/product', 'Product Management')}
-                  {this._getMenuLi('/inventory', 'Inventaris')}
-                  {this._getMenuLi('/purchaseorder', 'Purchase Order')}
                   {/* {this._getMenuLi('/tag', 'Tag Management')} */}
                 </SidebarMainMenu>}
               {AppConfig.appCode === 'RP' &&

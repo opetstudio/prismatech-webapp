@@ -61,7 +61,7 @@ class NavigationRouter extends Component {
     return (
       <Router>
         <AppContainer checkLogedStatus={this.props.checkLogedStatus} appPatch={this.props.appPatch}>
-          <ResponsiveContainer appname='adminlte' is>
+          <ResponsiveContainer sidemenu={this.props.sidemenu} appname='adminlte' is>
             {authorizedRoute.map(r => (
               <Route key={r.path} exact path={`${basePath}${r.path}`} component={r.component} />
             ))}

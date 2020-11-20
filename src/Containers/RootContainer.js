@@ -72,7 +72,7 @@ class RootContainer extends Component {
     }
     return (
       <IntlProvider locale={lang} messages={messages}>
-        <Navigation userPrivileges={this.props.userPrivileges} appPatch={this.props.appPatch} checkLogedStatus={this.props.getLoginStatus} />
+        <Navigation userPrivileges={this.props.userPrivileges} appPatch={this.props.appPatch} checkLogedStatus={this.props.getLoginStatus} sidemenu={this.props.sidemenu} />
       </IntlProvider>
     )
   }
