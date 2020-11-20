@@ -5,7 +5,7 @@ import ApiElectron from '../Services/ApiElectron'
 import {getAccessToken} from '../Utils/Utils'
 
 // our "constructor"
-const create = (baseURL = 'https://jsonplaceholder.typicode.com/') => {
+const create = ({ baseURL = 'https://jsonplaceholder.typicode.com/', externalApi }) => {
   // ------
   // STEP 1
   // ------
@@ -92,7 +92,7 @@ const create = (baseURL = 'https://jsonplaceholder.typicode.com/') => {
   // begin Ignite-Entity-Login
   apiMerged = merge(apiMerged, require('../Containers/Login/api').create(api))
   apiMerged = merge(apiMerged, require('../features/Signup/api').create(api))
-  apiMerged = merge(apiMerged, require('../features/PurchaseOrder/api').create(api))
+  // apiMerged = merge(apiMerged, require('../features/PurchaseOrder/api').create(api))
   apiMerged = merge(apiMerged, require('../features/Privilege/api').create(api))
   apiMerged = merge(apiMerged, require('../Containers/ForgetPassword/api').create(api))
   apiMerged = merge(apiMerged, require('../Containers/RpMerchant/Transaction/api').create(api))
@@ -107,7 +107,13 @@ const create = (baseURL = 'https://jsonplaceholder.typicode.com/') => {
   apiMerged = merge(apiMerged, require('../features/TablePagination/api').create(api))
   apiMerged = merge(apiMerged, require('../features/CourseEnrollment/api').create(api))
   apiMerged = merge(apiMerged, require('../features/ChangePassword/api').create(api))
+  
+  externalApi.forEach(v => {
+    apiMerged = merge(apiMerged, v.create(api))
+  })
+
   apiMerged = merge(apiMerged, {})
+
   return {
     ...apiMerged
   }

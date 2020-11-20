@@ -3,15 +3,14 @@ import { persistReducer, persistStore } from 'redux-persist'
 import CreateStore from './CreateStore'
 import rootSaga from '../Sagas/'
 import ReduxPersist from '../Config/ReduxPersist'
-import { any } from 'ramda'
 
-export default () => {
+export default ({ externalRedux, externalApi, externalSagas }) => {
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
     app: require('./AppRedux').reducer,
     // begin Ignite-Entity-Login
     privilege: require('../features/Privilege/redux').reducer,
-    purchaseorder: require('../features/PurchaseOrder/redux').reducer,
+    // purchaseorder: require('../features/PurchaseOrder/redux').reducer,
     myprofile: require('../Containers/Myprofile/redux').reducer,
     courseenrollment: require('../features/CourseEnrollment/redux').reducer,
     tablepagination: require('../features/TablePagination/redux').reducer,
@@ -33,7 +32,8 @@ export default () => {
     merchantsettlement: require('../Containers/RpMerchant/Settlement/redux').reducer,
     merchantrelatedinstitution: require('../Containers/RpMerchant/MerchantRelatedInstitution/redux').reducer,
     splash: require('../Containers/RpMerchant/SplashScreen/redux').reducer,
-    changepassword: require('../features/ChangePassword/redux').reducer
+    changepassword: require('../features/ChangePassword/redux').reducer,
+    ...externalRedux
   })
   let finalReducers = rootReducer
 
@@ -41,7 +41,7 @@ export default () => {
     const persistConfig = ReduxPersist.storeConfig
     finalReducers = persistReducer(persistConfig, rootReducer)
   }
-  const store = CreateStore(finalReducers, rootSaga)
+  const store = CreateStore(finalReducers, rootSaga({ externalApi, externalSagas }))
   return { store }
 
   // return configureStore(finalReducers, rootSaga)

@@ -60,17 +60,24 @@ import { purchaseorderCheckStatusRequestOtp, purchaseorderCheckStatus } from '..
 
 const hostBackend = process.env.REACT_APP_BACKEND_BASE_URL
 
-const apiDashboard = DebugConfig.useFixtures ? FixtureAPI : API.create(hostBackend)
 
-const apiDashboardPy = DebugConfig.useFixtures ? FixtureAPI : API.create(hostBackend + '')
 
 /* ------------- Connect Types To Sagas ------------- */
 
-export default function * root () {
+export default ({ externalApi, externalSagas }) => function * root () {
+  const apiDashboard = DebugConfig.useFixtures ? FixtureAPI : API.create({ baseURL: hostBackend, externalApi})
+  const apiDashboardPy = DebugConfig.useFixtures ? FixtureAPI : API.create({ baseURL: hostBackend + '', externalApi })
+  console.log('hallow')
+
+  let x = []
+  externalSagas.forEach(v => {
+    x.push(v.effects(v.type, v.sagas, apiDashboard))
+  })
+
   yield all([
     // purchase order
-    takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS_REQUEST_OTP, purchaseorderCheckStatusRequestOtp, apiDashboard),
-    takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS, purchaseorderCheckStatus, apiDashboard),
+    // takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS_REQUEST_OTP, purchaseorderCheckStatusRequestOtp, apiDashboard),
+    // takeLatest(PurchaseorderTypes.PURCHASEORDER_CHECK_STATUS, purchaseorderCheckStatus, apiDashboard),
     // privilege
     takeLatest(PrivilegeTypes.PRIVILEGE_CHECKBOX_SUBMIT, privilegeCheckboxSubmit, apiDashboard),
     // Courseenrollment
@@ -121,7 +128,9 @@ export default function * root () {
     takeLatest(MerchantRelatedInstitutionTypes.FETCH_RELATED_INSTITUTION, fetchMerchantRelatedInsitution, apiDashboard),
 
     // settlement
-    takeLatest(SettlementTypes.FETCH_SETTLEMENT, fetchMerchantSettlement, apiDashboard)
+    takeLatest(SettlementTypes.FETCH_SETTLEMENT, fetchMerchantSettlement, apiDashboard),
+
+    ...x
 
     // some sagas receive extra parameters in addition to an action
     // takeLatest(UserTypes.USER_REQUEST, getUserAvatar, api)
