@@ -1,5 +1,6 @@
 import React from 'react'
 import namor from 'namor'
+import randomString from 'randomstring'
 import AppConfig from '../Config/AppConfig'
 import Moment from 'moment'
 import { merge, path } from 'ramda'
@@ -317,3 +318,7 @@ export const updateURLParameter = (url, param, paramVal) => {
   var rowsTxt = temp + '' + param + '=' + paramVal
   return baseURL + '?' + newAdditionalURL + rowsTxt
 }
+export const generateRandomNumber = (length) => randomString.generate({
+  length,
+  charset: 'numeric'
+})

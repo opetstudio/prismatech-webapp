@@ -83,7 +83,9 @@ export const create = api => ({
       let val = payload[serviceName][prop]
       if (Array.isArray(val)) {
         console.log('arrayVal===>', val)
-        arr.push(`${prop}: ${JSON.stringify(val)}`)
+        const valStr = val.map(v => v)
+        arr.push(`${prop}: [${valStr}]`)
+        // arr.push(`${prop}: ${JSON.stringify(val)}`)
       } else if (prop === 'content1') {
         val = encodeURIComponent(val)
         arr.push(`${prop}: "${val}"`)

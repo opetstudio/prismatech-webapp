@@ -20,7 +20,6 @@ function Createform (props) {
     onSubmit,
     isNeedValidation
   } = props
-  const loading = path(['loading', paginationConfig.serviceName], props)
   //   const dataDetail = path(['dataDetail', paginationConfig.serviceName], props) || {}
 
   // Similar to componentDidMount
@@ -87,7 +86,6 @@ function Createform (props) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    loading: state.tablepagination.loading,
     payload: state.tablepagination.payload
   }
 }

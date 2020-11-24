@@ -57,7 +57,7 @@ function App (props) {
   } = props
   const history = useHistory()
   const loading = path(['loading', serviceName], props)
-  const data = path(['data', serviceName], props) || []
+  const data = Immutable.asMutable(path(['data', serviceName], props) || [], { deep: true })
   const count = path(['count', serviceName], props) || []
   const pageCount = path(['pageCount', serviceName], props) || []
 
@@ -90,7 +90,7 @@ function App (props) {
         optionColumnLabel={optionColumnLabel}
         fields={fields}
         filter={filter}
-        onChange={onChange}
+        onChange={(e) => onChange(e, data)}
         label={label}
       />
       {/* <Styles>

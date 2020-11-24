@@ -57,8 +57,15 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
     // console.log('react effect========pageIndex=', pageIndex)
     // console.log('react effect========pageSize=', pageSize)
     fetchData({ pageIndex, pageSize, filter, whereCondition })
-  }, [fetchData, pageIndex, pageSize, whereCondition])
-
+  }, [fetchData, pageIndex, pageSize])
+  React.useEffect(() => {
+    console.log('react effect========TablewhereCondition=====', whereCondition)
+    // console.log('react effect========pageIndex=', pageIndex)
+    // console.log('react effect========pageSize=', pageSize)
+    // fetchData({ pageIndex, pageSize, filter, whereCondition })
+    fetchData({ pageIndex, pageSize, filter, whereCondition })
+  }, [whereCondition])
+  
   // Render the UI for your table
   return (
     <>
