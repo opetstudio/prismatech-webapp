@@ -165,7 +165,7 @@ export default class ModalQrMerchant extends Component {
                                     <div className='btn-group' style={{ merginLeft: 10 }}>
                                         <button className='btn btn-warning' onClick={()=>this._downloadPNG()}>Download PNG</button>
                                         &nbsp;&nbsp;
-                                        <Pdf targetRef={ref} filename={`qr-merchant-${(merchant.business_name).replace(" ","-")}-rp.pdf`}>
+                                        <Pdf targetRef={ref} filename={`qr-merchant-${(merchant.business_name || '').replace(" ","-")}-rp.pdf`}>
                                             {({ toPdf }) => <button className='btn btn-warning' href='/#' onClick={toPdf}>Download PDF</button>}
                                         </Pdf>
                                     </div>

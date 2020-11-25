@@ -7,6 +7,6 @@ export const create = api => ({
     const body = { query: `mutation{signUpV2(email: "${email}", device_id: "${deviceId}", full_name: "${fullName}"){ error, status, success }}` }
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   }
 })

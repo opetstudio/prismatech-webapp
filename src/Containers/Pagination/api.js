@@ -1,4 +1,4 @@
-// import AppConfig from '../../Config/AppConfig'
+import AppConfig from '../../Config/AppConfig'
 // import { path } from 'ramda'
 import _ from 'lodash'
 import { generateHmac, generateSha256, getAccessToken } from '../../Utils/Utils'
@@ -19,7 +19,7 @@ export const create = api => ({
     console.log('submitFilter======filterStr=', filterStr)
     const query = `{${datasource}(page: ${page}, size: ${size}, where: "${filterStr.replace(/"/g, '\\"')}", sort: "") {content{ ${col} } size number totalPages}}`
     console.log('query===>', query)
-    const resp = api.post('/graphql', { query })
+    const resp = api.post(AppConfig.graphqlPath, { query })
     return resp
   },
   deleteRowById: (data) => {
@@ -28,6 +28,6 @@ export const create = api => ({
     api.setHeader('Authorization', `Bearer ${at}`)
     api.setHeader('merchantid', `${userMerchantCode}`)
     const mutation = `mutation{${deleteById}(id: "${id}"){responseCode, responseMessage, responseDescription}}`
-    return api.post('/graphql', { query: mutation })
+    return api.post(AppConfig.graphqlPath, { query: mutation })
   }
 })

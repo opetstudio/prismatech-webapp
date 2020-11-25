@@ -9,7 +9,7 @@ export const create = api => ({
     const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     // console.log('login body>>>>>>>>>>', body)
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     // console.log('response login>>>>>>>', resp)
     return resp
   },
@@ -19,7 +19,7 @@ export const create = api => ({
     console.log('query logoou>>>', body)
     const query = { query: body }
     api.setHeader('hmac', JSON.stringify(generateHmac(query)))
-    const resp = api.post('/graphql', { query: body })
+    const resp = api.post(AppConfig.graphqlPath, { query: body })
     return resp
   },
   getLoginStatus: (data, opt) => {
@@ -28,7 +28,7 @@ export const create = api => ({
     const query = { query: body }
     console.log('body==>', JSON.stringify(body))
     api.setHeader('mac', generateHmac(JSON.stringify(query)))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   }
 })

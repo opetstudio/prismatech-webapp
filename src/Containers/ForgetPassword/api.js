@@ -9,7 +9,7 @@ export const create = api => ({
     console.log('body forget password==>', body)
     const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   },
   submitForgetPassword: ({ email, otpRefNum, otp, new_password }) => {
@@ -22,7 +22,7 @@ export const create = api => ({
     console.log('body submit forget password==>', body)
     const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   }
 })

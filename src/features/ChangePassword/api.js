@@ -1,5 +1,5 @@
 // a library to wrap and simplify api calls
-// import AppConfig from '../../../Config/AppConfig'
+import AppConfig from '../../Config/AppConfig'
 import { getSession, generateHmac, getAccessToken } from '../../Utils/Utils'
 
 export const create = api => ({
@@ -17,7 +17,7 @@ export const create = api => ({
     const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     api.setHeader('AccessToken', at)
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   }
 })

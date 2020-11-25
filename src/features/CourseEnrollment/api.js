@@ -8,6 +8,6 @@ export const create = api => ({
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   }
 })

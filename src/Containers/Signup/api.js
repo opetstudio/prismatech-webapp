@@ -9,7 +9,7 @@ export const create = api => ({
     console.log('body==>', JSON.stringify(body))
     const query= { query:body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   }
 })

@@ -12,6 +12,6 @@ export const create = api => ({
     const body = { query: `mutation{privilegeCheckboxSubmit(role_id: "${roleId}", privilege_ids_flag: [${privilegeIdsFlag.join(',')}]){ error, status }}` }
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   }
 })

@@ -8,13 +8,13 @@ export const create = api => ({
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   },
   purchaseorderCheckStatus: ({ email, trxid, otp, otpRefNum }) => {
     const body = { query: `query{purchaseorderCheckStatus(email: "${email}", trxid: "${trxid}", otp: "${otp}", otpRefNum: "${otpRefNum}"){ error, data_detail{_id, action, debitin_paymentpage_backend_baseurl, payment_page_url, session_id, total_amount, phone_number, full_name, email, shipping_address} }}` }
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   }
 })

@@ -30,7 +30,7 @@ const doQuery = ({ api, filter, fields, serviceName, pageSize, pageIndex }) => {
   api.setHeader('hmac', generateHmac(JSON.stringify(query)))
   api.setHeader('AccessToken', getAccessToken())
   console.log('queryhmac===>>>', generateHmac(query))
-  const resp = api.post('/graphql', query)
+  const resp = api.post(AppConfig.graphqlPath, query)
   return resp
 }
 export const create = api => ({
@@ -64,7 +64,7 @@ export const create = api => ({
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     api.setHeader('AccessToken', getAccessToken())
     console.log('queryhmac===>>>', generateHmac(query))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   },
   fetchDetailService: ({ id, serviceName, fields, additionalFields }) => {
@@ -73,7 +73,7 @@ export const create = api => ({
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     api.setHeader('AccessToken', getAccessToken())
     // console.log('queryhmac===>>>', generateHmac(query))
-    const resp = api.post('/graphql', query)
+    const resp = api.post(AppConfig.graphqlPath, query)
     return resp
   },
   createService: ({ payload, serviceName, fields }) => {
@@ -98,14 +98,14 @@ export const create = api => ({
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   },
   deleteService: ({ serviceName, id }) => {
     const body = { query: `mutation{${serviceName}(_id: "${id}"){ error }}` }
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   },
   updateService: ({ payload, updateServiceName, serviceName, fields, id }) => {
     let graphQlFields = null
@@ -128,6 +128,6 @@ export const create = api => ({
     console.log('body==>', JSON.stringify(body))
     api.setHeader('hmac', generateHmac(JSON.stringify(body)))
     api.setHeader('AccessToken', getAccessToken())
-    return api.post('/graphql', body)
+    return api.post(AppConfig.graphqlPath, body)
   }
 })
