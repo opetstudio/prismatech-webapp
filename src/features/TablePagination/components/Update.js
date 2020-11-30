@@ -30,7 +30,8 @@ function Updateform (props) {
     payload,
     redirectAfterCreate,
     isNeedValidation,
-    onSubmit
+    onSubmit,
+    beforeSubmit
   } = props
   const loading = path(['loading', paginationConfig.serviceName], props)
   const errors = path(['errors', paginationConfig.serviceName], props) || []
@@ -75,16 +76,31 @@ function Updateform (props) {
           }
           if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
           else {
-            tablepaginationSubmitForm({
-              fields: paginationConfig.fields,
-              payload,
-              serviceName: paginationConfig.serviceName,
-              history,
-              redirectAfterCreate: redirectAfterCreate,
-              isUpdate: true,
-              updateServiceName: paginationConfig.updateServiceName,
-              id: id
-            })
+            if(beforeSubmit) {
+              beforeSubmit((p) => {
+                tablepaginationSubmitForm({
+                  fields: paginationConfig.fields,
+                  payload: { [paginationConfig.serviceName]: { ...payload[paginationConfig.serviceName], ...p } },
+                  serviceName: paginationConfig.serviceName,
+                  history,
+                  redirectAfterCreate: redirectAfterCreate,
+                  isUpdate: true,
+                  updateServiceName: paginationConfig.updateServiceName,
+                  id: id
+                })
+              })
+            } else {
+              tablepaginationSubmitForm({
+                fields: paginationConfig.fields,
+                payload,
+                serviceName: paginationConfig.serviceName,
+                history,
+                redirectAfterCreate: redirectAfterCreate,
+                isUpdate: true,
+                updateServiceName: paginationConfig.updateServiceName,
+                id: id
+              })
+            }
           }
         }}
       >

@@ -79,13 +79,37 @@ export const create = api => ({
   createService: ({ payload, serviceName, fields }) => {
     let graphQlFields = null
     const arr = []
+
     for (const prop in payload[serviceName]) {
       let val = payload[serviceName][prop]
       if (Array.isArray(val)) {
-        console.log('arrayVal===>', val)
-        const valStr = val.map(v => v)
-        arr.push(`${prop}: [${valStr}]`)
-        // arr.push(`${prop}: ${JSON.stringify(val)}`)
+        console.log('arrayVal===>', val) // ["{"] ["xxxx"]
+        let isValJson = false
+        for(let i = 0; i< val.length; i++){
+          const str = val[i]
+          if(str.substring(0, 1) === '{') {
+            isValJson = true
+            break;
+          }
+        }
+
+        if(isValJson) arr.push(`${prop}: [${val}]`)
+        else arr.push(`${prop}: ${JSON.stringify(val)}`)
+
+        // const valStr = val.map(v => v)
+        // console.log('valStr===>', valStr) // ["{"]
+        
+        // if(isJson(valStr)) {
+        //   console.log('value json')
+        //   arr.push(`${prop}: ${JSON.stringify(val)}`)
+        // } else {
+        //   console.log('value bukan json ==>', valStr)
+        //   const x = valStr;
+        //   if(x.substring(0, 2) === '"{') {
+        //   } else {
+        //     arr.push(`${prop}: ${JSON.stringify(val)}`)
+        //   }
+        // }
       } else if (prop === 'content1') {
         val = encodeURIComponent(val)
         arr.push(`${prop}: "${val}"`)
@@ -93,6 +117,7 @@ export const create = api => ({
         arr.push(`${prop}: "${val}"`)
       }
     }
+
     if (!_.isEmpty(arr)) graphQlFields = _.join(arr, ',')
     const body = { query: `mutation{${serviceName}(${graphQlFields}){ error detail_data{${fields}} }}` }
     console.log('body==>', JSON.stringify(body))

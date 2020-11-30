@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import TablepaginationActions from '../redux'
 
 function Createform (props) {
+  console.log('render Create.js')
   const history = useHistory()
   const {
     paginationConfig,
@@ -18,7 +19,8 @@ function Createform (props) {
     footerCard,
     tablepaginationResetForm,
     onSubmit,
-    isNeedValidation
+    isNeedValidation,
+    beforeSubmit
   } = props
   //   const dataDetail = path(['dataDetail', paginationConfig.serviceName], props) || {}
 
@@ -53,13 +55,26 @@ function Createform (props) {
             }
             if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
             else {
-              tablepaginationSubmitForm({
-                fields: paginationConfig.fields,
-                payload,
-                serviceName: paginationConfig.serviceName,
-                history,
-                redirectAfterCreate: redirectAfterCreate
-              })
+              if(beforeSubmit) {
+                beforeSubmit((p) => {
+                  const pl = { [paginationConfig.serviceName]: { ...payload[paginationConfig.serviceName], ...p } }
+                  tablepaginationSubmitForm({
+                    fields: paginationConfig.fields,
+                    payload: pl,
+                    serviceName: paginationConfig.serviceName,
+                    history,
+                    redirectAfterCreate: redirectAfterCreate
+                  })
+                })
+              } else {
+                tablepaginationSubmitForm({
+                  fields: paginationConfig.fields,
+                  payload,
+                  serviceName: paginationConfig.serviceName,
+                  history,
+                  redirectAfterCreate: redirectAfterCreate
+                })
+              }
             }
           }}
           novalidate

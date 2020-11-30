@@ -1,4 +1,4 @@
-import React, { Component, memo, useCallback, useState } from 'react'
+import React, { Component, useEffect, memo, useCallback, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import CreatableSelect from 'react-select/creatable'
 import Select from 'react-select'
@@ -27,34 +27,72 @@ const Styles = styled.div`
 //   { value: 'vanilla', label: 'Vanilla' }
 // ]
 
-function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeFilter, isAutocomplete, label, onChange, defaultValue, name, id, optionColumnValue, optionColumnLabel, columns, data, fetchData, loading, pageCount: controlledPageCount, count, filter }) {
-  const [inputValue, setInputValue] = useState('')
+function App2 ({
+  formType,
+  tablepaginationFetchData,
+  distinct,
+  whereCondition,
+  history,
+  fields,
+  maxOptions,
+  inputValue,
+  setInputValue,
+  isCreatableSelect,
+  serviceName,
+  tablepaginationOnChangeFilter,
+  isAutocomplete, label, onChange, defaultValue = [], name, id, optionColumnValue, optionColumnLabel, columns, data: xdata, loading: xloading = {}, pageCount: controlledPageCount = {}, count: xcount = {}, filter: xfilter }) {
+  console.log('render Multiselect component')
+  console.log('defaultValuedefaultValuedefaultValue==>', defaultValue)
+
+  const loading = xloading[serviceName]
+  const count = xcount[serviceName] || 0
+  const pageCount = controlledPageCount[serviceName] || 0
+  const data = Immutable.asMutable(xdata[serviceName] || {}, { deep: true })
+  const filter = Immutable.asMutable(xfilter[serviceName] || {}, { deep: true })
+
+  // const [inputValue, setInputValue] = useState('')
   // fetchData({ pageIndex, pageSize })
   // Listen for changes in pagination and use the state to fetch our new data
-  React.useEffect(() => {
-    // console.log('react effect========pageIndex=', pageIndex)
-    // console.log('react effect========pageSize=', pageSize)
-    fetchData({ filter })
-  }, [fetchData, inputValue])
+  useEffect(() => {
+    console.log('react effect========fff')
+    // fetchData({ filter })
+    tablepaginationFetchData({
+      serviceName: serviceName,
+      pageSize: maxOptions,
+      pageIndex: 0,
+      filter: Immutable.asMutable(filter, { deep: true }),
+      fields: fields,
+      history,
+      whereCondition,
+      distinct
+    })
+  }, [tablepaginationFetchData, inputValue])
 
   // console.log('loading===>', loading)
   // console.log('serviceName===>', serviceName)
-  if (typeof loading === 'undefined' || loading === 'undefined' || loading) {
-    console.log('jangan render')
-    return null
-  }
+  
+  
   // console.log('silahkan render')
   if (isAutocomplete) {
-    const options = (data.concat(defaultValue) || []).map((v, i) => {
+    if(formType === 'update' && _.isEmpty(inputValue) && (_.isEmpty(data) || _.isEmpty(defaultValue))) {
+      console.log('jangan render')
+      return null
+    }
+    const options =  (_.concat(data || [], defaultValue)).map((v, i) => {
       if (v) {
         const val = { value: v[optionColumnValue], label: v[optionColumnLabel] }
         return val
       }
       return { value: '-', label: '-' }
     })
-    const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
+    const optionsDefaultValue = []
+    for(let i = 0; i < defaultValue.length; i++ ) {
+      const v = defaultValue[i]
+      if(v) optionsDefaultValue.push({ value: v[optionColumnValue], label: v[optionColumnLabel] })
+    }
+    // const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
     // console.log('options=====>', options)
-    // console.log('defaultValue=====>', defaultValue)
+    console.log('optionsDefaultValueoptionsDefaultValue=====>', optionsDefaultValue)
     // console.log('isCreatableSelect===>', isCreatableSelect)
     // console.log('label===>', label)
     
@@ -65,13 +103,14 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
           <label>{label}</label>
           <CreatableSelect
             defaultValue={optionsDefaultValue}
+            defaultInputValue={inputValue}
             isMulti
             name='colors'
             options={options}
             className='basic-multi-select'
             classNamePrefix='select'
             onChange={(selectedOption) => {
-              // console.log('handleOnChange', selectedOption)
+              console.log('handleOnChangeeeeee', selectedOption)
               // var options = e.target.options
               // var value = []
               // for (var i = 0, l = options.length; i < l; i++) {
@@ -80,8 +119,10 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
               //   }
               // }
               // // this.props.someCallback(value)
-              // console.log('valueeee=======>', value)
-              onChange(selectedOption.map(v => v.value))
+              // const value = selectedOption.map(v => v.value)
+              // console.log('valueeee=====xxxx==>', value)
+              // onChange(value)
+              if (selectedOption) onChange(selectedOption.map(v => v.value), selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label })))
             }}
             onInputChange={(inputValue, actionMeta) => {
               // console.log('inputValue', inputValue)
@@ -100,13 +141,14 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
           <label>{label}</label>
           <Select
             defaultValue={optionsDefaultValue}
+            defaultInputValue={inputValue}
             isMulti
             name='colors'
             options={options}
             className='basic-multi-select'
             classNamePrefix='select'
             onChange={(selectedOption) => {
-              // console.log('handleOnChange', selectedOption)
+              console.log('handleOnChange', selectedOption)
               // var options = e.target.options
               // var value = []
               // for (var i = 0, l = options.length; i < l; i++) {
@@ -116,17 +158,17 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
               // }
               // // this.props.someCallback(value)
               // console.log('valueeee=======>', value)
-              if (selectedOption) onChange(selectedOption.map(v => v.value))
+              if (selectedOption) onChange(selectedOption.map(v => v.value), selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label })))
               else {
-                onChange([])
+                // onChange([])
               }
             }}
-            onInputChange={(inputValue, actionMeta) => {
-              // console.log('inputValue', inputValue)
+            onInputChange={(iv, actionMeta) => {
+              console.log('inputValue', iv)
               // console.log('actionMeta', actionMeta)
               // set filter string_to_search = inputValue
-              setInputValue(inputValue)
-              tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
+              setInputValue(iv)
+              tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: iv })
             }}
             isSearchable
           />
@@ -171,7 +213,33 @@ function Multiselect ({ isCreatableSelect, serviceName, tablepaginationOnChangeF
   // )
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    // count: state.tablepagination.count,
+    data: state.tablepagination.data,
+    filter: state.tablepagination.filter,
+    loading: state.tablepagination.loading,
+    // pageCount: state.tablepagination.pageCount,
+    // pageSize: state.tablepagination.pageSize,
+    // pageIndex: state.tablepagination.pageIndex
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    tablepaginationFetchData: data => dispatch(TablepaginationActions.tablepaginationFetchData(data)),
+    tablepaginationOnChangeFilter: data => dispatch(TablepaginationActions.tablepaginationOnChangeFilter(data))
+    //   resetForm: data => dispatch(LoginActions.loginReset(data)),
+  }
+}
+
+const Multiselect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(App2))
+
 function App (props) {
+
   const {
     tablepaginationFetchData,
     fetchDataConfig: { whereCondition, fields, serviceName },
@@ -186,50 +254,73 @@ function App (props) {
     label,
     isAutocomplete,
     isCreatableSelect,
-    tablepaginationOnChangeFilter
+    tablepaginationOnChangeFilter,
+    formType
   } = props
   const history = useHistory()
-  const loading = path(['loading', serviceName], props)
-  const data = path(['data', serviceName], props) || []
-  const count = path(['count', serviceName], props) || []
-  const pageCount = path(['pageCount', serviceName], props) || []
+  // const loading = path(['loading', serviceName], props)
+  // const data = path(['data', serviceName], props) || []
+  // const count = path(['count', serviceName], props) || []
+  // const pageCount = path(['pageCount', serviceName], props) || []
+
+  const [defaultValueComponent, setDefaultValueComponent] = React.useState([])
+  const [inputValue, setInputValue] = useState('')
+
+  console.log('render Multiselect inputValue===>', inputValue)
+
+  useEffect(() => {
+    setDefaultValueComponent(Immutable.asMutable(defaultValue || [], { deep: true }))
+  }, [defaultValue])
 
   // console.log('App begeeeeeeiinnn')
-  const filter = path(['filter', serviceName], props) || {}
+  // const data = path(['data', serviceName], props) || []
+  // const count = path(['count', serviceName], props) || []
+  // const pageCount = path(['pageCount', serviceName], props) || []
+  // const filter = path(['filter', serviceName], props) || {}
 
-  const doFetchData = React.useCallback(({ filter }) => {
-    console.log('doFetchData filter===>', filter)
-    tablepaginationFetchData({
-      serviceName: serviceName,
-      pageSize: maxOptions,
-      pageIndex: 0,
-      filter: Immutable.asMutable(filter, { deep: true }),
-      fields: fields,
-      history,
-      whereCondition,
-      distinct
-    })
-  }, [])
+  // const doFetchData = React.useCallback(({ filter }) => {
+  //   console.log('doFetchData filter===>', filter)
+  //   tablepaginationFetchData({
+  //     serviceName: serviceName,
+  //     pageSize: maxOptions,
+  //     pageIndex: 0,
+  //     filter: Immutable.asMutable(filter, { deep: true }),
+  //     fields: fields,
+  //     history,
+  //     whereCondition,
+  //     distinct
+  //   })
+  // }, [])
 
   return (
     <>
       <Multiselect
-        loading={loading}
-        defaultValue={Immutable.asMutable(defaultValue, { deep: true })}
+        // loading={loading}
+        defaultValue={defaultValueComponent}
+        setInputValue={setInputValue}
+        inputValue={inputValue}
         name={name}
         id={id}
-        data={Immutable.asMutable(data, { deep: true })}
-        fetchData={doFetchData}
+        // data={Immutable.asMutable(data, { deep: true })}
         optionColumnValue={optionColumnValue}
         optionColumnLabel={optionColumnLabel}
         fields={fields}
-        filter={filter}
-        onChange={onChange}
+        // filter={filter}
+        onChange={(val, forDefaultValue) => {
+          console.log('valvalvalvla===>', val)
+          console.log('valvalvalvla===>', forDefaultValue)
+          setDefaultValueComponent(forDefaultValue)
+          onChange(val, forDefaultValue)
+        }}
         label={label}
         isAutocomplete={isAutocomplete}
         isCreatableSelect={isCreatableSelect}
-        tablepaginationOnChangeFilter={tablepaginationOnChangeFilter}
         serviceName={serviceName}
+        maxOptions={maxOptions}
+        history={history}
+        whereCondition={whereCondition}
+        distinct={distinct}
+        formType={formType}
       />
       {/* <Styles>
         <Combobox
@@ -246,27 +337,6 @@ function App (props) {
     </>
   )
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    count: state.tablepagination.count,
-    data: state.tablepagination.data,
-    filter: state.tablepagination.filter,
-    loading: state.tablepagination.loading,
-    pageCount: state.tablepagination.pageCount,
-    pageSize: state.tablepagination.pageSize,
-    pageIndex: state.tablepagination.pageIndex
-  }
-}
 
-const mapDispatchToProps = dispatch => {
-  return {
-    tablepaginationFetchData: data => dispatch(TablepaginationActions.tablepaginationFetchData(data)),
-    tablepaginationOnChangeFilter: data => dispatch(TablepaginationActions.tablepaginationOnChangeFilter(data))
-    //   resetForm: data => dispatch(LoginActions.loginReset(data)),
-  }
-}
+export default App
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(App))
