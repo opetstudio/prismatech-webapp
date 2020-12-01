@@ -3,6 +3,7 @@ import { path } from 'ramda'
 import LoginActions from '../../Containers/Login/redux'
 import CourseenrollmentActions from './redux'
 import _ from 'lodash'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * courseenrollmentSubmitEnrollmentRequest (api, { data }) {
   console.log('courseenrollmentSubmitEnrollmentRequest====data', data)
@@ -20,11 +21,11 @@ export function * courseenrollmentSubmitEnrollmentRequest (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      if (element.message.includes('user_id_1_course_id_1_batch_1')) window.callErrorToast('Course have already enrolled', 'error')
-      else window.callErrorToast(element.message, 'error')
+      if (element.message.includes('user_id_1_course_id_1_batch_1')) callErrorToast('Course have already enrolled', 'error')
+      else callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('success enrollment', 'success')
+    callErrorToast('success enrollment', 'success')
   }
-  // window.callErrorToast('Login error. ' + responseMessage, 'error')
+  // callErrorToast('Login error. ' + responseMessage, 'error')
 }

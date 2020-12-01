@@ -3,6 +3,7 @@ import Actions from './redux'
 import _ from 'lodash'
 import { path } from 'ramda'
 import { isNullOrUndefined } from 'util'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * changepasswordSubmit (api, action) {
   const { data } = action
@@ -25,11 +26,11 @@ export function * changepasswordSubmit (api, action) {
   document.getElementById('buttonCloseModal').click()
   if (_.isEmpty(err)) {
     yield put(Actions.changepasswordSubmitDone({ status }))
-    window.callErrorToast('Change Password success.', 'success')
+    callErrorToast('Change Password success.', 'success')
   } else {
     let errors = ''
     if (!isNullOrUndefined(err[0].message)) { errors = err[0].message } else { errors = err[0] }
-    window.callErrorToast('Change Password error. ' + errors, 'error')
+    callErrorToast('Change Password error. ' + errors, 'error')
     yield put(Actions.changepasswordSubmitDone({ errors, status }))
   }
 }

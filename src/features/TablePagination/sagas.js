@@ -1,9 +1,11 @@
+import React, { Component } from 'react'
 import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
 import { useHistory } from 'react-router-dom'
 import LoginActions from '../../Containers/Login/redux'
 import TablepaginationActions from './redux'
 import _ from 'lodash'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * tablepaginationFetchData (api, { data }) {
   console.log('tablepaginationFetchData====data', data)
@@ -26,7 +28,7 @@ export function * tablepaginationFetchData (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   }
 }
@@ -53,7 +55,7 @@ export function * tablepaginationFetchDataDetail (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   }
 }
@@ -78,10 +80,10 @@ export function * tablepaginationSubmitForm (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('success', 'success')
+    callErrorToast('success', 'success')
   }
   if (_.isEmpty(errors)) history.push(`${redirectAfterCreate}/${detailData._id}`)
 }
@@ -103,10 +105,10 @@ export function * tablepaginationDeleteData (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('success', 'success')
+    callErrorToast('success', 'success')
     history.push(redirectAfterDelete)
   }
 }

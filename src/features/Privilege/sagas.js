@@ -3,6 +3,7 @@ import { path } from 'ramda'
 import LoginActions from '../../Containers/Login/redux'
 import PrivilegeActions from './redux'
 import _ from 'lodash'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * privilegeCheckboxSubmit (api, { data }) {
   console.log('privilegeCheckboxSubmit====data', data)
@@ -19,10 +20,10 @@ export function * privilegeCheckboxSubmit (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('Success setup privileges for the role', 'success')
+    callErrorToast('Success setup privileges for the role', 'success')
   }
-  // window.callErrorToast('Login error. ' + responseMessage, 'error')
+  // callErrorToast('Login error. ' + responseMessage, 'error')
 }

@@ -4,6 +4,18 @@ import randomString from 'randomstring'
 import AppConfig from '../Config/AppConfig'
 import Moment from 'moment'
 import { merge, path } from 'ramda'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
+// var Toast = MySwal.mixin({
+//   toast: true,
+//   position: 'top-end',
+//   showConfirmButton: false,
+//   timer: 3000
+// });
+
 // import AES from 'crypto-js/aes'
 // import EncUtf8 from 'crypto-js/enc-utf8'
 // import Chance from 'chance'
@@ -322,3 +334,52 @@ export const generateRandomNumber = (length) => randomString.generate({
   length,
   charset: 'numeric'
 })
+
+export const callErrorToast = (msg,type) => {
+  if(msg=='ERROR_CLIENT'){ msg='System Error'; }
+        else if(msg=='NETWORK_ERROR'){ msg='Error connection to server'; }
+        switch(type)
+        {
+          case 'error':
+          // $(document).Toasts('create', {
+          //   class: 'bg-danger', 
+          //   title: 'Something Error',
+          //   body: msg
+          // })
+          MySwal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: msg,
+            timer: 1500
+          })
+          break;
+          case 'warning':
+          // $(document).Toasts('create', {
+          //     class: 'bg-warning', 
+          //     title: 'Warning',
+          //     body: msg
+          //   })
+          MySwal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: msg,
+            timer: 1500
+          })
+          console.log("warning")
+          break;
+          case 'success':
+            MySwal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: msg,
+              timer: 1500
+            })
+          // $(document).Toasts('create', {
+          //     class: 'bg-success', 
+          //     title: 'Success',
+          //     body: msg
+          //   })
+          console.log("sucess")
+          break;
+        }
+}

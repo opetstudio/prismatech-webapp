@@ -3,6 +3,7 @@ import { path } from 'ramda'
 import LoginActions from '../../Containers/Login/redux'
 import SignupActions from './redux'
 import _ from 'lodash'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * signupRequest (api, { data }) {
   console.log('signupRequest====data', data)
@@ -20,11 +21,11 @@ export function * signupRequest (api, { data }) {
     yield put(LoginActions.loginDoLogout({}))
   } else if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('Success signup. The password has been sent to your email.', 'success')
+    callErrorToast('Success signup. The password has been sent to your email.', 'success')
     history.push('/login')
   }
-  // window.callErrorToast('Login error. ' + responseMessage, 'error')
+  // callErrorToast('Login error. ' + responseMessage, 'error')
 }

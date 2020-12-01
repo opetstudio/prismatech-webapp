@@ -2,6 +2,7 @@ import { call, put } from 'redux-saga/effects'
 import { path } from 'ramda'
 import Actions from './redux'
 import _ from 'lodash'
+import { callErrorToast } from '../../Utils/Utils'
 
 export function * purchaseorderCheckStatusRequestOtp (api, { data }) {
   console.log('purchaseorderCheckStatusRequestOtp====data', data)
@@ -15,10 +16,10 @@ export function * purchaseorderCheckStatusRequestOtp (api, { data }) {
   yield put(Actions.purchaseorderCheckStatusRequestOtpDone({ errors, otpRefNum }))
   if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
   } else {
-    window.callErrorToast('berhasil kirim otp', 'success')
+    callErrorToast('berhasil kirim otp', 'success')
   }
 }
 export function * purchaseorderCheckStatus (api, { data }) {
@@ -33,11 +34,11 @@ export function * purchaseorderCheckStatus (api, { data }) {
   let otpValid = false
   if (!_.isEmpty(errors)) {
     errors.forEach(element => {
-      window.callErrorToast(element.message, 'error')
+      callErrorToast(element.message, 'error')
     })
     otpValid = false
   } else {
-    window.callErrorToast('berhasil query data', 'success')
+    callErrorToast('berhasil query data', 'success')
     otpValid = true
   }
   yield put(Actions.purchaseorderCheckStatusDone({ errors, dataDetail, otpValid }))

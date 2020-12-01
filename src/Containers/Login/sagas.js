@@ -6,6 +6,7 @@ import AppConfig from '../../Config/AppConfig'
 import { setSession, getSession, destroySession ,getAccessToken} from '../../Utils/Utils'
 import {getAttributes,updateMulti} from '../../Transforms/TransformAttributes'
 import { merge, path } from 'ramda'
+import { callErrorToast } from '../../Utils/Utils'
 
 import _ from 'lodash'
 import { isNullOrUndefined } from 'util'
@@ -37,7 +38,7 @@ export function * doLogout (api, action) {
   //   // if(typeof(errors[0].message)==undefined&&!isNullOrUndefined(typeof(errors[0].message))){ responseMessage=errors[0].message }
   //   // else{ responseMessage=errors[0] }
   //   // console.log("type of>>>>>", typeof(errors[0].message))
-  //   // window.callErrorToast('Logout error. ' + responseMessage, 'error')
+  //   // callErrorToast('Logout error. ' + responseMessage, 'error')
   //   destroySession()
   //   return yield put(LoginActions.loginDoLoginFailed({ responseMessage }))
   //   yield put(AppActions.reset())
@@ -87,7 +88,7 @@ export function * loginDoLogin (api, action) {
     const responseCode = status
     let responseMessage = ''
     if (!isNullOrUndefined(errors[0].message)) { responseMessage = errors[0].message } else { responseMessage = errors[0] }
-    window.callErrorToast('Login error. ' + responseMessage, 'error')
+    callErrorToast('Login error. ' + responseMessage, 'error')
     return yield put(LoginActions.loginDoLoginFailed({ responseCode, responseMessage }))
   }
 }
