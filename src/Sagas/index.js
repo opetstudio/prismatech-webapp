@@ -58,7 +58,7 @@ import { purchaseorderCheckStatusRequestOtp, purchaseorderCheckStatus } from '..
 
 /* ------------- API ------------- */
 
-const hostBackend = process.env.REACT_APP_BACKEND_BASE_URL
+const hostBackend = AppConfig.hostBackend
 
 
 

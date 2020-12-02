@@ -19,6 +19,7 @@ export default {
   sessionData: 'ssst',
   graphqlPath: process.env.REACT_APP_GRAPHQL_PATH,
   hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
+  baseUrl: process.env.REACT_APP_BASE_URL,
   appName: process.env.REACT_APP_APP_NAME,
   appCode: process.env.REACT_APP_APP_CODE,
   appHomePage: process.env.REACT_APP_HOMEPAGE_PATH

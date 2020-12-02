@@ -35,7 +35,7 @@ class PageUpdateGrading extends Component {
     //   x.value = moment(par).format('YYYY-MM-DD HH:mm:ss')
     //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'end_date', fieldValue: new Date(par).getTime() })
     // })
-    // window.activateEditor({ hostBackend: process.env.REACT_APP_BACKEND_BASE_URL, at: getAccessToken(), cb: (content) => {
+    // window.activateEditor({ hostBackend: AppConfig.hostBackend, at: getAccessToken(), cb: (content) => {
     //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
     // }})
     tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })

@@ -193,7 +193,7 @@ export const isLoggedIn = (isLoggedInState) => {
   return isLoggedInState
 }
 export const generateHmac = (msg) => {
-  return hmacSha256(msg, process.env.REACT_APP_BACKEND_BASE_URL).toString()
+  return hmacSha256(msg, AppConfig.hostBackend).toString()
 }
 export const generateSha256 = (msg) => {
   return sha256(msg).toString()

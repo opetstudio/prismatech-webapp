@@ -1,7 +1,8 @@
 import { path } from 'ramda'
 import API from '../../../Services/Api'
+import AppConfig from '../../../Config/AppConfig'
 
-const hostBackend = process.env.REACT_APP_BACKEND_BASE_URL
+const hostBackend = AppConfig.hostBackend
 console.log('hostBackend===>', hostBackend)
 const apiDashboard = API.create(hostBackend)
 
