@@ -140,7 +140,6 @@ export const loadScriptRecallDatePicker = cb => {
   window.recallDatePicker(cb)
 }
 
-
 export const getAccessToken = (accessTokenState) => {
   // console.log('getAccessToken')
   const sessionToken = getSession(AppConfig.sessionToken)
@@ -307,9 +306,9 @@ export const getSession = (parameter) => {
   // console.log('getSession sessionValue=', sessionValue)
   return sessionValue
 }
-export const destroySession=() =>{
-  window.localStorage.clear() 
-  console.log("session destroyed")
+export const destroySession = () => {
+  window.localStorage.clear()
+  console.log('session destroyed')
 }
 export const updateURLParameter = (url, param, paramVal) => {
   var newAdditionalURL = ''
@@ -335,51 +334,50 @@ export const generateRandomNumber = (length) => randomString.generate({
   charset: 'numeric'
 })
 
-export const callErrorToast = (msg,type) => {
-  if(msg=='ERROR_CLIENT'){ msg='System Error'; }
-        else if(msg=='NETWORK_ERROR'){ msg='Error connection to server'; }
-        switch(type)
-        {
-          case 'error':
-          // $(document).Toasts('create', {
-          //   class: 'bg-danger', 
-          //   title: 'Something Error',
-          //   body: msg
-          // })
-          MySwal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: msg,
-            timer: 1500
-          })
-          break;
-          case 'warning':
-          // $(document).Toasts('create', {
-          //     class: 'bg-warning', 
-          //     title: 'Warning',
-          //     body: msg
-          //   })
-          MySwal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: msg,
-            timer: 1500
-          })
-          console.log("warning")
-          break;
-          case 'success':
-            MySwal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: msg,
-              timer: 1500
-            })
-          // $(document).Toasts('create', {
-          //     class: 'bg-success', 
-          //     title: 'Success',
-          //     body: msg
-          //   })
-          console.log("sucess")
-          break;
-        }
+export const callErrorToast = (msg, type) => {
+  if (msg === 'ERROR_CLIENT') msg = 'System Error'
+  else if (msg === 'NETWORK_ERROR') msg = 'Error connection to server'
+  switch (type) {
+    case 'error':
+      // $(document).Toasts('create', {
+      //   class: 'bg-danger',
+      //   title: 'Something Error',
+      //   body: msg
+      // })
+      MySwal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: msg,
+        timer: 1500
+      })
+      break
+    case 'warning':
+      // $(document).Toasts('create', {
+      //     class: 'bg-warning',
+      //     title: 'Warning',
+      //     body: msg
+      //   })
+      MySwal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: msg,
+        timer: 1500
+      })
+      console.log('warning')
+      break
+    case 'success':
+      MySwal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: msg,
+        timer: 1500
+      })
+      // $(document).Toasts('create', {
+      //     class: 'bg-success',
+      //     title: 'Success',
+      //     body: msg
+      //   })
+      console.log('sucess')
+      break
+  }
 }

@@ -199,7 +199,7 @@ class PageHistoryTransaction extends Component {
       <div className='col-md-12' >
         {/* <div className='card' style={{overflow:'visible',height:'100%'}}> */}
           <div className={data.length <=0 || isRequesting && !f_isFiltering ? 'card collapsed-card' : 'card'}>
-                <div className='card-header'>
+                <div className='card-header' data-card-widget='collapse'>
                   <h5 className='card-title'>Filter Data</h5>
                   <div className='card-tools'>
                     <button id='myCardWidget' type='button' className='btn btn-tool' data-card-widget='collapse'>

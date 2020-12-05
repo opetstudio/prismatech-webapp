@@ -40,7 +40,8 @@ function App2 ({
   isCreatableSelect,
   serviceName,
   tablepaginationOnChangeFilter,
-  isAutocomplete, label, onChange, defaultValue = [], name, id, optionColumnValue, optionColumnLabel, columns, data: xdata, loading: xloading = {}, pageCount: controlledPageCount = {}, count: xcount = {}, filter: xfilter }) {
+  isAutocomplete, label, onChange, defaultValue = [], name, id, optionColumnValue, optionColumnLabel, columns, data: xdata, loading: xloading = {}, pageCount: controlledPageCount = {}, count: xcount = {}, filter: xfilter 
+}) {
   console.log('render Multiselect component')
   console.log('defaultValuedefaultValuedefaultValue==>', defaultValue)
 
@@ -70,15 +71,15 @@ function App2 ({
 
   // console.log('loading===>', loading)
   // console.log('serviceName===>', serviceName)
-  
-  
+
+
   // console.log('silahkan render')
   if (isAutocomplete) {
-    if(formType === 'update' && _.isEmpty(inputValue) && (_.isEmpty(data) || _.isEmpty(defaultValue))) {
+    if (formType === 'update' && _.isEmpty(inputValue) && _.isEmpty(data)) {
       console.log('jangan render')
       return null
     }
-    const options =  (_.concat(data || [], defaultValue)).map((v, i) => {
+    const options = (_.concat(data || [], defaultValue)).map((v, i) => {
       if (v) {
         const val = { value: v[optionColumnValue], label: v[optionColumnLabel] }
         return val
@@ -86,16 +87,16 @@ function App2 ({
       return { value: '-', label: '-' }
     })
     const optionsDefaultValue = []
-    for(let i = 0; i < defaultValue.length; i++ ) {
+    for (let i = 0; i < defaultValue.length; i++) {
       const v = defaultValue[i]
-      if(v) optionsDefaultValue.push({ value: v[optionColumnValue], label: v[optionColumnLabel] })
+      if (v) optionsDefaultValue.push({ value: v[optionColumnValue], label: v[optionColumnLabel] })
     }
     // const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
     // console.log('options=====>', options)
     console.log('optionsDefaultValueoptionsDefaultValue=====>', optionsDefaultValue)
     // console.log('isCreatableSelect===>', isCreatableSelect)
     // console.log('label===>', label)
-    
+
     if (isCreatableSelect) {
       // console.log('optionsDefaultValue===>', optionsDefaultValue)
       return (
@@ -128,7 +129,7 @@ function App2 ({
               // console.log('inputValue', inputValue)
               // console.log('actionMeta', actionMeta)
               // set filter string_to_search = inputValue
-              setInputValue(inputValue)
+              // setInputValue(inputValue)
               tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
             }}
             isSearchable
@@ -167,14 +168,13 @@ function App2 ({
               console.log('inputValue', iv)
               // console.log('actionMeta', actionMeta)
               // set filter string_to_search = inputValue
-              setInputValue(iv)
+              // setInputValue(iv)
               tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: iv })
             }}
             isSearchable
           />
         </div>
       )
-
     }
   }
 
@@ -218,7 +218,7 @@ const mapStateToProps = (state, ownProps) => {
     // count: state.tablepagination.count,
     data: state.tablepagination.data,
     filter: state.tablepagination.filter,
-    loading: state.tablepagination.loading,
+    loading: state.tablepagination.loading
     // pageCount: state.tablepagination.pageCount,
     // pageSize: state.tablepagination.pageSize,
     // pageIndex: state.tablepagination.pageIndex
@@ -239,7 +239,6 @@ const Multiselect = connect(
 )(injectIntl(App2))
 
 function App (props) {
-
   const {
     tablepaginationFetchData,
     fetchDataConfig: { whereCondition, fields, serviceName },
@@ -263,14 +262,15 @@ function App (props) {
   // const count = path(['count', serviceName], props) || []
   // const pageCount = path(['pageCount', serviceName], props) || []
 
-  const [defaultValueComponent, setDefaultValueComponent] = React.useState([])
+  // const [defaultValueComponent, setDefaultValueComponent] = React.useState([])
   const [inputValue, setInputValue] = useState('')
 
   console.log('render Multiselect inputValue===>', inputValue)
+  console.log('render Multiselect defaultValue===>', defaultValue)
 
-  useEffect(() => {
-    setDefaultValueComponent(Immutable.asMutable(defaultValue || [], { deep: true }))
-  }, [defaultValue])
+  // useEffect(() => {
+  //   setDefaultValueComponent(Immutable.asMutable(defaultValue || [], { deep: true }))
+  // }, [defaultValue])
 
   // console.log('App begeeeeeeiinnn')
   // const data = path(['data', serviceName], props) || []
@@ -296,9 +296,10 @@ function App (props) {
     <>
       <Multiselect
         // loading={loading}
-        defaultValue={defaultValueComponent}
-        setInputValue={setInputValue}
-        inputValue={inputValue}
+        defaultValue={defaultValue}
+        // defaultValue={defaultValueComponent}
+        // setInputValue={setInputValue}
+        // inputValue={inputValue}
         name={name}
         id={id}
         // data={Immutable.asMutable(data, { deep: true })}
@@ -309,7 +310,7 @@ function App (props) {
         onChange={(val, forDefaultValue) => {
           console.log('valvalvalvla===>', val)
           console.log('valvalvalvla===>', forDefaultValue)
-          setDefaultValueComponent(forDefaultValue)
+          // setDefaultValueComponent(forDefaultValue)
           onChange(val, forDefaultValue)
         }}
         label={label}
@@ -339,4 +340,3 @@ function App (props) {
 }
 
 export default App
-

@@ -151,7 +151,7 @@ export default class FilterTransaction extends Component {
     return (
       <form className='form' onSubmit={(e) => this._formOnSubmit(e)}>
         <div className='card'>
-          <div className='card-header'>
+          <div className='card-header' data-card-widget='collapse'>
             <h5 className='card-title'>Data Filter</h5>
             <div className='card-tools'>
               <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'>

@@ -12,7 +12,7 @@ import { fetchData } from '../functions'
 import _ from 'lodash'
 
 const Styles = styled.div`
-  padding: 1rem;
+  padding: 0rem;
   .pagination {
     padding: 0.5rem;
   }
@@ -121,7 +121,7 @@ function Table ({ columns, data, fetchData, loading, pageCount: controlledPageCo
             <a href='javascript:;' aria-controls='example1' data-dt-idx={7} tabIndex={0} className='page-link' onClick={() => gotoPage(pageCount - 1)}>{'>>'}</a>
           </li>
           <li>
-            <div>Halaman {' '} <strong>{pageIndex + 1} dari {pageOptions.length}</strong></div>
+            <div>Hal. {' '} <strong>{pageIndex + 1} dari {pageOptions.length}</strong></div>
           </li>
           {/* <li className=''>
             <div>
@@ -214,7 +214,7 @@ function App (props) {
   return (
     <>
       <div className='card'>
-        <div className='card-header'>
+        <div className='card-header' data-card-widget='collapse'>
           {cardTitle && <h3 className='card-title'>{cardTitle}</h3>}
           {cardHeader && cardHeader()}
           <div className='card-tools'>
@@ -225,6 +225,7 @@ function App (props) {
         <div className='card-body'>
           {}
           {(!tableMenus && createHref) && (<button type='button' className='btn btn-info' onClick={() => history.push(createHref)}><i className='fas fa-plus' /> {`${createNewButtonLabel || 'Create New'}`}</button>)}
+          <hr />
           <Styles>
             <Table
               columns={columns}

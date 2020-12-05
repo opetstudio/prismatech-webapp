@@ -453,7 +453,7 @@
         var files = $('#fileUploadInput')[0].files[0];
         data.append('file',files);
         $.ajax({
-            url: hostBackend + "/uploadfile",
+            url: hostBackend + "/api/uploadfile",
             type: "POST",
             data: data,
             cache: false,
@@ -478,7 +478,7 @@
               // console.log('baseUrl=', baseUrl)
               var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
               console.log('filename=', filename)
-              var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/renderfile/' + filename);
+              var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/api/renderfile/' + filename);
               $('#fileUploadLabel').text('uploaded. Image Id: ' + resp.detail_data._id)
               cb('' + resp.detail_data._id)
                 // if(resp != 0){
@@ -523,7 +523,7 @@
         // var files = $('#fileUploadInput')[0].files[0];
         // data.append('file',files);
         // $.ajax({
-        //     url: "http://localhost:3000/uploadfile",
+        //     url: "http://localhost:3000/api/uploadfile",
         //     type: "POST",
         //     data: data,
         //     cache: false,
@@ -547,7 +547,7 @@
         //       console.log('baseUrl=', baseUrl)
         //       var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
         //       console.log('filename=', filename)
-        //       var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/renderfile/' + filename);
+        //       var image = $('#uploadImageDisplayPreview').attr('src', baseUrl + '/api/renderfile/' + filename);
         //       $('#fileUploadLabel').text(resp.detail_data._id)
         //       cb('' + resp.detail_data._id)
         //         // if(resp != 0){
@@ -570,7 +570,7 @@
             $.ajax({
                 data: data,
                 type: "POST",
-                url: hostBackend + "/uploadfile",
+                url: hostBackend + "/api/uploadfile",
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -585,7 +585,7 @@
                   console.log('baseUrl=', baseUrl)
                   var filename = resp.detail_data.filename + '.' + resp.detail_data.file_type
                   console.log('filename=', filename)
-                  var image = $('<img>').attr('src', baseUrl + '/renderfile/' + filename);
+                  var image = $('<img>').attr('src', baseUrl + '/api/renderfile/' + filename);
 
                   $('.textarea').summernote("insertNode", image[0]);
                   // $('.textarea').summernote("insertImage", url);

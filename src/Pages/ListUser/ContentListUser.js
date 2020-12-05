@@ -11,7 +11,7 @@ class ContentListUser extends Component {
       <section className='content'>
         <div className='container-fluid'>
           <div className='card'>
-            <div className='card-header'>
+            <div className='card-header' data-card-widget='collapse'>
               {/* <h3 className='box-title'>Data Table With Full Features</h3> */}
             </div>
             <div className='card-body'>

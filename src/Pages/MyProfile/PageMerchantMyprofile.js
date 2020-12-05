@@ -121,7 +121,7 @@ class PageMerchantMyprofile extends Component {
 
 
         <div className='card card-default' style={{ marginLeft: 10, marginRight: 10 }}>
-          <div className='card-header'>
+          <div className='card-header' data-card-widget='collapse'>
             <h3 className='card-title'>Instansi terkait Anda</h3>
           </div>
           <div className='row' style={{ marginLeft: 10, marginRight: 10 }}>

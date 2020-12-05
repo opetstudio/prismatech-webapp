@@ -39,62 +39,67 @@ function Createform (props) {
 
   return (
     <>
-      <div className='card'>
-        <div className='card-header'>
-          <h3 className='card-title'>{formTitle}</h3>
-        </div>
-        <form
-          id={paginationConfig.serviceName} role='form' onSubmit={(e) => {
-            const theForm = document.getElementById(paginationConfig.serviceName)
-            if (e) e.preventDefault()
-            if (isNeedValidation) {
-              if (theForm.checkValidity() === false) {
-                e.stopPropagation()
-              }
-              theForm.classList.add('was-validated')
+      <form
+        id={paginationConfig.serviceName} role='form' onSubmit={(e) => {
+          const theForm = document.getElementById(paginationConfig.serviceName)
+          if (e) e.preventDefault()
+          if (isNeedValidation) {
+            if (theForm.checkValidity() === false) {
+              e.stopPropagation()
             }
-            if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
-            else {
-              if(beforeSubmit) {
-                beforeSubmit((p) => {
-                  const pl = { [paginationConfig.serviceName]: { ...payload[paginationConfig.serviceName], ...p } }
-                  tablepaginationSubmitForm({
-                    fields: paginationConfig.fields,
-                    payload: pl,
-                    serviceName: paginationConfig.serviceName,
-                    history,
-                    redirectAfterCreate: redirectAfterCreate
-                  })
-                })
-              } else {
+            theForm.classList.add('was-validated')
+          }
+          if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
+          else {
+            if (beforeSubmit) {
+              beforeSubmit((p) => {
+                const pl = { [paginationConfig.serviceName]: { ...payload[paginationConfig.serviceName], ...p } }
                 tablepaginationSubmitForm({
                   fields: paginationConfig.fields,
-                  payload,
+                  payload: pl,
                   serviceName: paginationConfig.serviceName,
                   history,
                   redirectAfterCreate: redirectAfterCreate
                 })
-              }
+              })
+            } else {
+              tablepaginationSubmitForm({
+                fields: paginationConfig.fields,
+                payload,
+                serviceName: paginationConfig.serviceName,
+                history,
+                redirectAfterCreate: redirectAfterCreate
+              })
             }
-          }}
-          novalidate
-          className={isNeedValidation && 'needs-validation'}
-        >
+          }
+        }}
+        novalidate
+        className={isNeedValidation && 'needs-validation'}
+      >
+        <div className='card'>
+          <div className='card-header' data-card-widget='collapse'>
+            <h3 className='card-title'>{formTitle}</h3>
+            <div className='card-tools'>
+              <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'><i className='fas fa-minus' /></button>
+              {/* <button type='button' className='btn btn-tool' data-card-widget='remove'><i className='fas fa-times' /></button> */}
+            </div>
+          </div>
           <div className='card-body'>
             {child(tablepaginationOnChangeForm)}
           </div>
           <div className='card-footer'>
             {footerCard && footerCard({ tablepaginationSubmitForm, payload })}
             {!footerCard && (
-              <>
-                <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
-                <button style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
-              </>
+             <>
+                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                  <button style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
+                </>
             )}
 
           </div>
-        </form>
-      </div>
+
+        </div>
+      </form>
     </>
   )
 }
