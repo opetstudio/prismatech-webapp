@@ -68,7 +68,8 @@ class AdminlteContainer extends React.PureComponent {
 
         {(isLoggedIn(this.props.isLoggedIn) === true) &&
           <footer className='main-footer' style={{ fontSize: 12 }}>
-            © 2020 PT. Prismalink International
+            {AppConfig.copyright}
+            {/* © 2020 PT. Prismalink International */}
             {/* <div className='float-right d-none d-sm-inline-block'>
               <b>Version</b> 0.0.1
             </div> */}

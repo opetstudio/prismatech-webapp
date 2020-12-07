@@ -17,6 +17,7 @@ export default {
   sessionToken: 'st',
   loginFlag: 'il',
   sessionData: 'ssst',
+  copyright: process.env.REACT_APP_COPYRIGH,
   graphqlPath: process.env.REACT_APP_GRAPHQL_PATH,
   hostBackend: process.env.REACT_APP_BACKEND_BASE_URL,
   baseUrl: process.env.REACT_APP_BASE_URL,
