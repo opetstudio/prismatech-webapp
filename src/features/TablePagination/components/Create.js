@@ -73,7 +73,7 @@ function Createform (props) {
             }
           }
         }}
-        novalidate
+        noValidate
         className={isNeedValidation && 'needs-validation'}
       >
         <div className='card'>

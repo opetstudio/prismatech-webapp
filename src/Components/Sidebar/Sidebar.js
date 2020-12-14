@@ -56,9 +56,9 @@ class Sidebar extends Component {
 
   render () {
     const { profile, userPrivileges, sidemenu } = this.props
-    const xm = sidemenu.map(v => {
+    const xm = sidemenu.map((v, i) => {
       return (
-        <SidebarMainMenu name={v.userPrivilegeCode} title={v.title} userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
+        <SidebarMainMenu key={i} name={v.userPrivilegeCode} title={v.title} userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
           { v.submenu.map(v2 => this._getMenuLi(v2.route, v2.title)) }
         </SidebarMainMenu>
       )
