@@ -6,13 +6,13 @@ import { useHistory } from 'react-router-dom'
 import _ from 'lodash'
 import TablepaginationActions from '../redux'
 
-function CardBody ({ dataDetail, child, fetchData, id, tablepaginationOnChangeForm, payload }) {
+function CardBody ({ dataDetail, child, fetchData, id, tablepaginationOnChangeForm, payload, loading }) {
   console.log('CardBody-======', dataDetail)
   React.useEffect(() => {
     console.log('React.useEffect-======', dataDetail)
     fetchData({ id })
   }, [fetchData, id])
-  return child(tablepaginationOnChangeForm, dataDetail, payload)
+  return child(tablepaginationOnChangeForm, dataDetail, payload, loading)
 }
 
 function Updateform (props) {
@@ -115,7 +115,7 @@ function Updateform (props) {
           </div>
 
           <div className='card-body'>
-            <CardBody payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
+            <CardBody payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} loading={loading} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
             {/* {child(tablepaginationOnChangeForm, dataDetail)} */}
           </div>
           <div className='card-footer'>
