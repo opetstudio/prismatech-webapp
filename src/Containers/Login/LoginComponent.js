@@ -4,6 +4,7 @@ import AppConfig from '../../Config/AppConfig'
 import Loader from '../../Components/Loader/Loader'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
+import { injectIntl, FormattedMessage as T } from 'react-intl'
 
 // const basePath = AppConfig.basePath
 
@@ -112,14 +113,15 @@ class LoginPageComponent extends React.Component {
           </div> */}
         <div className='col-12'>
           {/* <button type='submit' className='btn btn-block btn-primary btn-sm'>Sign In</button> */}
-          {!this.props.isRequesting && <button type='submit' className='btn btn-block btn-primary btn-sm'>Sign In</button>}
+          {!this.props.isRequesting && <button type='submit' className='btn btn-block btn-primary btn-sm'><T id='label.signin' /></button>}
           {/* {this.props.isRequesting && (<center>Please Wait</center>)} */}
           {this.props.isRequesting && (<center><Loader loading type='rpmerah' /></center>)}
         </div>
         <br />
-        <center><Link to='/forget-password'>Forgot your password?</Link></center>
+        <center><Link to='/forget-password'><T id='label.forgotpassword' /></Link></center>
+        {/* <center><Link to='/forget-password'>Forgot your password?</Link></center> */}
         <center><b>OR</b></center>
-        <center>Don't have an account?<Link to='/signup'> Sign Up</Link></center>
+        <center><T id='label.donthaveaccount' /><Link to='/signup'><T id='label.signup' /></Link></center>
 
       </form>
     )
@@ -130,4 +132,5 @@ class LoginPageComponent extends React.Component {
   }
 }
 
-export default LoginPageComponent
+// export default LoginPageComponent
+export default injectIntl(LoginPageComponent)

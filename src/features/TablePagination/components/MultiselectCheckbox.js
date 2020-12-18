@@ -26,8 +26,8 @@ function App (props) {
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-listitem-table">
           {buttonAddLabel}
         </button>
-      <div className="modal fade" id="modal-listitem-table" aria-hidden="true" style={{display: 'none'}}>
-        <div className="modal-dialog">
+      <div className="modal fade bd-example-modal-lg" id="modal-listitem-table" aria-hidden="true" style={{display: 'none'}}>
+        <div className="modal-dialog modal-lg">
           <div className="modal-content">
             
             <Table
@@ -50,7 +50,7 @@ function App (props) {
                 )
               }}
               cardFooter={() => {
-                return (<button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' data-dismiss="modal"><i className='fas fa-plus' /> Close </button>)
+                return (<button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' data-dismiss="modal"> Pilih </button>)
               }}
             />
           {/* /.modal-content */}

@@ -20,5 +20,13 @@
   "header.detail_pembayaran": "Detail Pembayaran",
   "label.userid": "User ID",
   "label.generate": "Generate QR",
-  "label.download": "Download"
+  "label.download": "Download",
+  "label.edit": "ubah",
+  "label.forgotpassword": "Lupa password?",
+  "label.donthaveaccount": "Belum punya akun?",
+  "label.signup": "Daftar",
+  "label.signin": "Masuk",
+  "label.storedescription": "Deskripsi Toko",
+  "label-addpicture": "Tambah Gambar",
+  "label.createNewProduct": "Buat Produk Baru"
 }

@@ -28,6 +28,7 @@ const Styles = styled.div`
 // ]
 
 function App2 ({
+  placeholder,
   formType,
   tablepaginationFetchData,
   distinct,
@@ -107,9 +108,10 @@ function App2 ({
             defaultInputValue={inputValue}
             isMulti
             name='colors'
+            placeholder={placeholder}
             options={options}
             className='basic-multi-select'
-            classNamePrefix='select'
+            classNamePrefix='selectss'
             onChange={(selectedOption) => {
               console.log('handleOnChangeeeeee', selectedOption)
               // var options = e.target.options
@@ -145,6 +147,7 @@ function App2 ({
             defaultInputValue={inputValue}
             isMulti
             name='colors'
+            placeholder={placeholder}
             options={options}
             className='basic-multi-select'
             classNamePrefix='select'
@@ -184,6 +187,7 @@ function App2 ({
       <select
         multiple
         className='form-control'
+        placeholder={placeholder}
         id={id}
         onChange={e => {
           var options = e.target.options
@@ -240,6 +244,7 @@ const Multiselect = connect(
 
 function App (props) {
   const {
+    placeholder,
     tablepaginationFetchData,
     fetchDataConfig: { whereCondition, fields, serviceName },
     distinct,
@@ -313,6 +318,7 @@ function App (props) {
           // setDefaultValueComponent(forDefaultValue)
           onChange(val, forDefaultValue)
         }}
+        placeholder={placeholder}
         label={label}
         isAutocomplete={isAutocomplete}
         isCreatableSelect={isCreatableSelect}

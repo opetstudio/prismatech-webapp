@@ -18,13 +18,13 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 // let initialData = AppConfig.env === 'development' ? window : window
-let initialData = AppConfig.env === 'development' ? {
-  LANG: 'en'
-} : window
+// let initialData = AppConfig.env === 'development' ? {
+//   LANG: 'en'
+// } : window
 
 // console.log('initialData===', initialData.LANG)
 export const INITIAL_STATE = Immutable({
-  lang: initialData.LANG,
+  lang: document.documentElement.lang,
   routeActive: '',
   pageTitle: '',
   merchantCode: '',
@@ -34,12 +34,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 export const AppSelectors = {
-  lang: st => {
-    // console.log('huffff111===', initialData.LANG)
-    if (st.lang !== '__LANG__' && st.lang !== '') return st.lang
-    // console.log('huffff')
-    return 'id'
-  },
+  lang: st => st.lang || 'id',
   routeActive: st => st.routeActive,
   pageTitle: st => st.pageTitle,
   merchantCode: st => st.merchantCode,
