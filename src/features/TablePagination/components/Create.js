@@ -1,11 +1,15 @@
 import React, { Component, useEffect } from 'react'
 import { path } from 'ramda'
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
+import { injectIntl, FormattedMessage as T } from 'react-intl'
+import Loader from '../../../Components/Loader/Loader'
 import TablepaginationActions from '../redux'
 
-function Createform (props) {
+function CardBody ({ tablepaginationOnChangeForm, payload, child }) {
+  return child(tablepaginationOnChangeForm, payload)
+}
+const Createform = React.memo(props => {
   console.log('render Create.js')
   const history = useHistory()
   const {
@@ -16,12 +20,15 @@ function Createform (props) {
     tablepaginationSubmitForm,
     payload,
     redirectAfterCreate,
+    redirectAfterCreateToParent,
     footerCard,
     tablepaginationResetForm,
     onSubmit,
     isNeedValidation,
-    beforeSubmit
+    beforeSubmit,
+    children
   } = props
+  const loading = props.loading || false
   //   const dataDetail = path(['dataDetail', paginationConfig.serviceName], props) || {}
 
   // Similar to componentDidMount
@@ -36,6 +43,14 @@ function Createform (props) {
     }
   }, [])
   console.log('Createform=========')
+
+  const childrenWithProps = React.Children.map(children, child => {
+      // checking isValidElement is the safe way and avoids a typescript error too
+      if (React.isValidElement(child)) {
+          return React.cloneElement(child, { tablepaginationOnChangeForm: tablepaginationOnChangeForm, payload });
+      }
+      return child;
+  });
 
   return (
     <>
@@ -59,7 +74,8 @@ function Createform (props) {
                   payload: pl,
                   serviceName: paginationConfig.serviceName,
                   history,
-                  redirectAfterCreate: redirectAfterCreate
+                  redirectAfterCreate: redirectAfterCreate,
+                  redirectAfterCreateToParent: redirectAfterCreateToParent
                 })
               })
             } else {
@@ -68,7 +84,8 @@ function Createform (props) {
                 payload,
                 serviceName: paginationConfig.serviceName,
                 history,
-                redirectAfterCreate: redirectAfterCreate
+                redirectAfterCreate: redirectAfterCreate,
+                redirectAfterCreateToParent: redirectAfterCreateToParent
               })
             }
           }
@@ -78,21 +95,26 @@ function Createform (props) {
       >
         <div className='card'>
           <div className='card-header' data-card-widget='collapse'>
-            <h3 className='card-title'>{formTitle}</h3>
+            <h3 className='card-title'><T id={formTitle} /></h3>
             <div className='card-tools'>
               <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'><i className='fas fa-minus' /></button>
               {/* <button type='button' className='btn btn-tool' data-card-widget='remove'><i className='fas fa-times' /></button> */}
             </div>
           </div>
           <div className='card-body'>
-            {child(tablepaginationOnChangeForm, payload)}
+            {/* {childrenWithProps} */}
+            <CardBody child={child} payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} />
           </div>
           <div className='card-footer'>
-            {footerCard && footerCard({ tablepaginationSubmitForm, payload })}
-            {!footerCard && (
+            {
+              loading &&
+              <Loader loading type='rpmerah' />
+            }
+            {!loading && footerCard && footerCard({ tablepaginationSubmitForm, payload })}
+            {!loading && !footerCard && (
              <>
-                  <button style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
-                  <button style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
+                  <button disabled={loading} style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                  <button disabled={loading} style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
                 </>
             )}
 
@@ -102,11 +124,13 @@ function Createform (props) {
       </form>
     </>
   )
-}
+})
 
 const mapStateToProps = (state, ownProps) => {
+  const loading = state.tablepagination.loading[ownProps.paginationConfig.serviceName] || false
   return {
-    payload: state.tablepagination.payload
+    payload: state.tablepagination.payload,
+    loading
   }
 }
 

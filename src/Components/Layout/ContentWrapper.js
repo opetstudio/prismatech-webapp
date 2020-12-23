@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 
 export default class ContentWrapper extends Component {
   render () {
+    console.log('render ContentWrapper....')
     const { children, pageTitle, breadcrumb, contentHeaderTitle, isNeedLoggedin } = this.props
     return (
       <>

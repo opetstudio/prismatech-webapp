@@ -1,3 +1,4 @@
+export { default as MultiselectCheckboxDisplay } from './MultiselectCheckboxDisplay'
 export { default as MultiselectCheckbox } from './MultiselectCheckbox'
 export { default as Multiselect } from './Multiselect'
 export { default as Combobox } from './Combobox'

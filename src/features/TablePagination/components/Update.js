@@ -5,19 +5,31 @@ import { injectIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 import _ from 'lodash'
 import TablepaginationActions from '../redux'
+import Loader from '../../../Components/Loader/Loader'
 
-function CardBody ({ dataDetail, child, fetchData, id, tablepaginationOnChangeForm, payload, loading }) {
+function CardBody ({ errors, serviceName, dataDetail, child, fetchData, id, tablepaginationOnChangeForm, payload, loading }) {
   console.log('CardBody-======', dataDetail)
   React.useEffect(() => {
     console.log('React.useEffect-======', dataDetail)
     fetchData({ id })
   }, [fetchData, id])
-  return child(tablepaginationOnChangeForm, dataDetail, payload, loading)
+  if(loading) return <Loader loading type='rpmerah' />
+  if(!loading) return (
+    <>
+      {!_.isEmpty(errors) && <div class="alert alert-danger" role="alert">
+        <ul>
+          {errors.map((v, i) => <li key={i}>{v.message}</li>)}
+        </ul>
+      </div>}
+      {!_.isEmpty(dataDetail) && child(tablepaginationOnChangeForm, dataDetail, payload, loading)}
+    </>
+  )
 }
 
 function Updateform (props) {
   const history = useHistory()
   const {
+    footerCard,
     paginationConfig,
     child,
     tablepaginationOnChangeForm,
@@ -31,10 +43,11 @@ function Updateform (props) {
     redirectAfterCreate,
     isNeedValidation,
     onSubmit,
-    beforeSubmit
+    beforeSubmit,
+    errors,
+    loading
   } = props
-  const loading = path(['loading', paginationConfig.serviceName], props)
-  const errors = path(['errors', paginationConfig.serviceName], props) || []
+  // const errors = path(['errors', paginationConfig.serviceName], props) || []
 
   const doFetchData = React.useCallback(({ id }) => {
     console.log('doFetchData====', id)
@@ -53,7 +66,7 @@ function Updateform (props) {
 
   return (
     <>
-      {
+      {/* {
         !_.isEmpty(errors) && (
           <div className='alert alert-danger' role='alert'>
             <ul>
@@ -61,7 +74,7 @@ function Updateform (props) {
             </ul>
           </div>
         )
-      }
+      } */}
       <form
         id={paginationConfig.serviceName}
         role='form'
@@ -115,15 +128,21 @@ function Updateform (props) {
           </div>
 
           <div className='card-body'>
-            <CardBody payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} loading={loading} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
+            <CardBody errors={errors} serviceName={paginationConfig.serviceName} payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} loading={loading} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
             {/* {child(tablepaginationOnChangeForm, dataDetail)} */}
           </div>
           <div className='card-footer'>
-            <button style={{ width: 100 }} type='button' onClick={() => history.goBack()} className='btn bg-gradient-warning'>Cancel</button>
-            <button
-              style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'
-            >Submit
-            </button>
+            {loading && <Loader loading type='rpmerah' />}
+            {!loading && footerCard && footerCard({ dataDetail })}
+            {!loading && !footerCard &&
+              <>
+                <button style={{ width: 100 }} type='button' onClick={() => history.goBack()} className='btn bg-gradient-warning'>Cancel</button>
+                <button
+                style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'
+                >Submit
+                </button>
+              </>
+            }
           </div>
         </div>
       </form>
@@ -132,9 +151,11 @@ function Updateform (props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const errors = (state.tablepagination.errors || {})[(ownProps.paginationConfig || {}).serviceName] || []
+  const loading = (state.tablepagination.loading || {})[(ownProps.paginationConfig || {}).serviceName] || false
   return {
-    loading: state.tablepagination.loading,
-    errors: state.tablepagination.errors,
+    loading,
+    errors,
     payload: state.tablepagination.payload,
     dataDetail: state.tablepagination.dataDetail
   }

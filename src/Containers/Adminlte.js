@@ -27,6 +27,7 @@ class Adminlte extends Component {
   //   return {__html: '<div class="ext">Hello!</div>'}
   // }
   render () {
+    console.log('translationstranslationstranslationstranslationstranslations=>', this.props.translations)
     // console.log('render')
     // if (ReduxPersist.active) {
     //   return (
@@ -40,7 +41,7 @@ class Adminlte extends Component {
     return (
       <Provider store={this.props.store}>
         {/* <ApolloProvider client={client}> */}
-        <RootContainer sidemenu={this.props.sidemenu} />
+        <RootContainer translations={this.props.translations} sidemenu={this.props.sidemenu} />
         {/* </ApolloProvider> */}
       </Provider>
     )
@@ -68,5 +69,5 @@ export default (params) => {
   // console.log('reducerreducerreducerreducerreducerreducer===>', reducer)
   const exApp = ExternalApp()
   const { store } = createStore({ externalApi: exApp.api, externalRedux: exApp.redux, externalSagas: exApp.sagas })
-  return <Adminlte store={store} sidemenu={exApp.sidemenu} />
+  return <Adminlte translations={exApp.translations} store={store} sidemenu={exApp.sidemenu} />
 }

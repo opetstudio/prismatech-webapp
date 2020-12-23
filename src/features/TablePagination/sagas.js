@@ -61,7 +61,7 @@ export function * tablepaginationFetchDataDetail (api, { data }) {
 }
 export function * tablepaginationSubmitForm (api, { data }) {
   console.log('tablepaginationSubmitForm====data', data)
-  const { serviceName, history, redirectAfterCreate, isUpdate, updateServiceName } = data
+  const { serviceName, history, redirectAfterCreate, isUpdate, updateServiceName, redirectAfterCreateToParent } = data
   let response = null
   if (isUpdate) response = yield call(api.updateService, data)
   else response = yield call(api.createService, data)
@@ -74,6 +74,8 @@ export function * tablepaginationSubmitForm (api, { data }) {
   if (!_.isEmpty(errorBody)) errors.push({ message: errorBody })
   yield put(TablepaginationActions.tablepaginationSubmitFormDone({ detailData, errors, serviceName }))
   console.log('errors========>', errors)
+  
+  
   // const history = yield call(useHistory)
   if (!_.isEmpty(errors) && (_.isEqual((errors[0] || {}).message, 'Invalid Access Token') || _.isEqual((errors[0] || {}).message, 'jwt expired'))) {
     console.log('do logout karena at exp')
@@ -85,7 +87,10 @@ export function * tablepaginationSubmitForm (api, { data }) {
   } else {
     callErrorToast('success', 'success')
   }
-  if (_.isEmpty(errors)) history.push(`${redirectAfterCreate}/${detailData._id}`)
+  if (_.isEmpty(errors)) {
+    if(!_.isEmpty(redirectAfterCreateToParent)) history.push(redirectAfterCreateToParent)
+    else history.push(`${redirectAfterCreate}/${detailData._id}`)
+  }
 }
 export function * tablepaginationDeleteData (api, { data }) {
   console.log('tablepaginationDeleteData====data', data)

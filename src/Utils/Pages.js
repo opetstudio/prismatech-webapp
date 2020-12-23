@@ -85,10 +85,10 @@ import PageUpdateTag from '../Pages/Tag/PageUpdate'
 import { pages } from '../../../manifest'
 
 const createPage = ({ entity, entityTitle, ListAllComp, CreateComp, DetailComp, UpdateComp, params }) => ({
-  ['/' + entity]: { route: '/' + entity, path: `/${entity}${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
-  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}`, title: 'Buat ' + entityTitle + '', component: CreateComp },
-  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + '', component: DetailComp },
-  ['/' + entity + '/update']: { route: '/' + entity + '/update', path: `/${entity}/update${params[2] ? '/' + params[2] : ''}${params[1] ? '/' + params[1] : ''}${params[0] ? '/' + params[0] : ''}`, title: entityTitle + ' Update', component: UpdateComp }
+  ['/' + entity]: { route: '/' + entity, path: `/${entity}${params && params[2] ? '/' + params[2] : ''}${params && params[1] ? '/' + params[1] : ''}`, title: entityTitle, component: ListAllComp },
+  ['/' + entity + '/create']: { route: '/' + entity + '/create', path: `/${entity}/create${params && params[2] ? '/' + params[2] : ''}${params && params[1] ? '/' + params[1] : ''}`, title: 'Buat ' + entityTitle + '', component: CreateComp },
+  ['/' + entity + '/detail']: { route: '/' + entity + '/detail', path: `/${entity}/detail${params && params[2] ? '/' + params[2] : ''}${params && params[1] ? '/' + params[1] : ''}${params && params[0] ? '/' + params[0] : ''}`, title: '' + entityTitle, component: DetailComp },
+  ['/' + entity + '/update']: { route: '/' + entity + '/update', path: `/${entity}/update${params && params[2] ? '/' + params[2] : ''}${params && params[1] ? '/' + params[1] : ''}${params && params[0] ? '/' + params[0] : ''}`, title: 'Ubah ' + entityTitle , component: UpdateComp }
 })
 
 const externalPages = () =>{

@@ -41,6 +41,7 @@ function App2 ({
   isCreatableSelect,
   serviceName,
   tablepaginationOnChangeFilter,
+  sortBy,
   isAutocomplete, label, onChange, defaultValue = [], name, id, optionColumnValue, optionColumnLabel, columns, data: xdata, loading: xloading = {}, pageCount: controlledPageCount = {}, count: xcount = {}, filter: xfilter 
 }) {
   console.log('render Multiselect component')
@@ -66,7 +67,8 @@ function App2 ({
       fields: fields,
       history,
       whereCondition,
-      distinct
+      distinct,
+      sortBy
     })
   }, [tablepaginationFetchData, inputValue])
 
@@ -259,7 +261,8 @@ function App (props) {
     isAutocomplete,
     isCreatableSelect,
     tablepaginationOnChangeFilter,
-    formType
+    formType,
+    sortBy
   } = props
   const history = useHistory()
   // const loading = path(['loading', serviceName], props)
@@ -328,6 +331,7 @@ function App (props) {
         whereCondition={whereCondition}
         distinct={distinct}
         formType={formType}
+        sortBy={sortBy}
       />
       {/* <Styles>
         <Combobox

@@ -20,8 +20,17 @@ class App extends Component {
     super(props)
     this.checkLogin(window.location.pathname)
     this.unlisten = this.props.history.listen((location, action) => {
-      // console.log('halooooooooo', window.location.pathname)
-      const title = (lp[window.location.pathname] || {}).title
+      console.log('halooooooooowwww', window.location.pathname)
+      let r = {}
+      const pathSplit = (window.location.pathname || '').split('/')
+      console.log('pathSplit====>', pathSplit.length)
+      if((window.location.pathname).includes('detail') || (window.location.pathname).includes('update') || (window.location.pathname).includes('create')) {
+        for(let i in lp) {
+          if(i.startsWith(`/${pathSplit[1]}/${pathSplit[2]}`)){ r = lp[i]; break;}
+        }
+      } else r = lp[window.location.pathname] || {}
+      const title = r.title
+      // const title = (lp[window.location.pathname] || {}).title
       if (title) this.props.appPatch({ routeActive: window.location.pathname, pageTitle: title })
       this.checkLogin(window.location.pathname)
     })

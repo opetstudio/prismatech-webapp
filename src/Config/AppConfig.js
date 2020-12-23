@@ -23,5 +23,6 @@ export default {
   baseUrl: process.env.REACT_APP_BASE_URL,
   appName: process.env.REACT_APP_APP_NAME,
   appCode: process.env.REACT_APP_APP_CODE,
-  appHomePage: process.env.REACT_APP_HOMEPAGE_PATH
+  appHomePage: process.env.REACT_APP_HOMEPAGE_PATH,
+  currency: process.env.REACT_APP_CURRENCY
 }

@@ -37,7 +37,7 @@ export const create = api => ({
   getAllCourses: ({ filter, fields, serviceName, pageSize, pageIndex, distinct }) => {
     return doQuery({ api, filter, fields, serviceName, pageSize, pageIndex })
   },
-  fetchAllService: ({ filter, fields, serviceName, pageSize, pageIndex, whereCondition, distinct }) => {
+  fetchAllService: ({ filter, fields, serviceName, pageSize, pageIndex, whereCondition, distinct, sortBy }) => {
     let theFilterString = null
     let theWhereConditionString = ''
     const arr = []
@@ -59,7 +59,10 @@ export const create = api => ({
     console.log('arr2====>', arr2)
     if (!_.isEmpty(arr2)) theWhereConditionString = _.join(arr2, ',') + ','
 
-    const body = `query{${serviceName}${_.isEmpty(theFilterString) ? `(${distinct ? 'distinct:"' + distinct + '",' : ''} ${theWhereConditionString} page_size: ${pageSize}, page_index: ${pageIndex})` : `(${distinct ? 'distinct:"' + distinct + '",' : ''} ${theWhereConditionString} ${theFilterString}, page_size: ${pageSize}, page_index: ${pageIndex})`}{status,error,count,page_count,list_data{${fields}}}}`
+    let sortByBy = null
+    if(!_.isEmpty(sortBy)) sortByBy = JSON.stringify(sortBy).replace(/"/g, '\'')
+
+    const body = `query{${serviceName}${_.isEmpty(theFilterString) ? `(${sortByBy ? 'sort_by:"'+sortByBy+'",':''} ${distinct ? 'distinct:"' + distinct + '",' : ''} ${theWhereConditionString} page_size: ${pageSize}, page_index: ${pageIndex})` : `(${sortByBy ? 'sort_by:"'+sortByBy+'",':''} ${distinct ? 'distinct:"' + distinct + '",' : ''} ${theWhereConditionString} ${theFilterString}, page_size: ${pageSize}, page_index: ${pageIndex})`}{status,error,count,page_count,list_data{${fields}}}}`
     const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
     api.setHeader('AccessToken', getAccessToken())

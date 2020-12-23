@@ -3,13 +3,25 @@ import { path } from 'ramda'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
+import _ from 'lodash'
 import TablepaginationActions from '../redux'
+import Loader from '../../../Components/Loader/Loader'
 
-function CardBody ({ dataDetail, child, fetchData, id }) {
+function CardBody ({ errors, dataDetail, child, fetchData, id, loading }) {
   React.useEffect(() => {
     window.collapseBoxRefresh()
     fetchData({ id })
   }, [fetchData, id])
+  if(loading) return <Loader loading type='rpmerah' />
+  if(!loading && !_.isEmpty(errors)) return (
+    <>
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          {errors.map((v, i) => <li key={i}>{v.message}</li>)}
+        </ul>
+      </div>
+    </>
+  )
   return child(dataDetail)
 }
 
@@ -26,9 +38,10 @@ function Detaildata (props) {
     tablepaginationDeleteData,
     redirectAfterDelete,
     footerCard,
-    modalFooter
+    modalFooter,
+    errors,
+    loading
   } = props
-  // const loading = path(['loading', paginationConfig.serviceName], props)
   // const payload = path(['payload', paginationConfig.serviceName], props) || {}
   console.log('updateHref===>', updateHref)
   const doFetchData = React.useCallback(({ id }) => {
@@ -46,7 +59,7 @@ function Detaildata (props) {
           </div>
         </div>
         <div className='card-body'>
-          <CardBody dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
+          <CardBody errors={errors} loading={loading} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
           {/* {child(dataDetail)} */}
         </div>
         <div className='card-footer'>
@@ -73,8 +86,9 @@ function Detaildata (props) {
               <p>Konfirmasi hapus data.</p>
             </div>
             <div className='modal-footer justify-content-between'>
-              {modalFooter && modalFooter(dataDetail, tablepaginationDeleteData)}
-              {!modalFooter && (
+              {loading && <Loader loading type='rpmerah' />}
+              {!loading && modalFooter && modalFooter(dataDetail, tablepaginationDeleteData)}
+              {!loading && !modalFooter && (
                 <>
                   <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Cancel</button>
                   <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete, history })}>Delete</button>
@@ -94,9 +108,12 @@ function Detaildata (props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const errors = (state.tablepagination.errors || {})[(ownProps.paginationConfig || {}).serviceName] || []
+  const loading = (state.tablepagination.loading || {})[(ownProps.paginationConfig || {}).serviceName] || false
   return {
-    loading: state.tablepagination.loading,
-    dataDetail: state.tablepagination.dataDetail
+    loading: loading,
+    dataDetail: state.tablepagination.dataDetail,
+    errors: errors
   }
 }
 

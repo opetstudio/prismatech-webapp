@@ -28,5 +28,8 @@
   "label.signin": "Signin",
   "label.storedescription": "Deskripsi Toko",
   "label-addpicture": "Add Pictures",
-  "label.createNewProduct": "Create New Product"
+  "label.createNewProduct": "Create New Product",
+  "label-description": "Description",
+  "label-uploadfile": "Upload File",
+  "label-create_customer_email": "Create Customer Email"
 }

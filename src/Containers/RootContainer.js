@@ -65,11 +65,13 @@ class RootContainer extends Component {
   }
 
   render (xmessages) {
+    const translations = this.props.translations || translationMessages
     const lang = this.props.lang || 'id'
     let messages = {}
-    if (translationMessages.hasOwnProperty(lang)) {
-      messages = translationMessages[lang]
+    if (translations.hasOwnProperty(lang)) {
+      messages = translations[lang]
     }
+    console.log('translationstranslations=>', messages)
     return (
       <IntlProvider locale={lang} messages={messages}>
         <Navigation userPrivileges={this.props.userPrivileges} appPatch={this.props.appPatch} checkLogedStatus={this.props.getLoginStatus} sidemenu={this.props.sidemenu} />

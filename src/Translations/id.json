@@ -28,5 +28,9 @@
   "label.signin": "Masuk",
   "label.storedescription": "Deskripsi Toko",
   "label-addpicture": "Tambah Gambar",
-  "label.createNewProduct": "Buat Produk Baru"
+  "label.createNewProduct": "Buat Produk Baru",
+  "label-description": "Keterangan",
+  "label-uploadfile": "Unggah File",
+  "label-create_customer_email": "Buat Email Customer",
+  "data-pembelian": "Data Pembelian"
 }

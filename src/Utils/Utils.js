@@ -381,3 +381,8 @@ export const callErrorToast = (msg, type) => {
       break
   }
 }
+
+export const truncate = (str, n, str2) => {
+  if(!str) return ''
+  return (str.length > n) ? str.substr(0, n-1) + str2 : str;
+};

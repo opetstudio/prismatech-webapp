@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { injectIntl, FormattedMessage as T } from 'react-intl'
 import { Images } from '../../Themes'
 import AppConfig from '../../Config/AppConfig'
 import { getAccessToken } from '../../Utils/Utils'
@@ -45,13 +46,13 @@ class Sidebar extends Component {
 
     const baseRoute = `${basePath}${path}`
     if (!userPrivileges.includes(path)) return null
-    return (<li key={baseRoute} className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <p>{page.title || title}</p></Link></li>)
+    return (<li key={baseRoute} className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <T id={page.title || title} /></Link></li>)
   }
 
   _getMenuLiSingle (route, title, liClass) {
     const page = getPage(route) || {}
     const baseRoute = `${basePath}${route}`
-    return (<li className={(this.props.routeActive || '').startsWith(baseRoute) ? 'nav-item active' : 'nav-item active'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}><i className={liClass || 'fas fa-circle nav-icon'} /> <p>{page.title || title}</p></Link></li>)
+    return (<li className={(this.props.routeActive || '').startsWith(baseRoute) ? 'nav-item active' : 'nav-item active'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}><i className={liClass || 'fas fa-circle nav-icon'} /> <T id={page.title || title} /></Link></li>)
   }
 
   render () {
@@ -117,5 +118,4 @@ class Sidebar extends Component {
     )
   }
 }
-
-export default Sidebar
+export default injectIntl(Sidebar)

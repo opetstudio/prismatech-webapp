@@ -3,6 +3,8 @@ import moment from 'moment'
 import Clock from 'react-live-clock'
 import { isNullOrUndefined } from 'util'
 import { Link } from 'react-router-dom'
+import { injectIntl, FormattedMessage as T } from 'react-intl'
+import AppConfig from '../../Config/AppConfig'
 // import {Images} from '../../Themes'
 // import AppConfig from '../../Config/AppConfig'
 // import { getAccessToken, getUserPrivName } from '../../Utils/Utils'
@@ -48,7 +50,7 @@ class HeaderComponent extends Component {
             </button>} */}
 
           <li className='nav-item d-sm-inline-block'>
-            <h3 style={{ marginBottom: 0, marginTop: 4 }}>{this.props.pageTitle}</h3>
+            <h3 style={{ marginBottom: 0, marginTop: 4 }}><T id={(this.props.pageTitle || AppConfig.appName)} /></h3>
           </li>
 
         </ul>
@@ -84,4 +86,4 @@ class HeaderComponent extends Component {
     )
   }
 }
-export default HeaderComponent
+export default injectIntl(HeaderComponent)
