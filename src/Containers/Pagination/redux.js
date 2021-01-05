@@ -1,6 +1,5 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-// import Moment from 'moment'
 import { path } from 'ramda'
 // import qs from 'qs'
 

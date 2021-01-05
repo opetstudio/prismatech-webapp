@@ -1,7 +1,6 @@
-import React, { Component, isValidElement } from 'react'
+import React, { Component } from 'react'
 
 export default class ModalCommon extends Component {
-
   render () {
     const { content, title, footer } = this.props
     return (

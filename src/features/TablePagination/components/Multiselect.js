@@ -1,352 +1,252 @@
-import React, { Component, useEffect, memo, useCallback, useState } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import CreatableSelect from 'react-select/creatable'
-import Select from 'react-select'
-import _ from 'lodash'
-import styled from 'styled-components'
-import { path } from 'ramda'
-import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import TablepaginationActions from '../redux'
-import Immutable from 'seamless-immutable'
+// import Immutable from 'seamless-immutable'
+import Select, { components } from 'react-select'
+import TableCon from '../containers/TableCon'
+import PaginationNav from './PaginationNav'
 
-const Styles = styled.div`
-  padding: 1rem;
-  .pagination {
-    padding: 0.5rem;
-  }
-`
+const menuHeaderStyle = {
+  padding: '8px 12px',
+  background: '#0052CC',
+  color: 'white'
+}
 
-// const options = [
-//   { value: 'chocolate', label: 'Chocolate' },
-//   { value: 'strawberry', label: 'Strawberry' },
-//   { value: 'strawberry1', label: 'Strawberry' },
-//   { value: 'strawberry2', label: 'Strawberry' },
-//   { value: 'strawberry3', label: 'Strawberry' },
-//   { value: 'strawberry4', label: 'Strawberry' },
-//   { value: 'vanilla', label: 'Vanilla' }
-// ]
-
-function App2 ({
-  placeholder,
-  formType,
-  tablepaginationFetchData,
-  distinct,
-  whereCondition,
-  history,
-  fields,
-  maxOptions,
-  inputValue,
-  setInputValue,
-  isCreatableSelect,
-  serviceName,
-  tablepaginationOnChangeFilter,
-  sortBy,
-  isAutocomplete, label, onChange, defaultValue = [], name, id, optionColumnValue, optionColumnLabel, columns, data: xdata, loading: xloading = {}, pageCount: controlledPageCount = {}, count: xcount = {}, filter: xfilter 
-}) {
-  console.log('render Multiselect component')
-  console.log('defaultValuedefaultValuedefaultValue==>', defaultValue)
-
-  const loading = xloading[serviceName]
-  const count = xcount[serviceName] || 0
-  const pageCount = controlledPageCount[serviceName] || 0
-  const data = Immutable.asMutable(xdata[serviceName] || {}, { deep: true })
-  const filter = Immutable.asMutable(xfilter[serviceName] || {}, { deep: true })
-
-  // const [inputValue, setInputValue] = useState('')
-  // fetchData({ pageIndex, pageSize })
-  // Listen for changes in pagination and use the state to fetch our new data
-  useEffect(() => {
-    console.log('react effect========fff')
-    // fetchData({ filter })
-    tablepaginationFetchData({
-      serviceName: serviceName,
-      pageSize: maxOptions,
-      pageIndex: 0,
-      filter: Immutable.asMutable(filter, { deep: true }),
-      fields: fields,
-      history,
-      whereCondition,
-      distinct,
-      sortBy
-    })
-  }, [tablepaginationFetchData, inputValue])
-
-  // console.log('loading===>', loading)
-  // console.log('serviceName===>', serviceName)
-
-
-  // console.log('silahkan render')
-  if (isAutocomplete) {
-    if (formType === 'update' && _.isEmpty(inputValue) && _.isEmpty(data)) {
-      console.log('jangan render')
-      return null
-    }
-    const options = (_.concat(data || [], defaultValue)).map((v, i) => {
-      if (v) {
-        const val = { value: v[optionColumnValue], label: v[optionColumnLabel] }
-        return val
-      }
-      return { value: '-', label: '-' }
-    })
-    const optionsDefaultValue = []
-    for (let i = 0; i < defaultValue.length; i++) {
-      const v = defaultValue[i]
-      if (v) optionsDefaultValue.push({ value: v[optionColumnValue], label: v[optionColumnLabel] })
-    }
-    // const optionsDefaultValue = defaultValue.map((v, i) => ({ value: v[optionColumnValue], label: v[optionColumnLabel] }))
-    // console.log('options=====>', options)
-    console.log('optionsDefaultValueoptionsDefaultValue=====>', optionsDefaultValue)
-    // console.log('isCreatableSelect===>', isCreatableSelect)
-    // console.log('label===>', label)
-
-    if (isCreatableSelect) {
-      // console.log('optionsDefaultValue===>', optionsDefaultValue)
-      return (
-        <div className='form-group'>
-          <label>{label}</label>
-          <CreatableSelect
-            defaultValue={optionsDefaultValue}
-            defaultInputValue={inputValue}
-            isMulti
-            name='colors'
-            placeholder={placeholder}
-            options={options}
-            className='basic-multi-select'
-            classNamePrefix='selectss'
-            onChange={(selectedOption) => {
-              console.log('handleOnChangeeeeee', selectedOption)
-              // var options = e.target.options
-              // var value = []
-              // for (var i = 0, l = options.length; i < l; i++) {
-              //   if (options[i].selected) {
-              //     value.push(options[i].value)
-              //   }
-              // }
-              // // this.props.someCallback(value)
-              // const value = selectedOption.map(v => v.value)
-              // console.log('valueeee=====xxxx==>', value)
-              // onChange(value)
-              if (selectedOption) onChange(selectedOption.map(v => v.value), selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label })))
-            }}
-            onInputChange={(inputValue, actionMeta) => {
-              // console.log('inputValue', inputValue)
-              // console.log('actionMeta', actionMeta)
-              // set filter string_to_search = inputValue
-              // setInputValue(inputValue)
-              tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
-            }}
-            isSearchable
-          />
-        </div>
-      )
-    } else {
-      return (
-        <div className='form-group'>
-          <label>{label}</label>
-          <Select
-            defaultValue={optionsDefaultValue}
-            defaultInputValue={inputValue}
-            isMulti
-            name='colors'
-            placeholder={placeholder}
-            options={options}
-            className='basic-multi-select'
-            classNamePrefix='select'
-            onChange={(selectedOption) => {
-              console.log('handleOnChange', selectedOption)
-              // var options = e.target.options
-              // var value = []
-              // for (var i = 0, l = options.length; i < l; i++) {
-              //   if (options[i].selected) {
-              //     value.push(options[i].value)
-              //   }
-              // }
-              // // this.props.someCallback(value)
-              // console.log('valueeee=======>', value)
-              if (selectedOption) onChange(selectedOption.map(v => v.value), selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label })))
-              else {
-                // onChange([])
-              }
-            }}
-            onInputChange={(iv, actionMeta) => {
-              console.log('inputValue', iv)
-              // console.log('actionMeta', actionMeta)
-              // set filter string_to_search = inputValue
-              // setInputValue(iv)
-              tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: iv })
-            }}
-            isSearchable
-          />
-        </div>
-      )
-    }
-  }
-
+const MenuList = ({ navigation, selectProps }) => {
   return (
-    <div className='form-group'>
-      <label>{label}</label>
-      <select
-        multiple
-        className='form-control'
-        placeholder={placeholder}
-        id={id}
-        onChange={e => {
-          var options = e.target.options
-          var value = []
-          for (var i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-              value.push(options[i].value)
-            }
-          }
-          // this.props.someCallback(value)
-          // console.log('valueeee=======>', value)
-          onChange(value)
-        }}
-      >
-        {data.map((v, i) => <option key={i} value={v[optionColumnValue]} selected={_.find(defaultValue, { _id: v[optionColumnValue] })}>{v[optionColumnLabel]}</option>)}
-      </select>
-    </div>
-
+    <components.MenuList {...selectProps}>
+      <div style={menuHeaderStyle}>
+        <PaginationNav {...navigation} />
+      </div>
+      {selectProps.children}
+    </components.MenuList>
   )
-
-  // Render the UI for your table
-  // return (
-  //   <select name={name} id={id} className='form-control' onChange={e => onChange(e)}>
-  //     <option key='-'> --select {label}-- </option>
-  //     {data.map((v, i) => <option key={i} value={v[optionColumnValue]} selected={defaultValue === v[optionColumnValue]}>{v[optionColumnLabel]}</option>)}
-  //   </select>
-  // )
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    // count: state.tablepagination.count,
-    data: state.tablepagination.data,
-    filter: state.tablepagination.filter,
-    loading: state.tablepagination.loading
-    // pageCount: state.tablepagination.pageCount,
-    // pageSize: state.tablepagination.pageSize,
-    // pageIndex: state.tablepagination.pageIndex
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    tablepaginationFetchData: data => dispatch(TablepaginationActions.tablepaginationFetchData(data)),
-    tablepaginationOnChangeFilter: data => dispatch(TablepaginationActions.tablepaginationOnChangeFilter(data))
-    //   resetForm: data => dispatch(LoginActions.loginReset(data)),
-  }
-}
-
-const Multiselect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(App2))
-
-function App (props) {
+function TableViewMultiselect (props) {
   const {
-    placeholder,
-    tablepaginationFetchData,
-    fetchDataConfig: { whereCondition, fields, serviceName },
-    distinct,
-    maxOptions,
-    optionColumnLabel,
+    // loading,
+    // errors,
+    // data,
+    // headerGroups,
+    // getTableProps,
+    // getTableBodyProps,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageIndex,
+    pageOptions,
+    gotoPage,
+    pageCount,
+    previousPage,
+    nextPage,
+    pageSize,
+    setPageSize,
     optionColumnValue,
-    name,
-    id,
-    defaultValue,
+    optionColumnLabel,
+    payloadValue,
+    defaultValueOriginal,
+    payloadValueOriginal,
+    inputValue,
+    placeholder,
     onChange,
-    label,
-    isAutocomplete,
-    isCreatableSelect,
-    tablepaginationOnChangeFilter,
-    formType,
-    sortBy
+    isCreatableSelect
   } = props
-  const history = useHistory()
-  // const loading = path(['loading', serviceName], props)
-  // const data = path(['data', serviceName], props) || []
-  // const count = path(['count', serviceName], props) || []
-  // const pageCount = path(['pageCount', serviceName], props) || []
+  let options = page.map((row, i) => {
+    prepareRow(row)
+    const v = row.original
+    return { value: '' + v[optionColumnValue], label: v[optionColumnLabel] }
+  })
+  // const defaultVal = options.filter(v => optionsDefaultValue.includes('' + v.value))
+  // const defValue = (defaultValueOriginal || []).map(v => ({ value: '' + v[optionColumnValue], label: v[optionColumnLabel] }))
 
-  // const [defaultValueComponent, setDefaultValueComponent] = React.useState([])
-  const [inputValue, setInputValue] = useState('')
-
-  console.log('render Multiselect inputValue===>', inputValue)
-  console.log('render Multiselect defaultValue===>', defaultValue)
-
-  // useEffect(() => {
-  //   setDefaultValueComponent(Immutable.asMutable(defaultValue || [], { deep: true }))
-  // }, [defaultValue])
-
-  // console.log('App begeeeeeeiinnn')
-  // const data = path(['data', serviceName], props) || []
-  // const count = path(['count', serviceName], props) || []
-  // const pageCount = path(['pageCount', serviceName], props) || []
-  // const filter = path(['filter', serviceName], props) || {}
-
-  // const doFetchData = React.useCallback(({ filter }) => {
-  //   console.log('doFetchData filter===>', filter)
-  //   tablepaginationFetchData({
-  //     serviceName: serviceName,
-  //     pageSize: maxOptions,
-  //     pageIndex: 0,
-  //     filter: Immutable.asMutable(filter, { deep: true }),
-  //     fields: fields,
-  //     history,
-  //     whereCondition,
-  //     distinct
-  //   })
-  // }, [])
-
+  // defaultValue={typeof payload.privilege_id !== 'undefined' ? payload.privilege_id : (privilegeIds || []).map(v => '' + v._id)}
+  // defaultValueOriginal={typeof payload.privilege_id !== 'undefined' ? (privilegeIds || []).map(v => v => ({ value: '' + v._id, label: v.name })).filter(v => payload.privilege_id.includes(v._id)) : (privilegeIds || []).map(v => v => ({ value: '' + v._id, label: v.name }))}
+  let defVal = (defaultValueOriginal || []).map(v => ({ value: '' + v[optionColumnValue], label: v[optionColumnLabel] }))
+  console.log('optionsoptionsoptions1=>', options)
+  if (typeof payloadValue !== 'undefined') {
+    // options = options.concat((defaultValueOriginal || []).filter(v => options.map(v => '' + v.value).includes(v[optionColumnValue])).map(v => ({ value: '' + v[optionColumnValue], label: v[optionColumnLabel] })))
+    // let optId = options.map(v => '' + v.value)
+    // console.log('optId=>', optId)
+    // const filtered = (payloadValueOriginal || []).filter(v => optId.includes('' + v[optionColumnLabel]))
+    // console.log('filtered=>', filtered)
+    // const filteredOpt = filtered.map(v => ({ value: '' + v[optionColumnValue], label: v[optionColumnLabel] }))
+    // console.log('filteredOpt=>', filteredOpt)
+    options = options.concat(payloadValueOriginal.map(v => ({ value: '' + v[optionColumnValue], label: v[optionColumnLabel] })))
+    options = options.filter((thing, index, self) =>
+      index === self.findIndex((t) => (
+        t.value === thing.value
+      ))
+    )
+    // optId = options.map(v => '' + v.value)
+    // console.log('optId2=>', optId)
+    // console.log('optionsoptionsoptions2=>', options)
+    // console.log('optionsDefaultValue=>', payloadValue)
+    // console.log('payloadValueOriginal=>', payloadValueOriginal)
+    // console.log('optionColumnValue=>', optionColumnValue)
+    defVal = options.filter(v => payloadValue.includes(v.value))
+    console.log('defVal=>', defVal)
+  }
+  if (options.length < 1) return null
+  if (isCreatableSelect) {
+    return (
+      <CreatableSelect
+        value={defVal}
+        defaultInputValue={inputValue}
+        isMulti
+        name='colors'
+        placeholder={placeholder}
+        options={options}
+        className='basic-multi-select'
+        classNamePrefix='selectss'
+        onChange={(selectedOption) => {
+          console.log('handleOnChangeeeeee', selectedOption)
+          // var options = e.target.options
+          // var value = []
+          // for (var i = 0, l = options.length; i < l; i++) {
+          //   if (options[i].selected) {
+          //     value.push(options[i].value)
+          //   }
+          // }
+          // // this.props.someCallback(value)
+          // const value = selectedOption.map(v => v.value)
+          // console.log('valueeee=====xxxx==>', value)
+          // onChange(value)
+          let val = []
+          let valueOriginal = []
+          if (selectedOption) {
+            val = selectedOption.map(v => v.value)
+            valueOriginal = selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label }))
+          }
+          onChange({ val: val, valueOriginal: valueOriginal })
+        }}
+        onInputChange={(inputValue, actionMeta) => {
+          // console.log('inputValue', inputValue)
+          // console.log('actionMeta', actionMeta)
+          // set filter string_to_search = inputValue
+          // setInputValue(inputValue)
+          // tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: inputValue })
+        }}
+        isSearchable
+      />)
+  }
   return (
     <>
-      <Multiselect
-        // loading={loading}
-        defaultValue={defaultValue}
-        // defaultValue={defaultValueComponent}
-        // setInputValue={setInputValue}
-        // inputValue={inputValue}
-        name={name}
-        id={id}
-        // data={Immutable.asMutable(data, { deep: true })}
-        optionColumnValue={optionColumnValue}
-        optionColumnLabel={optionColumnLabel}
-        fields={fields}
-        // filter={filter}
-        onChange={(val, forDefaultValue) => {
-          console.log('valvalvalvla===>', val)
-          console.log('valvalvalvla===>', forDefaultValue)
-          // setDefaultValueComponent(forDefaultValue)
-          onChange(val, forDefaultValue)
-        }}
+      <Select
+        value={defVal}
+        defaultInputValue={inputValue}
+        isMulti
+        name='colors'
         placeholder={placeholder}
-        label={label}
-        isAutocomplete={isAutocomplete}
-        isCreatableSelect={isCreatableSelect}
-        serviceName={serviceName}
-        maxOptions={maxOptions}
-        history={history}
-        whereCondition={whereCondition}
-        distinct={distinct}
-        formType={formType}
-        sortBy={sortBy}
+        options={options}
+        components={{
+          MenuList: (pr) => MenuList({
+            navigation: {
+              canPreviousPage,
+              gotoPage,
+              canNextPage,
+              previousPage,
+              nextPage,
+              pageCount,
+              pageIndex,
+              pageOptions,
+              pageSize,
+              setPageSize,
+              withPageSize: false
+            },
+            selectProps: pr
+          })
+        }}
+        className='basic-multi-select'
+        classNamePrefix='select'
+        onChange={(selectedOption) => {
+          console.log('handleOnChange', selectedOption)
+          // var options = e.target.options
+          // var value = []
+          // for (var i = 0, l = options.length; i < l; i++) {
+          //   if (options[i].selected) {
+          //     value.push(options[i].value)
+          //   }
+          // }
+          // // this.props.someCallback(value)
+          // console.log('valueeee=======>', value)
+          if (selectedOption) onChange({ val: selectedOption.map(v => v.value), valueOriginal: selectedOption.map(v => ({ [optionColumnValue]: v.value, [optionColumnLabel]: v.label })) })
+          else {
+            // onChange([])
+          }
+        }}
+        onInputChange={(iv, actionMeta) => {
+          console.log('inputValue', iv)
+          // console.log('actionMeta', actionMeta)
+          // set filter string_to_search = inputValue
+          // setInputValue(iv)
+          // tablepaginationOnChangeFilter({ serviceName: serviceName, fieldName: 'string_to_search', fieldValue: iv })
+        }}
+        isSearchable
       />
-      {/* <Styles>
-        <Combobox
-          columns={columns}
-          data={Immutable.asMutable(data, { deep: true })}
-          fetchData={doFetchData}
-          loading={loading}
-          pageCount={pageCount}
-          count={count}
-          filter={filter}
-          child={child}
-        />
-      </Styles> */}
     </>
   )
 }
 
-export default App
+function Multiselect (props) {
+  const {
+    getColumns,
+    whereCondition,
+    distinct,
+    history,
+    listallServiceName,
+    fields,
+    onChange,
+    payloadValue,
+    defaultValueOriginal,
+    payloadValueOriginal,
+    // label,
+    labelButton,
+    labelColumn,
+    optionColumnLabel,
+    optionColumnValue,
+    inputValue,
+    placeholder,
+    isCreatableSelect
+  } = props
+  console.log('defaultValuedefaultValuedefaultValuedefaultValue=>', payloadValue)
+  return (
+    <>
+      <TableCon
+        columns={[
+          { Header: labelColumn, accessor: p => <button type='button' class='btn btn-default' data-dismiss='modal' onClick={() => { onChange({ val: p[optionColumnValue] }) }}>{labelButton}</button> },
+          ...getColumns({ onChange })
+        ]}
+        listallServiceName={listallServiceName}
+        fields={fields}
+        history={history}
+        whereCondition={whereCondition}
+        distinct={distinct}
+      >
+        <TableViewMultiselect
+          payloadValue={payloadValue}
+          defaultValueOriginal={defaultValueOriginal}
+          payloadValueOriginal={payloadValueOriginal}
+          inputValue={inputValue}
+          placeholder={placeholder}
+          onChange={onChange}
+          optionColumnValue={optionColumnValue}
+          optionColumnLabel={optionColumnLabel}
+          isCreatableSelect={isCreatableSelect}
+        />
+      </TableCon>
+    </>
+  )
+}
+// export default Multiselect
+export default injectIntl((props) => {
+  var history = useHistory()
+  const [payloadValueOriginal, setPayloadValueOriginal] = React.useState([])
+  const onChange = (v) => {
+    setPayloadValueOriginal(v.valueOriginal)
+    props.onChange(v)
+  }
+  return <Multiselect history={history} {...props} onChange={onChange} payloadValueOriginal={payloadValueOriginal} />
+})

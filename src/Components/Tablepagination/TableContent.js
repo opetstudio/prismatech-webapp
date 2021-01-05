@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import _ from 'lodash'
 // Import React Table
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'

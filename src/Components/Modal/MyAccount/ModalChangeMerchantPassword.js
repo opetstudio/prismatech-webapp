@@ -86,7 +86,7 @@ export default class ModalChangePassword extends Component {
       )
     }
 
-    componentWillMount () {
+    componentDidMount () {
       this.props.reset()
     }
 

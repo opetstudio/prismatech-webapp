@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router-dom'
 import SignupActions from '../../features/Signup/redux'
-import Loader from '../../Components/Loader/Loader'
 // import SignupPageComponent from '../../Components/Signup/SignupPageComponent'
 // import { isLoggedIn } from '../../Utils/Utils'
 // import LoginActions, { LoginSelectors } from '../Login/redux'
 // import SignUpActions from './redux'
-// import AppConfig from '../../Config/AppConfig'
+import AppConfig from '../../Config/AppConfig'
 // const basePath = AppConfig.basePath
 
 function PageSignup (props) {
@@ -17,11 +16,12 @@ function PageSignup (props) {
     <>
       <Helmet>
         <title>Mendaftar</title>
-        <body className='register-page' />
+        <body className='register-page' style={{ minHeight: 512 }} />
       </Helmet>
       <div className='register-box'>
         <div className='register-logo'>
-          <a href='../../index2.html'><b>Tokoonline</b></a>
+          <Link to='/login' className='text-center'><b>{AppConfig.appName}</b></Link>
+          {/* <a href='../../index2.html'><b>{AppConfig.appName}</b></a> */}
         </div>
         <div className='card'>
           <div className='card-body register-card-body'>
@@ -88,7 +88,7 @@ function PageSignup (props) {
                   <div className='icheck-primary'>
                     <input type='checkbox' id='agreeTerms' name='terms' required />
                     <label htmlFor='agreeTerms'>
-                I agree to the <a href='#'>terms</a>
+                        I agree to the <Link to='/tnc'> terms</Link>
                     </label>
                   </div>
                 </div>

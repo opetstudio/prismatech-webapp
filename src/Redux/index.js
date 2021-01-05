@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux'
-import { persistReducer, persistStore } from 'redux-persist'
+// import loadable from '@loadable/component'
+import { persistReducer } from 'redux-persist'
 import CreateStore from './CreateStore'
 import rootSaga from '../Sagas/'
 import ReduxPersist from '../Config/ReduxPersist'
+// import { redux } from '../features/TablePagination/redux'
+
+// const { reducer } = redux
+
+// const PaginationRedux = loadable(() => import('../Containers/Pagination/redux'))
 
 export default ({ externalRedux, externalApi, externalSagas }) => {
   /* ------------- Assemble The Reducers ------------- */
@@ -14,6 +20,8 @@ export default ({ externalRedux, externalApi, externalSagas }) => {
     myprofile: require('../Containers/Myprofile/redux').reducer,
     courseenrollment: require('../features/CourseEnrollment/redux').reducer,
     tablepagination: require('../features/TablePagination/redux').reducer,
+    // tablepagination: reducer,
+    // tablepagination: reducer,
     login: require('../Containers/Login/redux').reducer,
     pagination: require('../Containers/Pagination/redux').reducer,
     modal: require('../Containers/Modal/redux').reducer,

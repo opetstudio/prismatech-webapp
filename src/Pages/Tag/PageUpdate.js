@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
-import { Table, Update as Updateform } from '../../features/TablePagination'
-import LoginCheck from '../../Containers/Login/LoginCheck'
-import ContentHeader from '../../Components/ContentHeader'
+import { Update as Updateform } from '../../features/TablePagination'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import { injectIntl } from 'react-intl'
-import { connect } from 'react-redux'
-import _ from 'lodash'
-import moment from 'moment'
 import { path } from 'ramda'
 import AppConfig from '../../Config/AppConfig'
-import AppActions from '../../Redux/AppRedux'
-import { getAccessToken } from '../../Utils/Utils'
 import { lp } from '../../Utils/Pages'
-import { updatePageTitle, detailPageTitle, detailPageUrl, redirectAfterCreate, fields, detailService, updateService, createNewButtonLabel, getColumns } from './Manifest'
+import { updatePageTitle, detailPageTitle, detailPageUrl, redirectAfterCreate, fields, detailService, updateService } from './Manifest'
 
-let tablepaginationOnChangeFormFunc = null
 const paginationConfig = {
   serviceName: detailService,
   updateServiceName: updateService,
@@ -28,7 +20,7 @@ class Comp extends Component {
   }
 
   componentDidMount () {
-    const { match, appPatch } = this.props
+    const { appPatch } = this.props
     const title = (lp[window.location.pathname] || {}).title
     if (title) appPatch({ routeActive: window.location.pathname, pageTitle: title })
     else appPatch({ routeActive: window.location.pathname, pageTitle: updatePageTitle })
@@ -72,7 +64,7 @@ class Comp extends Component {
               child={(tablepaginationOnChangeForm, dataDetail, payload) => {
                 // console.log('haloooooooo===>', dataDetail)
                 // console.log('haloooooooo payload===>', payload)
-                tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
+                // tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
                 // currentDataDetail = dataDetail
                 // if (startDate) startDate.value = path([paginationConfig.serviceName, 'start_date'], currentDataDetail)
                 // if (title) title.value = path([paginationConfig.serviceName, 'title'], payload) // || path([paginationConfig.serviceName, 'title'], currentDataDetail)
@@ -103,15 +95,4 @@ class Comp extends Component {
     )
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    dataDetail: state.tablepagination.dataDetail
-  }
-}
-const mapDispatchToProps = dispatch => ({
-  appPatch: data => dispatch(AppActions.appPatch(data))
-})
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(Comp))
+export default injectIntl(Comp)

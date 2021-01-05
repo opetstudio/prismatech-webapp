@@ -2,13 +2,13 @@
 import React from 'react'
 import LoginActions, { LoginSelectors } from '../../Containers/Login/redux'
 import LoginPage from './PageLogin'
-import { isLoggedIn, getAccessToken } from '../../Utils/Utils'
+import { isLoggedIn } from '../../Utils/Utils'
 import AppConfig from '../../Config/AppConfig'
 const basePath = AppConfig.basePath
 
 class Container extends React.Component {
   componentDidMount () {
-    this.props.resetForm()
+    // this.props.resetForm()
   }
 
   render () {

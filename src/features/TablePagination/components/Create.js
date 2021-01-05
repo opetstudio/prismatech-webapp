@@ -1,13 +1,16 @@
-import React, { Component, useEffect } from 'react'
-import { path } from 'ramda'
+import React, { PureComponent, useEffect } from 'react'
+// import { path } from 'ramda'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { injectIntl, FormattedMessage as T } from 'react-intl'
 import Loader from '../../../Components/Loader/Loader'
 import TablepaginationActions from '../redux'
 
-function CardBody ({ tablepaginationOnChangeForm, payload, child }) {
-  return child(tablepaginationOnChangeForm, payload)
+class CardBody extends PureComponent {
+  render () {
+    const { tablepaginationOnChangeForm, payload, child } = this.props
+    return child(tablepaginationOnChangeForm, payload)
+  }
 }
 const Createform = React.memo(props => {
   console.log('render Create.js')
@@ -26,7 +29,8 @@ const Createform = React.memo(props => {
     onSubmit,
     isNeedValidation,
     beforeSubmit,
-    children
+    children,
+    tablepaginationSetloading
   } = props
   const loading = props.loading || false
   //   const dataDetail = path(['dataDetail', paginationConfig.serviceName], props) || {}
@@ -41,21 +45,23 @@ const Createform = React.memo(props => {
     return () => {
       tablepaginationResetForm({ serviceName: paginationConfig.serviceName })
     }
-  }, [])
+  }, [tablepaginationResetForm, paginationConfig.serviceName])
   console.log('Createform=========')
 
   const childrenWithProps = React.Children.map(children, child => {
-      // checking isValidElement is the safe way and avoids a typescript error too
-      if (React.isValidElement(child)) {
-          return React.cloneElement(child, { tablepaginationOnChangeForm: tablepaginationOnChangeForm, payload });
-      }
-      return child;
-  });
+    // checking isValidElement is the safe way and avoids a typescript error too
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { tablepaginationOnChangeForm: tablepaginationOnChangeForm, payload })
+    }
+    return child
+  })
 
   return (
     <>
       <form
-        id={paginationConfig.serviceName} role='form' onSubmit={(e) => {
+        id={paginationConfig.serviceName}
+        // role='form'
+        onSubmit={(e) => {
           const theForm = document.getElementById(paginationConfig.serviceName)
           if (e) e.preventDefault()
           if (isNeedValidation) {
@@ -66,6 +72,7 @@ const Createform = React.memo(props => {
           }
           if (onSubmit) onSubmit({ tablepaginationSubmitForm, payload })
           else {
+            tablepaginationSetloading({ serviceName: paginationConfig.serviceName, isLoading: true })
             if (beforeSubmit) {
               beforeSubmit((p) => {
                 const pl = { [paginationConfig.serviceName]: { ...payload[paginationConfig.serviceName], ...p } }
@@ -102,20 +109,20 @@ const Createform = React.memo(props => {
             </div>
           </div>
           <div className='card-body'>
-            {/* {childrenWithProps} */}
-            <CardBody child={child} payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} />
+            {child && <CardBody child={child} payload={payload} tablepaginationOnChangeForm={tablepaginationOnChangeForm} />}
+            {!child && childrenWithProps}
           </div>
           <div className='card-footer'>
             {
               loading &&
-              <Loader loading type='rpmerah' />
+                <Loader loading type='rpmerah' />
             }
             {!loading && footerCard && footerCard({ tablepaginationSubmitForm, payload })}
             {!loading && !footerCard && (
-             <>
-                  <button disabled={loading} style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
-                  <button disabled={loading} style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
-                </>
+              <>
+                <button disabled={loading} style={{ width: 100 }} type='button' className='btn bg-gradient-warning' onClick={e => history.goBack()}>Cancel</button>
+                <button disabled={loading} style={{ width: 100, marginLeft: 5 }} type='submit' className='btn bg-gradient-primary'>Submit</button>
+              </>
             )}
 
           </div>
@@ -128,14 +135,16 @@ const Createform = React.memo(props => {
 
 const mapStateToProps = (state, ownProps) => {
   const loading = state.tablepagination.loading[ownProps.paginationConfig.serviceName] || false
+  const payload = state.tablepagination.payload[ownProps.paginationConfig.serviceName] || {}
   return {
-    payload: state.tablepagination.payload,
+    payload,
     loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    tablepaginationSetloading: data => dispatch(TablepaginationActions.tablepaginationSetloading(data)),
     tablepaginationOnChangeForm: data => dispatch(TablepaginationActions.tablepaginationOnChangeForm(data)),
     tablepaginationSubmitForm: data => dispatch(TablepaginationActions.tablepaginationSubmitForm(data)),
     tablepaginationResetForm: data => dispatch(TablepaginationActions.tablepaginationResetForm(data))

@@ -12,7 +12,8 @@ export default class ContentWrapper extends Component {
         {isNeedLoggedin && <LoginCheck />}
         <Helmet>
           <title>{pageTitle}</title>
-          <body className='hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed' />
+          {/* <body className='hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed' /> */}
+          <body className='sidebar-mini layout-navbar-fixed' style={{ height: 'auto' }} />
         </Helmet>
         <div className='content-wrapper'>
           <ContentHeader

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import _ from 'lodash'
 import Helmet from 'react-helmet'
 import FormUpdateLimitMerchant from '../../Containers/Merchant/FormUpdateLimitMerchant'
 

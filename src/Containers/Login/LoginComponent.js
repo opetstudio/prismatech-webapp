@@ -1,9 +1,10 @@
 import React from 'react'
 import { isEmpty, isNil } from 'ramda'
-import AppConfig from '../../Config/AppConfig'
+// import AppConfig from '../../Config/AppConfig'
 import Loader from '../../Components/Loader/Loader'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
+import Helmet from 'react-helmet'
 import { injectIntl, FormattedMessage as T } from 'react-intl'
 
 // const basePath = AppConfig.basePath
@@ -18,6 +19,7 @@ class LoginPageComponent extends React.Component {
       formSubmitMessage: this.props.formSubmitMessage
     }
     this._form = this._form.bind(this)
+    this._formOnSubmit = this._formOnSubmit.bind(this)
     this.props.loginPatch({ responseMessage: '', responseCode: '', responseDescription: '' })
     this.state = {
       password: '',
@@ -30,7 +32,7 @@ class LoginPageComponent extends React.Component {
   }
 
   componentWillUnmount () {
-    const login = AppConfig.basePath + '/login'
+    // const login = AppConfig.basePath + '/login'
     this.props.loginPatch({ responseMessage: '', responseCode: '', responseDescription: '' })
   }
 
@@ -63,11 +65,13 @@ class LoginPageComponent extends React.Component {
 
   _formOnSubmit (e) {
     if (e) e.preventDefault()
+    const { history } = this.props
     const email = this.refs.email.value
     const pass = this.refs.pass.value
     this.props.loginDoLogin({
       email: email,
-      password: pass
+      password: pass,
+      history
     })
     return false
   }
@@ -77,8 +81,14 @@ class LoginPageComponent extends React.Component {
   }
 
   _form () {
-    const { responseMessage } = this.props
+    const { responseMessage, history } = this.props
     return (
+      <>
+      <Helmet>
+          <title>Login</title>
+          <body className='login-page' style={{ minHeight: 512 }} />
+          {/* <body className='sidebar-mini layout-navbar-fixed' style={{ height: 'auto' }} /> */}
+      </Helmet>
       <form onSubmit={(e) => this._formOnSubmit(e)}>
         {!_.isEmpty(responseMessage) &&
           <div className='row'>
@@ -124,6 +134,7 @@ class LoginPageComponent extends React.Component {
         <center><T id='label.donthaveaccount' /><Link to='/signup'><T id='label.signup' /></Link></center>
 
       </form>
+      </>
     )
   }
 

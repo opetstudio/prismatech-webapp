@@ -1,10 +1,10 @@
 // a library to wrap and simplify api calls
 import AppConfig from '../../Config/AppConfig'
-import { getSession, generateHmac, getAccessToken } from '../../Utils/Utils'
+import { generateHmac, getAccessToken } from '../../Utils/Utils'
 
 export const create = api => ({
   changepasswordSubmit: ({ password, new_password, userId }) => {
-    const merchant_id = getSession('merchant_id')
+    // const merchant_id = getSession('merchant_id')
     const at = getAccessToken()
     const body = `mutation{
       changeUserPassword(user_id:"${userId}",access_token:"${at}",password:"${password}",new_password:"${new_password}") {

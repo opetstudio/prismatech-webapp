@@ -1,130 +1,57 @@
-import React, { Component } from 'react'
-import { path } from 'ramda'
-import { connect } from 'react-redux'
+import React, { PureComponent } from 'react'
+// import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
-import _ from 'lodash'
-import TablepaginationActions from '../redux'
-import Loader from '../../../Components/Loader/Loader'
-
-function CardBody ({ errors, dataDetail, child, fetchData, id, loading }) {
-  React.useEffect(() => {
-    window.collapseBoxRefresh()
-    fetchData({ id })
-  }, [fetchData, id])
-  if(loading) return <Loader loading type='rpmerah' />
-  if(!loading && !_.isEmpty(errors)) return (
-    <>
-      <div class="alert alert-danger" role="alert">
-        <ul>
-          {errors.map((v, i) => <li key={i}>{v.message}</li>)}
-        </ul>
-      </div>
-    </>
-  )
-  return child(dataDetail)
-}
-
-function Detaildata (props) {
-  const history = useHistory()
-  const {
-    paginationConfig,
-    child,
-    formTitle,
-    tablepaginationFetchDataDetail,
-    id,
-    dataDetail,
-    updateHref,
-    tablepaginationDeleteData,
-    redirectAfterDelete,
-    footerCard,
-    modalFooter,
-    errors,
-    loading
-  } = props
-  // const payload = path(['payload', paginationConfig.serviceName], props) || {}
-  console.log('updateHref===>', updateHref)
-  const doFetchData = React.useCallback(({ id }) => {
-    tablepaginationFetchDataDetail({ serviceName: paginationConfig.serviceName, id, fields: paginationConfig.fields, additionalFields: paginationConfig.additionalFields })
-  }, [id])
-
-  return (
-    <>
+// import _ from 'lodash'
+// import TablepaginationActions from '../redux'
+// import Loader from '../../../Components/Loader/Loader'
+import DetailCon from '../containers/DetailCon'
+class DetailComp extends PureComponent {
+  render () {
+    console.log('DetailCompDetailCompDetailComp')
+    const {
+      formTitle,
+      children,
+      childFunc,
+      fields,
+      upsertServiceName,
+      detailServiceName,
+      updatePageUrl,
+      createPageUrl,
+      redirectAfterDelete,
+      deleteServiceName,
+      id
+    } = this.props
+    console.log('upsertServiceNameupsertServiceNameupsertServiceNameupsertServiceName', upsertServiceName)
+    return (
       <div className='card'>
         <div className='card-header' data-card-widget='collapse'>
           <h3 className='card-title'>{formTitle}</h3>
           <div className='card-tools'>
             <button type='button' className='btn btn-tool myCardWidget' data-card-widget='collapse'><i className='fas fa-minus' /></button>
-            {/* <button type='button' className='btn btn-tool' data-card-widget='remove'><i className='fas fa-times' /></button> */}
           </div>
         </div>
         <div className='card-body'>
-          <CardBody errors={errors} loading={loading} dataDetail={dataDetail} child={child} fetchData={doFetchData} id={id} />
-          {/* {child(dataDetail)} */}
-        </div>
-        <div className='card-footer'>
-          {footerCard && footerCard(dataDetail)}
-          {!footerCard && (
-            <>
-              <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button>
-              <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(updateHref)} type='button' className='btn bg-gradient-primary'>Edit</button>
-              <button style={{ width: 100, marginLeft: 5 }} onClick={e => history.goBack()} type='button' className='btn bg-gradient-warning'>Back</button>
-            </>
-          )}
+          <DetailCon
+            updatePageUrl={updatePageUrl}
+            createPageUrl={createPageUrl}
+            upsertServiceName={upsertServiceName}
+            detailServiceName={detailServiceName}
+            deleteServiceName={deleteServiceName}
+            fields={fields}
+            childFunc={childFunc}
+            id={id}
+            redirectAfterDelete={redirectAfterDelete}
+          >
+            {children && children}
+          </DetailCon>
         </div>
       </div>
-      <div className='modal fade' id='modal-danger'>
-        <div className='modal-dialog'>
-          <div className='modal-content bg-danger'>
-            <div className='modal-header'>
-              <h4 className='modal-title'>Danger</h4>
-              <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
-                <span aria-hidden='true'>×</span>
-              </button>
-            </div>
-            <div className='modal-body'>
-              <p>Konfirmasi hapus data.</p>
-            </div>
-            <div className='modal-footer justify-content-between'>
-              {loading && <Loader loading type='rpmerah' />}
-              {!loading && modalFooter && modalFooter(dataDetail, tablepaginationDeleteData)}
-              {!loading && !modalFooter && (
-                <>
-                  <button id='buttonCloseModal' type='button' className='btn btn-outline-light' data-dismiss='modal'>Cancel</button>
-                  <button type='button' className='btn btn-outline-light' onClick={() => tablepaginationDeleteData({ id, serviceName: paginationConfig.serviceDeleteName, redirectAfterDelete, history })}>Delete</button>
-                </>
-              )}
-
-            </div>
-          </div>
-          {/* /.modal-content */}
-        </div>
-        {/* /.modal-dialog */}
-      </div>
-      {/* /.modal */}
-
-    </>
-  )
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const errors = (state.tablepagination.errors || {})[(ownProps.paginationConfig || {}).serviceName] || []
-  const loading = (state.tablepagination.loading || {})[(ownProps.paginationConfig || {}).serviceName] || false
-  return {
-    loading: loading,
-    dataDetail: state.tablepagination.dataDetail,
-    errors: errors
+    )
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    tablepaginationFetchDataDetail: data => dispatch(TablepaginationActions.tablepaginationFetchDataDetail(data)),
-    tablepaginationDeleteData: data => dispatch(TablepaginationActions.tablepaginationDeleteData(data))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(Detaildata))
+export default injectIntl((props) => {
+  var history = useHistory()
+  return <DetailComp history={history} {...props} />
+})

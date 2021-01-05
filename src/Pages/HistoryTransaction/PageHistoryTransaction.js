@@ -54,13 +54,18 @@ class PageHistoryTransaction extends Component {
     const merchant_id=getSession('merchant_id')
     this.props.transactionSummaryFetch({merchant_id})
   }
-  componentWillMount()
-  {
+  // componentWillMount()
+  // {
+  //   const merchant_id=getSession('merchant_id')
+  //   this.props.transactionSummaryFetch({merchant_id})
+  //   this.props.filterReset()
+  // }
+  componentDidMount () {
+
     const merchant_id=getSession('merchant_id')
     this.props.transactionSummaryFetch({merchant_id})
     this.props.filterReset()
-  }
-  componentDidMount () {
+
     let client=moment.tz.guess()
     let now = (moment.tz(client).format('MM-DD-YYYY')).toString()
     window.callDaterangePicker(this.props.doFilter,now,now)

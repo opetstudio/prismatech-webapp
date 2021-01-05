@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom'
 import _ from 'lodash'
+// import loadable from '@loadable/component'
 // import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
 
 // Import Screens for the Router
@@ -13,6 +14,8 @@ import AppConfig from '../Config/AppConfig'
 const basePath = AppConfig.basePath
 const loginPath = basePath + '/login'
 
+// const AsyncPage = loadable(props => import(`./${props.page}`))
+
 // const publicRoutes = ['/login', '/signup']
 
 class App extends Component {
@@ -20,16 +23,17 @@ class App extends Component {
     super(props)
     this.checkLogin(window.location.pathname)
     this.unlisten = this.props.history.listen((location, action) => {
-      console.log('halooooooooowwww', window.location.pathname)
+      // console.log('halooooooooowwww', window.location.pathname)
       let r = {}
       const pathSplit = (window.location.pathname || '').split('/')
-      console.log('pathSplit====>', pathSplit.length)
-      if((window.location.pathname).includes('detail') || (window.location.pathname).includes('update') || (window.location.pathname).includes('create')) {
-        for(let i in lp) {
-          if(i.startsWith(`/${pathSplit[1]}/${pathSplit[2]}`)){ r = lp[i]; break;}
+      // console.log('pathSplit====>', pathSplit.length)
+      if ((window.location.pathname).includes('detail') || (window.location.pathname).includes('update') || (window.location.pathname).includes('create')) {
+        for (const i in lp) {
+          if (i.startsWith(`/${pathSplit[1]}/${pathSplit[2]}`)) { r = lp[i]; break }
         }
       } else r = lp[window.location.pathname] || {}
       const title = r.title
+      console.log('titletitletitletitletitle===', title)
       // const title = (lp[window.location.pathname] || {}).title
       if (title) this.props.appPatch({ routeActive: window.location.pathname, pageTitle: title })
       this.checkLogin(window.location.pathname)
@@ -39,7 +43,7 @@ class App extends Component {
   checkLogin (pathName) {
     // console.log('checkLogin statussssss')
     // console.log(pathName, 'pathnem', this.props)
-    
+
     if (loginPath === pathName) {
       // console.log('path = ' + pathName + '|no need check status')
     } else {
@@ -65,10 +69,15 @@ class NavigationRouter extends Component {
   render () {
     const { userPrivileges } = this.props
     // console.log('userPrivileges========>', userPrivileges)
+    // const userPrivileges2 = Immutable.asMutable(userPrivileges, { deep: true })
+    // console.log('userPrivileges2========>', userPrivileges2)
     const authorizedRoute = _.filter(pageList, v => (userPrivileges || []).includes(v.path) || v.isPublic)
+    // console.log('pageList===>', pageList)
     // console.log('authorizedRoute===>', authorizedRoute)
+
     return (
       <Router>
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
         <AppContainer checkLogedStatus={this.props.checkLogedStatus} appPatch={this.props.appPatch}>
           <ResponsiveContainer sidemenu={this.props.sidemenu} appname='adminlte' is>
             {authorizedRoute.map(r => (
@@ -76,6 +85,7 @@ class NavigationRouter extends Component {
             ))}
           </ResponsiveContainer>
         </AppContainer>
+        {/* </Suspense> */}
       </Router>
     )
   }

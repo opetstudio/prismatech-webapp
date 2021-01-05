@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import LoginCheck from '../../Containers/Login/LoginCheck'
-import ContentHeader from '../../Components/ContentHeader'
-import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { Images } from '../../Themes'
 import { getSession } from '../../Utils/Utils'
@@ -10,7 +7,7 @@ import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import AppConfig from '../../Config/AppConfig'
 
 class PageMerchantMyprofile extends Component {
-  componentWillMount () {
+  componentDidMount () {
     const merchant_id = getSession('merchant_id')
     console.log('merchant id di page profile>>>>>', merchant_id)
     this.props.fetchRelateInstitution({ merchant_id })
@@ -33,7 +30,7 @@ class PageMerchantMyprofile extends Component {
                   {/* <i className="fas fa-pencil-alt mr-1"/> */}
                 </strong>
                 <div className='text-center'>
-                  <img className='profile-user-img img-fluid img-circle' src={Images.LogoRp} alt='User profile picture' />
+                  <img alt='-' className='profile-user-img img-fluid img-circle' src={Images.LogoRp} />
                 </div>
                 <h3 className='profile-username text-center'>{profile.full_name}</h3>
                 <div className='card-body'>

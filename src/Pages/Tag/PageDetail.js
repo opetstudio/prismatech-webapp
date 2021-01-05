@@ -1,18 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { Detail as Detaildata, Table } from '../../features/TablePagination'
+import { Detail as Detaildata } from '../../features/TablePagination'
 import { path } from 'ramda'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
 import { detailService, fields, deleteService, detailPageTitle, updatePageUrl, redirectAfterDelete } from './Manifest'
-// import moment from 'moment'
 import Moment from 'moment'
 import AppConfig from '../../Config/AppConfig'
-const basePath = AppConfig.basePath
 
 function Comp (props) {
-  const { match, history, dataDetail } = props
+  const { match, history } = props
   const paginationConfig = {
     serviceName: detailService,
     serviceDeleteName: deleteService,
@@ -89,13 +85,4 @@ function Comp (props) {
     </ContentWrapper>
   )
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    dataDetail: state.tablepagination.dataDetail
-  }
-}
-export default connect(
-  mapStateToProps,
-  null
-)(injectIntl(Comp))
+export default injectIntl(Comp)

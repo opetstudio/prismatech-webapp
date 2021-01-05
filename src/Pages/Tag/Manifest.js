@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'moment'
 import AppConfig from '../../Config/AppConfig'
@@ -6,7 +6,6 @@ const basePath = AppConfig.basePath
 
 const entityName = 'Tag'
 const entity = 'tag'
-const collection = 'tag'
 const serviceEntity = 'Tag'
 
 export const redirectAfterCreate = '/' + entity + '/detail'

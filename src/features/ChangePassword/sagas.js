@@ -1,4 +1,4 @@
-import { call, put, select } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import Actions from './redux'
 import _ from 'lodash'
 import { path } from 'ramda'

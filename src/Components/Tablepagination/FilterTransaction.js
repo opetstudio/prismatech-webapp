@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import Moment from 'moment'
 import { loadScriptRecallDatePicker } from '../../Utils/Utils'
 
 export default class FilterTransaction extends Component {

@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage as T } from 'react-intl'
 import { Images } from '../../Themes'
 import AppConfig from '../../Config/AppConfig'
-import { getAccessToken } from '../../Utils/Utils'
 import { getPage } from '../../Utils/Pages'
-import Shimmer from 'react-shimmer-effect'
 import moment from 'moment'
 import Clock from 'react-live-clock'
 import SidebarMainMenu from './SidebarMainMenu'
@@ -37,7 +35,7 @@ class Sidebar extends Component {
   _getMenuLi (route, title, liClass, parameter = {}) {
     const { userMerchantCode, userPrivileges } = this.props
     const page = getPage(route) || {}
-    const pageRole = page.role || 'xxxx'
+    // const pageRole = page.role || 'xxxx'
 
     const path = (page.path || '').replace(':merchantId', userMerchantCode || '*')
 
@@ -46,7 +44,7 @@ class Sidebar extends Component {
 
     const baseRoute = `${basePath}${path}`
     if (!userPrivileges.includes(path)) return null
-    return (<li key={baseRoute} className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <T id={page.title || title} /></Link></li>)
+    return (<li key={baseRoute} className={(this.props.routeActive || '').startsWith(baseRoute) ? 'active nav-item' : 'nav-item'}><Link className='nav-link' onClick={() => this.props.appPatch({ routeActive: baseRoute, pageTitle: title })} to={baseRoute}> <i className='far fa-circle nav-icon' /> <T id={page.title || title} /></Link></li>)
   }
 
   _getMenuLiSingle (route, title, liClass) {
@@ -56,34 +54,38 @@ class Sidebar extends Component {
   }
 
   render () {
-    const { profile, userPrivileges, sidemenu } = this.props
+    const { userPrivileges, sidemenu } = this.props
     const xm = sidemenu.map((v, i) => {
       return (
         <SidebarMainMenu key={i} name={v.userPrivilegeCode} title={v.title} userPrivileges={userPrivileges} icon={(<i className='nav-icon fas fa-tachometer-alt' />)}>
-          { v.submenu.map(v2 => this._getMenuLi(v2.route, v2.title)) }
+          {v.submenu.map(v2 => this._getMenuLi(v2.route, v2.title))}
         </SidebarMainMenu>
       )
     })
     return (
-      <aside className='main-sidebar sidebar-dark-primary elevation-4' style={{ background: 'linear-gradient(to right bottom, #a00f0f,#ed2f2f )' }}>
+      <aside className='main-sidebar sidebar-dark-primary elevation-4'>
         {/* Brand Logo */}
-        <a href='/#' className='brand-link' style={{ background: 'white' }}>
+        {/* <a href='/#' className='brand-link' style={{ background: 'white' }}> */}
+        <a href='/#' className='brand-link'>
           <img src={Images.LogoRp} alt='Rayapay' className='brand-image img-circle elevation-3' />
-          <span className='brand-text' style={{ color: ' #a00f0f' }}>{AppConfig.appName}</span>
+          <span className='brand-text'>{AppConfig.appName}</span>
+          {/* <span className='brand-text' style={{ color: ' #a00f0f' }}>{AppConfig.appName}</span> */}
         </a>
         <div className='sidebar'>
-          <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
+          {/* <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
             <div className='info'>
               <marquee style={{ color: '#fff' }}>Selamat Datang di Website {AppConfig.appName}</marquee>
-              <br />
-              {/* <h5 style={{ color: 'white' }}><i className='icon fas fa-user' /> &nbsp;{profile.full_name}</h5> */}
-              {/* <label style={{ color: 'white' }}><i className='icon fas fa-store-alt' /> &nbsp;{profile.business_name}</label> */}
-            </div>
-          </div>
+              <br /> */}
+          {/* <h5 style={{ color: 'white' }}><i className='icon fas fa-user' /> &nbsp;{profile.full_name}</h5> */}
+          {/* <label style={{ color: 'white' }}><i className='icon fas fa-store-alt' /> &nbsp;{profile.business_name}</label> */}
+          {/* </div>
+          </div> */}
           <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
             <div className='info'>
               <strong style={{ color: '#fff' }}>
-                {moment(new Date().toDateString()).format('DD MMMM, YYYY')}&nbsp;&nbsp;<Clock format='HH:mm:ss' ticking timezone={moment.tz.guess()} />
+                {moment(new Date().getTime()).format('DD MMMM, YYYY')}
+                <br />
+                <Clock format='HH:mm:ss' ticking timezone={moment.tz.guess()} />
               </strong>
             </div>
           </div>
@@ -109,6 +111,7 @@ class Sidebar extends Component {
               <SidebarMainMenu name='main-menu-user-management' title='User Management' userPrivileges={userPrivileges}>
                 {this._getMenuLi('/user', 'User')}
                 {this._getMenuLi('/role', 'Role')}
+                {this._getMenuLi('/privilege', 'Privilege')}
               </SidebarMainMenu>
             </ul>
 

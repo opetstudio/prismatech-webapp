@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { path } from 'ramda'
@@ -14,11 +14,11 @@ function PrivilegeCheckBox ({
 }) {
   // local checked
   let localIsChecked = path([roleId, privilegeId], checkbox)
-  console.log('localIsChecked===>', localIsChecked)
+  // console.log('localIsChecked===>', localIsChecked)
 
   // server checked
   const serverIsChecked = _.find(rolePrivilegeIds, { _id: privilegeId })
-  console.log('serverIsChecked====>', serverIsChecked)
+  // console.log('serverIsChecked====>', serverIsChecked)
 
   if (typeof localIsChecked === 'undefined') {
     if (!_.isEmpty(serverIsChecked)) {

@@ -4,9 +4,6 @@ import { isEmpty, isNil } from 'ramda'
 import { injectIntl } from 'react-intl'
 // import LoginActions, { LoginSelectors } from './redux'
 import LoginContainer from '../../Containers/Login/LoginContainer'
-import { Colors } from '../../Themes'
-import Loader from '../../Components/Loader/Loader'
-import LoaderFull from '../../Components/Loader/LoaderFull'
 import AppConfig from '../../Config/AppConfig'
 
 class PageLogin extends Component {
@@ -26,19 +23,24 @@ class PageLogin extends Component {
   //   },3000)
   // }
   render () {
+    const { history } = this.props
     return (
-      <div className='login-box'>
+      <>
         <Helmet>
+          {/* <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
+          <link rel="stylesheet" href="/dist/css/adminlte.min.css" /> */}
           <title>Masuk</title>
           <body className='hold-transition login-page' />
         </Helmet>
-        <div className='card'>
-          <div className='card-body login-card-body'>
-            <p className='login-box-msg'><b>{AppConfig.appName}</b></p>
-            <LoginContainer location={this.props.location} />
+        <div className='login-box'>
+          <div className='card'>
+            <div className='card-body login-card-body'>
+              <p className='login-box-msg'><b>{AppConfig.appName}</b></p>
+              <LoginContainer history={history} location={this.props.location} />
+            </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }

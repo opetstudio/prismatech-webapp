@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Loader from '../../Components/Loader/Loader'
 import _ from 'lodash'
-import Base64Downloader from 'react-base64-downloader';
+// import Base64Downloader from 'react-base64-downloader';
 import { Images } from '../../Themes'
 import htmlToImage from 'html-to-image'
 import Pdf from "react-to-pdf"
@@ -44,15 +44,15 @@ export default class ModalQrMerchant extends Component {
     _qrOnly(qr,ref)
     {
 
-        const wdw=this._windowsWidth()
+        // const wdw=this._windowsWidth()
         // console.log("width=",wdw.width," | heigth=",wdw.height)
         return(
             <div className="container" id="qr-code-merchant-rp" style={{overflow:'visible',position:'relative'}} ref={ref}>
                 <center style={{position:'relative'}}>
-                    <img className="img-qr-only" src=""/>
-                    <img src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'42%',left:'42%',backgroundSize:720}}/> 
+                    <img alt='-' className="img-qr-only" src=""/>
+                    <img alt='-' src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'42%',left:'42%',backgroundSize:720}}/> 
                     {/* <img src={Images.LogoRp} style={{position:'absolute',width:'12%',}}/> */}
-                    <img src={`${qr}`} width={'100%'} style={{position:'relative'}}/>
+                    <img alt='-' src={`${qr}`} width={'100%'} style={{position:'relative'}}/>
 
                 </center>
             </div>
@@ -60,8 +60,8 @@ export default class ModalQrMerchant extends Component {
     }
     _qrmerchant(ref)
     {
-       const {isRequesting,qr,refresh,errors,merchant} = this.props
-       const versi_ctk='1.0.25.0.3'
+       const {qr,merchant} = this.props
+    //    const versi_ctk='1.0.25.0.3'
        return(
         <div id="qr-code-merchant-rp" style={{width:'100%'}} ref={ref}>
             <div style={{width:'60%',left:'20%',top:'33%',position:'absolute'}}>
@@ -70,16 +70,16 @@ export default class ModalQrMerchant extends Component {
                     <label className="form-check-label">NMID : {merchant.merchant_id}</label>
                 </center>
 
-                <img src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'55%',left:'43%'}}/> 
-                <img src={`${qr}`} width={'100%'}/>
+                <img alt='-' src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'55%',left:'43%'}}/> 
+                <img alt='-' src={`${qr}`} width={'100%'}/>
             </div>
-            <img src={Images.Qrmerchant} width={'100%'}/>
+            <img alt='-' src={Images.Qrmerchant} width={'100%'}/>
         </div>
        )
      }
     _qris(ref)
     {
-       const {isRequesting,qr,refresh,errors,merchant} = this.props
+       const {qr,merchant} = this.props
        const versi_ctk='1.0.25.0.3'
        return(
         <div id="qr-code-merchant-rp" style={{width:'100%'}} ref={ref}>
@@ -100,10 +100,10 @@ export default class ModalQrMerchant extends Component {
             </div> 
 
             <div style={{width:'60%',position:'absolute',left:'18%',top:'42%'}}>
-                <img src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'42%',left:'42%'}}/> 
-                <img src={`${qr}`} width={'100%'}/>
+                <img alt='-' src={Images.LogoRp} style={{zIndex:100,position:'absolute',width:'12%',top:'42%',left:'42%'}}/> 
+                <img alt='-' src={`${qr}`} width={'100%'}/>
             </div>
-            <img src={Images.Qris} width={'100%'}/>
+            <img alt='-' src={Images.Qris} width={'100%'}/>
         </div>
        )
     }
@@ -136,13 +136,13 @@ export default class ModalQrMerchant extends Component {
                                     </div>
                                 </div>
                             )}
-                            {!isRequesting && _.isEmpty(error) && this.state.qr == 'qronly' && (                                
+                            {!isRequesting && _.isEmpty(error) && this.state.qr === 'qronly' && (                                
                                 this._qrOnly(qr,ref)
                             )}
-                            {!isRequesting && _.isEmpty(error) && this.state.qr == 'qris' && (                                
+                            {!isRequesting && _.isEmpty(error) && this.state.qr === 'qris' && (                                
                                 this._qris(ref)
                             )}
-                             {!isRequesting && _.isEmpty(error) && this.state.qr == 'merchant' && (                                
+                             {!isRequesting && _.isEmpty(error) && this.state.qr === 'merchant' && (                                
                                 this._qrmerchant(ref)
                             )}
                             {isRequesting && <Loader loading type="rpmerah"/>}

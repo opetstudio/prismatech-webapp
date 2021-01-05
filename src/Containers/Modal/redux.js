@@ -1,8 +1,8 @@
-import React from 'react'
+// import React from 'react'
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
-const $ = window.jqueryBridge()
+// const $ = window.jqueryBridge()
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -37,11 +37,11 @@ export const ModalSelectors = {
 
 export const setContent = (state, { data }) => state.merge({ modalContent: data })
 export const openModal = (state, { data }) => {
-  $('#mbdd-modal-common').modal('show')
+  // $('#mbdd-modal-common').modal('show')
   return state.merge({ modalIsOpen: true, modalTitle: data.modalTitle, modalContent: data.modalContent, modalFooter: data.modalFooter })
 }
 export const closeModal = (state, { data }) => {
-  $('#mbdd-modal-common').modal('hide')
+  // $('#mbdd-modal-common').modal('hide')
   return state.merge({ modalIsOpen: false, modalTitle: '', modalContent: '', modalFooter: () => {} })
 }
 

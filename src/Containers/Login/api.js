@@ -1,6 +1,6 @@
 // a library to wrap and simplify api calls
 import AppConfig from '../../Config/AppConfig'
-import { getSession, generateHmac, generateSha256 } from '../../Utils/Utils'
+import { getSession, generateHmac } from '../../Utils/Utils'
 
 export const create = api => ({
   loginDoLogin: ({ email, password }) => {

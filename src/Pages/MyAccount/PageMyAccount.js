@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import { Link } from 'react-router-dom'
 import LoginCheck from '../../Containers/Login/LoginCheck'
 // PAGES
 // import ChangePassword from '../../Containers/RpMerchant/ModalChangePassword'
@@ -35,12 +36,12 @@ class PageMyAccount extends Component {
                 <div className='card-body'>
                   <ul className='list-group list-group-unbordered mb-3'>
                     <li className='list-group-item'>
-                      <b>Email</b> <a className='float-right'>{this.props.email}</a>
+                      <b>Email</b> <span className='float-right'>{this.props.email}</span>
                     </li>
                     {menu.map((r, i) => {
                       return (
                         <li key={i} className='list-group-item'>
-                          <b>{r.page}</b> <a className='float-right btn btn-outline-secondary btn-sm' data-target={'#' + r.modalid} data-widget='control-sidebar' data-toggle='modal'>Ganti</a>
+                          <b>{r.page}</b> <span className='float-right btn btn-outline-secondary btn-sm' data-target={'#' + r.modalid} data-widget='control-sidebar' data-toggle='modal'>Ganti</span>
                         </li>
                       )
                     })}

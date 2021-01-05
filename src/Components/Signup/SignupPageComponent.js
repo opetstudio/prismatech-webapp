@@ -15,11 +15,9 @@ export default class SignupPageComponent extends Component {
   state={
     msg:''
   } 
-  componentWillMount()
-  {
-    this.props.reset()
-  }
+
   componentDidMount () {
+    this.props.reset()
     window.SignupPageComponent()
   }
 

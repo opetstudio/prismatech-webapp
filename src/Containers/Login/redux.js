@@ -1,9 +1,9 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { arrayMerge } from '../../Utils/helper/datamining'
-import { isEmpty } from 'ramda'
-import AppConfig from '../../Config/AppConfig'
-import {setSession,getSession, makeData} from '../../Utils/Utils'
+// import { arrayMerge } from '../../Utils/helper/datamining'
+// import { isEmpty } from 'ramda'
+// import AppConfig from '../../Config/AppConfig'
+// import {setSession,getSession, makeData} from '../../Utils/Utils'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -25,8 +25,8 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  token:'',
-  merchant_id:'',
+  // token:'',
+  merchant_id: '',
   data: {},
   fetching: null,
   payload: null,
@@ -88,11 +88,10 @@ export const LoginSelectors = {
 
 /* ------------- Reducers ------------- */
 
-
 // Something went wrong somewhere.
 export const failure = (state, action) => {
   const { data } = action
-  console.log('Response message>>>>',data.formSubmitMessage)
+  console.log('Response message>>>>', data.formSubmitMessage)
   return state.merge({
     fetching: false,
     error: true,
@@ -100,7 +99,7 @@ export const failure = (state, action) => {
     formSubmitMessage: data.formSubmitMessage
   })
 }
-export const reset = (state,action) =>state.merge(INITIAL_STATE)
+export const reset = (state, action) => state.merge(INITIAL_STATE)
 
 export const loginDoLogin = (state, { data }) => {
   console.log('loginDoLogin====')
@@ -112,18 +111,19 @@ export const loginDoLogout = (state, { data }) => {
   return loginPatch(state, { data })
 }
 export const loginDoLoginSuccess = (state, { data }) => {
-  const {responseCode, responseMessage,merchant_id,token, user} = data
-  data.token=token
-  data.userMerchantCode=token
+  const { responseCode, responseMessage, token } = data
+  data.token = token
+  data.userMerchantCode = token
   data.isRequesting = false
   data.isLoggedIn = true
   data.responseCode = responseCode
-  data.responseMessage= responseMessage
-  return loginPatch(state, { data})
+  data.responseMessage = responseMessage
+  return state.merge(data)
+  // return loginPatch(state, { data })
 }
 export const loginDoLoginFailed = (state, { data }) => {
   data.isRequesting = false
-  
+
   return loginPatch(state, { data })
 }
 
@@ -133,17 +133,19 @@ export const loginDoLogoutSuccess = (state, { data }) => {
   data.sessionToken = null
   data.userMerchantCode = ''
   data.userMerchantId = ''
-  return loginPatch(state, { data })
+  return state.merge(data)
+  // return loginPatch(state, { data })
 }
 
 export const loginPatch = (state, { data }) => {
-  let mergeData = {}
+  const mergeData = {}
   if (data.hasOwnProperty('user')) mergeData.user = data.user
   if (data.hasOwnProperty('merchant_id')) mergeData.merchant_id = data.merchant_id
   if (data.hasOwnProperty('isRequesting')) mergeData.isRequesting = data.isRequesting
   if (data.hasOwnProperty('responseCode')) mergeData.responseCode = data.responseCode
   if (data.hasOwnProperty('responseMessage')) mergeData.responseMessage = data.responseMessage
-  if (data.isLoggedIn) mergeData.isLoggedIn = data.isLoggedIn
+  if (data.hasOwnProperty('isLoggedIn')) mergeData.isLoggedIn = data.isLoggedIn
+  // if (data.isLoggedIn) mergeData.isLoggedIn = data.isLoggedIn
   if (data.hasOwnProperty('responseDescription')) mergeData.responseDescription = data.responseDescription
   if (data.hasOwnProperty('userFullName')) mergeData.userFullName = data.userFullName
   if (data.hasOwnProperty('userRole')) mergeData.userRole = data.userRole

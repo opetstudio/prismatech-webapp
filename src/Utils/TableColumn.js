@@ -2,9 +2,8 @@ import React from 'react'
 import Moment from 'moment'
 import AppConfig from '../Config/AppConfig'
 import { getAccessToken } from '../Utils/Utils'
-import { wrap } from 'module'
 
-const $ = window.jqueryBridge()
+// const $ = window.jqueryBridge()
 
 const basePath = AppConfig.basePath
 // const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
@@ -220,80 +219,80 @@ export const getVirtualAccountReportColumn = ({ history, sessionToken }) => {
     {
       id: 'mercRefNo',
       Header: () => <strong>Transaction</strong>,
-      headerClassName: "wordwrap",
+      headerClassName: 'wordwrap',
       accessor: 'mercRefNo', // String-based value accessors! ,
-      className: "columnTable"
+      className: 'columnTable'
     },
     {
       id: 'coDt',
       Header: props => <span><strong>Checkout Date</strong></span>,
       accessor: d => Moment(d.coDt).format('YYYY-MM-DD HH:mm:ss'),
-      headerClassName: "wordwrap",
-      className: "columnTable"
+      headerClassName: 'wordwrap',
+      className: 'columnTable'
       // accessor: 'friend.age'
     },
     {
       id: 'consumerUsername',
-      Header: ()=> <strong>Consumer Name</strong>,
-      headerClassName: "wordwrap",
+      Header: () => <strong>Consumer Name</strong>,
+      headerClassName: 'wordwrap',
       accessor: 'consumerUsername',
-      className: "columnTable"
+      className: 'columnTable'
     },
     {
       id: 'pymtMethodNm',
-      Header: ()=> <strong>Payment Method</strong>,
-      headerClassName: "wordwrap",
+      Header: () => <strong>Payment Method</strong>,
+      headerClassName: 'wordwrap',
       accessor: 'pymtMethodNm',
-      className: "columnTable"
+      className: 'columnTable'
     },
     {
       id: 'coCcyCd',
-      Header: ()=> <strong>Curr</strong>,
-      headerClassName: "wordwrap",
+      Header: () => <strong>Curr</strong>,
+      headerClassName: 'wordwrap',
       accessor: 'coCcyCd',
-      className: "columnTable"
+      className: 'columnTable'
     },
     {
       id: 'coCcyAmt', // Required because our accessor is not a string
-      Header: ()=> <strong>Amount</strong>,
-      headerClassName: "wordwrap",
-      className: "columnTable",
+      Header: () => <strong>Amount</strong>,
+      headerClassName: 'wordwrap',
+      className: 'columnTable',
       accessor: d => d.coCcyAmt, // Custom value accessors!,props.value
       Cell: props => <span className='number'>{formatter.format(props.value)}</span> // Custom cell components!
     },
     {
       id: 'payDt',
       Header: props => <span><strong>Payment Date</strong></span>,
-      headerClassName: "wordwrap",
+      headerClassName: 'wordwrap',
       accessor: d => Moment(d.payDt).format('YYYY-MM-DD HH:mm:ss'),
-      className: "columnTable"
+      className: 'columnTable'
       // accessor: 'friend.age'
     },
     {
       id: 'paySts',
-      Header: ()=><strong>Status</strong>,
-      headerClassName: "wordwrap",
+      Header: () => <strong>Status</strong>,
+      headerClassName: 'wordwrap',
       accessor: 'paySts',
-      className: "columnTable",
+      className: 'columnTable',
       Cell: ({ value }) => {
-        if (value === 'APRVD') return <span class="badge bg-info">{value}</span>
-        if (value === 'PNDNG') return <span class="badge bg-warning">{value}</span>
-        else return <span class="badge bg-danger">{value}</span>
+        if (value === 'APRVD') return <span class='badge bg-info'>{value}</span>
+        if (value === 'PNDNG') return <span class='badge bg-warning'>{value}</span>
+        else return <span class='badge bg-danger'>{value}</span>
       }
     },
     {
       id: 'consBnkCardNo',
-      Header: ()=><strong>Nomor Va</strong>,
-      headerClassName: "wordwrap",
-      className: "columnTable",
-      accessor: 'consBnkCardNo' // String-based value accessors! 
+      Header: () => <strong>Nomor Va</strong>,
+      headerClassName: 'wordwrap',
+      className: 'columnTable',
+      accessor: 'consBnkCardNo' // String-based value accessors!
     },
     {
       id: 'payInfo',
-      Header: ()=><strong>Description</strong>,
-      headerClassName: "wordwrap",
-      className: "columnTable",
-      accessor: 'payInfo' // String-based value accessors! 
+      Header: () => <strong>Description</strong>,
+      headerClassName: 'wordwrap',
+      className: 'columnTable',
+      accessor: 'payInfo' // String-based value accessors!
     }
     // ,
     // {
@@ -421,4 +420,3 @@ export const getMbddRolesColumn = ({ history, sessionToken, openModal, actionDel
     }
   ]
 }
-

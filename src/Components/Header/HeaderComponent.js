@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import Clock from 'react-live-clock'
-import { isNullOrUndefined } from 'util'
+// import Clock from 'react-live-clock'
+// import { isNullOrUndefined } from 'util'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage as T } from 'react-intl'
 import AppConfig from '../../Config/AppConfig'
@@ -11,9 +11,9 @@ import AppConfig from '../../Config/AppConfig'
 
 // const useravatar = Images.useravatar
 class HeaderComponent extends Component {
-  state={
-    time: '01 March, 2020 [09:57]'
-  }
+  // state = {
+  //   time: '01 March, 2020 [09:57]'
+  // }
 
   _logout (e) {
     if (e) e.preventDefault()
@@ -30,14 +30,14 @@ class HeaderComponent extends Component {
   }
 
   render () {
-    const timezone = moment.tz.guess()
-    const relates = this.props.relates
+    // const timezone = moment.tz.guess()
+    // const relates = this.props.relates
     return (
       <nav className='main-header navbar navbar-expand navbar-white navbar-light'>
         {/* Left navbar links */}
         <ul className='navbar-nav '>
           <li className='nav-item row'>
-            <a className='nav-link ' data-widget='pushmenu' href='/#'><i className='fas fa-bars' /></a>
+            <span className='nav-link ' data-widget='pushmenu'><i className='fas fa-bars' /></span>
             {/* <p className='text-center' style={{ fontSize: 12, margin: 10 }}>
               <strong>
                 {this.state.time}&nbsp;&nbsp;<Clock format='HH:mm:ss' ticking timezone={timezone} />
@@ -61,9 +61,9 @@ class HeaderComponent extends Component {
             <a className='nav-link' data-toggle='modal' data-target='#modal-default' data-widget='control-sidebar' href='/#'><i className='fas fa-power-off' /></a>
           </li> */}
           <li className='nav-item dropdown'>
-            <a className='nav-link' data-toggle='dropdown' href='#'>
+            <span className='nav-link' data-toggle='dropdown'>
               <i className='fas fa-cog' />
-            </a>
+            </span>
             <div className='dropdown-menu dropdown-menu-lg dropdown-menu-right'>
               <div className='dropdown-divider' />
               <Link to='/my-profile' className='dropdown-item'>
@@ -74,9 +74,9 @@ class HeaderComponent extends Component {
                 <i className='fas fa-user-cog mr-2' /> Akun Saya
               </Link>
               <div className='dropdown-divider' />
-              <a href='#' className='dropdown-item' data-toggle='modal' data-target='#modal-default' data-widget='control-sidebar'>
+              <span className='dropdown-item' data-toggle='modal' data-target='#modal-default' data-widget='control-sidebar'>
                 <i className='fas fa-sign-out-alt mr-2' /> Keluar
-              </a>
+              </span>
               <div className='dropdown-divider' />
             </div>
           </li>

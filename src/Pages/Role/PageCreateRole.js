@@ -1,45 +1,14 @@
 import React, { Component } from 'react'
 import { Create as Createform } from '../../features/TablePagination'
-import LoginCheck from '../../Containers/Login/LoginCheck'
-import ContentHeader from '../../Components/ContentHeader'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
-import Helmet from 'react-helmet'
-import _ from 'lodash'
-import moment from 'moment'
-import { path } from 'ramda'
-import { getAccessToken } from '../../Utils/Utils'
 import AppConfig from '../../Config/AppConfig'
-
-let tablepaginationOnChangeFormFunc = null
 const paginationConfig = {
   serviceName: 'createRole',
   fields: 'title,_id,description,created_at,updated_at,created_by{full_name},updated_by{full_name}'
 }
 
 class CreateRole extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
-  componentDidMount () {
-    // window.singleDatePicker('#start_date', 'YYYY-MM-DD HH:mm:ss', (par) => {
-    //   const x = document.getElementById('start_date')
-    //   x.value = moment(par).format('YYYY-MM-DD HH:mm:ss')
-    //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'start_date', fieldValue: new Date(par).getTime() })
-    // })
-    // window.singleDatePicker('#end_date', 'YYYY-MM-DD HH:mm:ss', (par) => {
-    //   const x = document.getElementById('end_date')
-    //   x.value = moment(par).format('YYYY-MM-DD HH:mm:ss')
-    //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'end_date', fieldValue: new Date(par).getTime() })
-    // })
-    // window.activateEditor({ hostBackend: AppConfig.hostBackend, at: getAccessToken(), cb: (content) => {
-    //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
-    // }})
-  }
-
   render () {
-    const { match } = this.props
     return (
       <ContentWrapper
         pageTitle='Create Role'

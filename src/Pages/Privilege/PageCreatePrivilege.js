@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Create as Createform } from '../../features/TablePagination'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
-import moment from 'moment'
-import { getAccessToken } from '../../Utils/Utils'
 import { path } from 'ramda'
 import { connect } from 'react-redux'
 import AppConfig from '../../Config/AppConfig'

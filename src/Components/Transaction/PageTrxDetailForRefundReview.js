@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import qs from 'qs'
-// import _ from 'lodash'
 import TrxDetailForRefundReview from '../../Containers/Transaction/TrxDetailForRefundReview'
 export default class PageTrxDetailForRefundReview extends Component {
   render () {

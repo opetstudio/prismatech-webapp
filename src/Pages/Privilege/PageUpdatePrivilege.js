@@ -1,20 +1,109 @@
-import React, { Component } from 'react'
-import { Table, Update as Updateform } from '../../features/TablePagination'
-import LoginCheck from '../../Containers/Login/LoginCheck'
-import ContentHeader from '../../Components/ContentHeader'
+import React, { Component, useRef, useMemo } from 'react'
+import qs from 'qs'
+import { Detail, Multiselect } from '../../features/TablePagination'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
-import Helmet from 'react-helmet'
-import _ from 'lodash'
-import moment from 'moment'
-import { path } from 'ramda'
-import { getAccessToken } from '../../Utils/Utils'
+// import { path } from 'ramda'
 import AppConfig from '../../Config/AppConfig'
 
-let tablepaginationOnChangeFormFunc = null
-const paginationConfig = {
-  serviceName: 'getDetailPrivilege',
-  updateServiceName: 'updatePrivilege',
-  fields: '_id,title,description,name,entity,created_at,updated_at,created_by{full_name},updated_by{full_name}'
+export const useComponentWillMount = (func) => {
+  const willMount = useRef(true)
+
+  if (willMount.current) func()
+
+  willMount.current = false
+}
+// const useComponentDidMount = func => useEffect(func, [])
+
+// or
+// export const useComponentWillMount = (func) => {
+//   useMemo(func, [])
+// }
+
+const FormUpdate = (props) => {
+  const {
+    tablepaginationResetForm,
+    tablepaginationOnChangeForm,
+    dataDetail,
+    payload,
+    upsertServiceName,
+    id,
+    roleId
+  } = props
+  // useComponentWillMount(() => tablepaginationResetForm({ serviceName: upsertServiceName }))
+  // componentWillMount
+  // useMemo(() => tablepaginationResetForm({ isInitialReset: true, serviceName: upsertServiceName }), [upsertServiceName, tablepaginationResetForm])
+  React.useEffect(() => {
+    const defaultFormValue = {}
+    if (id) defaultFormValue._id = id
+    if (roleId) defaultFormValue.role_id = [roleId]
+    tablepaginationResetForm({ isInitialReset: true, serviceName: upsertServiceName, defaultFormValue })
+    // if (id) tablepaginationResetForm({ isInitialReset: true, serviceName: upsertServiceName, defaultFormValue: { _id: id } })
+    // if (id) tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: '_id', fieldValue: '' + id, resetValue: '' + id })
+    // if (roleId) tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'role_id', fieldValue: [roleId], resetValue: [roleId] })
+    // }
+    // if (roleId && id) tablepaginationResetForm({ serviceName: upsertServiceName, defaultValueForm: { role_id: [roleId], _id: id } })
+  }, [tablepaginationOnChangeForm, upsertServiceName, id, roleId])
+  return (
+    <div className='row'>
+      <div className='col-sm-6'>
+        <div className='form-group'>
+          <label htmlFor='title'>title</label>
+          <input type='text' className='form-control' value={typeof payload.title !== 'undefined' ? payload.title : dataDetail.title || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'title', fieldValue: e.target.value })} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='name'>name</label>
+          <input type='text' className='form-control' value={typeof payload.name !== 'undefined' ? payload.name : dataDetail.name || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'name', fieldValue: e.target.value })} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='entity'>entity</label>
+          <input type='text' className='form-control' value={typeof payload.entity !== 'undefined' ? payload.entity : dataDetail.entity || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'entity', fieldValue: e.target.value })} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='description'>description</label>
+          <input type='text' className='form-control' value={typeof payload.description !== 'undefined' ? payload.description : dataDetail.description || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'description', fieldValue: e.target.value })} />
+        </div>
+        {/* <div className='form-group'>
+          <label htmlFor='role_id'>role id</label>
+          <input type='text' className='form-control' value={typeof payload.role_id !== 'undefined' ? payload.role_id : (dataDetail.role_id || {})._id || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'role_id', fieldValue: e.target.value })} />
+        </div> */}
+        <div className='form-group'>
+          <label htmlFor='role_id'>Pilih Beberapa Role</label>
+          <br />
+          <Multiselect
+            className='form-control'
+            label='pilih Beberapa Role'
+            labelButton='Pilih'
+            labelColumn='Pilih'
+            optionColumnValue='_id'
+            optionColumnLabel='title'
+            payloadValue={payload.role_id}
+            defaultValueOriginal={dataDetail.role_id}
+            getColumns={({ onChange }) => []}
+            listallServiceName='getAllRoles'
+            fields='_id,title'
+            onChange={({ val }) => { tablepaginationOnChangeForm({ serviceName: upsertServiceName, fieldName: 'role_id', fieldValue: val }) }}
+          />
+        </div>
+
+        {/* <div className='form-group'>
+          <label htmlFor='content2'>content2</label>
+          <input type='text' className='form-control' id='content2' placeholder='Enter content 2' value={path([paginationConfig.serviceName, 'content2'], payload) || path([paginationConfig.serviceName, 'content2'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content2', fieldValue: e.target.value })} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='content3'>content3</label>
+          <input type='text' className='form-control' id='content3' placeholder='Enter content3' value={path([paginationConfig.serviceName, 'content3'], payload) || path([paginationConfig.serviceName, 'content3'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content3', fieldValue: e.target.value })} />
+        </div> */}
+        {/* <div className='form-group'>
+          <label htmlFor='start_date'>start date</label>
+          <input type='text' className='form-control' id='start_date' placeholder='Enter start_date' value={startDate} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'start_date', fieldValue: e.target.value })} />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='end_date'>end date</label>
+          <input type='text' className='form-control' id='end_date' placeholder='Enter end_date' value={endDate} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'end_date', fieldValue: e.target.value })} />
+        </div> */}
+      </div>
+    </div>
+  )
 }
 
 class PageUpdateGrading extends Component {
@@ -24,7 +113,7 @@ class PageUpdateGrading extends Component {
   }
 
   componentDidMount () {
-    const { match } = this.props
+    // const { match } = this.props
     // window.singleDatePicker('#start_date', 'YYYY-MM-DD HH:mm:ss', (par) => {
     //   const x = document.getElementById('start_date')
     //   x.value = moment(par).format('YYYY-MM-DD HH:mm:ss')
@@ -38,91 +127,36 @@ class PageUpdateGrading extends Component {
     // window.activateEditor({ hostBackend: AppConfig.hostBackend, at: getAccessToken(), cb: (content) => {
     //   tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'content1', fieldValue: content })
     // }})
-    tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
+    // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
   }
 
   render () {
-    const { match } = this.props
+    const { location, match } = this.props
+    const queryParams = qs.parse(location.search, { ignoreQueryPrefix: true }) || {}
+    // console.log('okeeeee=====', qs.parse(location.search, { ignoreQueryPrefix: true }).role_id)
     return (
       <ContentWrapper
         pageTitle='Update Privilege'
         breadcrumb={[
           { title: 'Home', link: AppConfig.appHomePage },
-          { title: 'Privilege Detail', link: `/privilege/detail/${match.params.role_id}/${match.params._id}`, isActive: true },
-          { title: 'Update Privilege', link: null, isActive: true }
+          { title: 'Privilege', link: '/privilege', isActive: true },
+          { title: 'Form Privilege', link: null, isActive: true }
         ]}
         contentHeaderTitle='Update Privilege'
         isNeedLoggedin
       >
         <div className='row'>
           <div className='col-md-12'>
-            <Updateform
+            <Detail
               id={match.params._id}
-              cancelHref={`/privilege/detail/${match.params.role_id}/${match.params._id}`}
-              formTitle='Update Privilege'
-              paginationConfig={paginationConfig}
-              redirectAfterCreate={`/privilege/detail/${match.params.role_id}`}
-              child={(tablepaginationOnChangeForm, dataDetail, payload) => {
-                // console.log('haloooooooo===>', dataDetail)
-                // console.log('haloooooooo payload===>', payload)
-                tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
-                // currentDataDetail = dataDetail
-                // if (startDate) startDate.value = path([paginationConfig.serviceName, 'start_date'], currentDataDetail)
-                // if (title) title.value = path([paginationConfig.serviceName, 'title'], payload) // || path([paginationConfig.serviceName, 'title'], currentDataDetail)
-
-                // tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'code', fieldValue: path([paginationConfig.serviceName, 'code'], dataDetail) || '' })
-                // let startDate = moment(path([paginationConfig.serviceName, 'start_date'], payload) || path([paginationConfig.serviceName, 'start_date'], dataDetail))
-                // if (startDate && startDate.isValid()) startDate = startDate.format('YYYY-MM-DD HH:mm:ss')
-                // else startDate = ''
-                // let endDate = moment(path([paginationConfig.serviceName, 'end_date'], payload) || path([paginationConfig.serviceName, 'end_date'], dataDetail))
-                // if (endDate && endDate.isValid()) endDate = endDate.format('YYYY-MM-DD HH:mm:ss')
-                // else endDate = ''
-
-                return (
-                  <div className='row'>
-                    <div className='col-sm-6'>
-                      <div className='form-group'>
-                        <label htmlFor='title'>title</label>
-                        <input type='text' className='form-control' value={path([paginationConfig.serviceName, 'title'], payload) || path([paginationConfig.serviceName, 'title'], dataDetail) || ''} id='title' placeholder='Enter title' onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'title', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='name'>name</label>
-                        <input type='text' className='form-control' id='name' placeholder='Enter name' value={path([paginationConfig.serviceName, 'name'], payload) || path([paginationConfig.serviceName, 'name'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'name', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='entity'>entity</label>
-                        <input type='text' className='form-control' id='entity' placeholder='Enter entity' value={path([paginationConfig.serviceName, 'entity'], payload) || path([paginationConfig.serviceName, 'entity'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'entity', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='description'>description</label>
-                        <input type='text' className='form-control' id='description' placeholder='Enter description' value={path([paginationConfig.serviceName, 'description'], payload) || path([paginationConfig.serviceName, 'description'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'description', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='role_id'>role id</label>
-                        <input type='text' className='form-control' id='role_id' placeholder='Enter role_id' value={path([paginationConfig.serviceName, 'role_id'], payload) || path([paginationConfig.serviceName, 'role_id'], dataDetail) || ''} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: e.target.value })} />
-                      </div>
-
-                      {/* <div className='form-group'>
-                        <label htmlFor='content2'>content2</label>
-                        <input type='text' className='form-control' id='content2' placeholder='Enter content 2' value={path([paginationConfig.serviceName, 'content2'], payload) || path([paginationConfig.serviceName, 'content2'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content2', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='content3'>content3</label>
-                        <input type='text' className='form-control' id='content3' placeholder='Enter content3' value={path([paginationConfig.serviceName, 'content3'], payload) || path([paginationConfig.serviceName, 'content3'], dataDetail)} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'content3', fieldValue: e.target.value })} />
-                      </div> */}
-                      {/* <div className='form-group'>
-                        <label htmlFor='start_date'>start date</label>
-                        <input type='text' className='form-control' id='start_date' placeholder='Enter start_date' value={startDate} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'start_date', fieldValue: e.target.value })} />
-                      </div>
-                      <div className='form-group'>
-                        <label htmlFor='end_date'>end date</label>
-                        <input type='text' className='form-control' id='end_date' placeholder='Enter end_date' value={endDate} onChange={e => tablepaginationOnChangeForm({ serviceName: paginationConfig.serviceName, fieldName: 'end_date', fieldValue: e.target.value })} />
-                      </div> */}
-                    </div>
-                  </div>
-                )
-              }}
-            />
+              detailServiceName='getDetailPrivilege'
+              upsertServiceName='upsertPrivilege'
+              fields='_id,role_id{_id, title},title,description,name,entity,created_at,updated_at,created_by{full_name},updated_by{full_name}'
+              formTitle='Form Privilege'
+              redirectAfterDelete='/privilege'
+            >
+              <FormUpdate roleId={queryParams.role_id} match={match} />
+            </Detail>
           </div>
         </div>
       </ContentWrapper>

@@ -5,7 +5,7 @@ import _ from 'lodash'
 import PaginationActions from './redux'
 import ModalActions from '../Modal/redux'
 
-const $ = window.jqueryBridge()
+// const $ = window.jqueryBridge()
 
 export function * submitFilter (api, action) {
   const { data } = action

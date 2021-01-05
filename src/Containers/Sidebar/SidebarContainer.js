@@ -1,9 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
+import loadable from '@loadable/component'
 import { LoginSelectors } from '../Login/redux'
 import AppActions, { AppSelectors } from '../../Redux/AppRedux'
-import Sidebar from '../../Components/Sidebar/Sidebar'
+// import Sidebar from '../../Components/Sidebar/Sidebar'
+
+const Sidebar = loadable(() => import('../../Components/Sidebar/Sidebar'))
 class TheComponent extends React.PureComponent {
   render () {
     const { userMerchantCode } = this.props

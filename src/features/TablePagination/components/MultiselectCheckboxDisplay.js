@@ -1,35 +1,18 @@
-import React, { Component, memo, useCallback, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import CreatableSelect from 'react-select/creatable'
-import Select from 'react-select'
-import _ from 'lodash'
-import styled from 'styled-components'
-import { path } from 'ramda'
-import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
-import TablepaginationActions from '../redux'
-import Immutable from 'seamless-immutable'
+import React from 'react'
+// import styled from 'styled-components'
 import { Table } from '../'
-
-const Styles = styled.div`
-  padding: 1rem;
-  .pagination {
-    padding: 0.5rem;
-  }
-`
-
 function App (props) {
-  const { whereCondition, buttonAddLabel, listallService, fields, columns, onSubmit, serviceName, tablepaginationOnChangeForm, fieldName, currentValue } = props
-  const rows = []
+  const { whereCondition, buttonAddLabel, listallService, fields, columns } = props
+  // const rows = []
   return (
     <>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-listitem-table">
-          {buttonAddLabel}
-        </button>
-      <div className="modal fade bd-example-modal-lg" id="modal-listitem-table" aria-hidden="true" style={{display: 'none'}}>
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            
+      <button type='button' class='btn btn-default' data-toggle='modal' data-target='#modal-listitem-table'>
+        {buttonAddLabel}
+      </button>
+      <div className='modal fade bd-example-modal-lg' id='modal-listitem-table' aria-hidden='true' style={{ display: 'none' }}>
+        <div className='modal-dialog modal-lg'>
+          <div className='modal-content'>
+
             <Table
               paginationConfig={{
                 serviceName: listallService,
@@ -50,14 +33,14 @@ function App (props) {
                 )
               }}
               cardFooter={() => {
-                return (<button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' data-dismiss="modal"> Pilih </button>)
+                return (<button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' data-dismiss='modal'> Pilih </button>)
               }}
             />
-          {/* /.modal-content */}
+            {/* /.modal-content */}
+          </div>
+          {/* /.modal-dialog */}
         </div>
-        {/* /.modal-dialog */}
       </div>
-    </div>
     </>
   )
 }

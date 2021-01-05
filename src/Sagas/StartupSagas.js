@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects'
+// import { put, select } from 'redux-saga/effects'
 // import GalleryActions from '../containers/Gallery/redux'
 
 // exported to make available for tests

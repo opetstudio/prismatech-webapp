@@ -1,7 +1,7 @@
 import AppConfig from '../../Config/AppConfig'
 // import { path } from 'ramda'
 import _ from 'lodash'
-import { generateHmac, generateSha256, getAccessToken } from '../../Utils/Utils'
+import { getAccessToken } from '../../Utils/Utils'
 // import { generateSha256 } from '../../Utils/Utils'
 export const create = api => ({
   submitFilter: (data) => {

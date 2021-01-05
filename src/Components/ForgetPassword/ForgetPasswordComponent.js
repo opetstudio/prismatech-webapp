@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router-dom'
-import AppConfig from '../../Config/AppConfig'
+import { injectIntl, FormattedMessage as T } from 'react-intl'
 import Loader from '..//Loader/Loader'
 import _ from 'lodash'
-const basePath = AppConfig.basePath
 
-export default class SignupPageComponent extends Component {
+class SignupPageComponent extends Component {
   constructor (props) {
     super(props)
     this._formOnSubmit = this._formOnSubmit.bind(this)
@@ -24,12 +23,12 @@ export default class SignupPageComponent extends Component {
     subOtp: 0
   }
 
-  componentWillUnmount () {
-    console.log('component will unmount')
-    this.props.reset()
-  }
+  // componentWillUnmount () {
+  //   console.log('component will unmount')
+  //   this.props.reset()
+  // }
 
-  componentWillMount () {
+  componentDidMount () {
     console.log('component will mount')
     this.props.reset()
   }
@@ -72,7 +71,8 @@ export default class SignupPageComponent extends Component {
           </center>
         </form>
         <br />
-        <center><a href='/' className='text-center'>ke halaman Login</a></center>
+        <center><Link to='/login'><T id='ke halaman Login' /></Link></center>
+        {/* <center><a href='/' className='text-center'>ke halaman Login</a></center> */}
       </div>
     )
   }
@@ -80,9 +80,9 @@ export default class SignupPageComponent extends Component {
   // Submit Email
   _formOnSubmit (e) {
     if (e) e.preventDefault()
-    const { submit } = this.props
     const email = this.refs.email.value
-    if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+    // if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+    if ((/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))) {
       this.setState({ msg: '' })
       this.props.doForget({ email })
     } else { this.setState({ msg: 'Email not valid' }) }
@@ -97,7 +97,7 @@ export default class SignupPageComponent extends Component {
     return (
       <div style={{ marginLeft: 30, marginRight: 30 }}>
         <i className='fa fa-arrow-left' onClick={() => this.props.setPage({ page: 'form' })} />
-        {!_.isEmpty(msg) != '' &&
+        {!_.isEmpty(msg) !== '' &&
           <div className='row' style={{ marginTop: 10, marginBottom: 10 }}>
             <div className='col-12'>
               <div className='alert alert-danger' role='alert'><center>{msg}</center></div>
@@ -127,7 +127,7 @@ export default class SignupPageComponent extends Component {
     const newPass = this.refs.newPass.value
     const confirmNewPass = this.refs.confirmNewPass.value
 
-    if (newPass == confirmNewPass) {
+    if (newPass === confirmNewPass) {
       this.props.setNewPassword({ new_password: newPass })
       this.setState({ msg: '' })
       this.props.setPage({ page: 'otp', isRequesting: false, errors: '', status: 0 })
@@ -141,7 +141,7 @@ export default class SignupPageComponent extends Component {
     return (
       <div style={{ marginLeft: 30, marginRight: 30 }}>
         <i className='fa fa-arrow-left' onClick={() => this.props.setPage({ page: 'password' })} />
-        {!_.isEmpty(this.props.errors) != '' &&
+        {!_.isEmpty(this.props.errors) !== '' &&
           <div className='row' style={{ marginTop: 10, marginBottom: 10 }}>
             <div className='col-12'>
               <div className='alert alert-danger' role='alert'><center>{this.props.errors}</center></div>
@@ -155,9 +155,9 @@ export default class SignupPageComponent extends Component {
             </div>
           )}
           <input type='password' className='form-control' placeholder='OTP' style={{ textAlign: 'center', letterSpacing: 15 }} onChange={(e) => this.setState({ otp: e.target.value })} autoFocus maxLength={4} />
-          {this.state.subOtp > 0 && this.props.errors != 'Otp expired' && <p style={{ color: 'red' }}><b>Silahkan periksa kembali otp</b></p>}
+          {this.state.subOtp > 0 && this.props.errors !== 'Otp expired' && <p style={{ color: 'red' }}><b>Silahkan periksa kembali otp</b></p>}
           <br />
-          <a href='#' type='submit' className='btn btn-primary btn-block btn-flat ' required onClick={() => this._formOnSubmitOtp()}>Kirim Otp</a>
+          <Link type='submit' className='btn btn-primary btn-block btn-flat ' required onClick={() => this._formOnSubmitOtp()}>Kirim Otp</Link>
         </center>
         <br />
         <center><a href='/' className='text-center'>ke halaman Login</a></center>
@@ -171,7 +171,7 @@ export default class SignupPageComponent extends Component {
   _formOnSubmitOtp () {
     if (!_.isEmpty(this.state.otp)) {
       this.props.doConfirmForget({ otpRefNum: this.props.otpRefNum, email: this.props.email, new_password: this.props.new_password, otp: this.state.otp })
-      this.setState({ subOtp: this.state.subOtp += 1 })
+      this.setState({ subOtp: this.state.subOtp + 1 })
     }
     return false
   }
@@ -209,9 +209,6 @@ export default class SignupPageComponent extends Component {
   }
 
   render () {
-    const { isResult } = this.props
-    const { msg } = this.state
-
     return (
       <div>
         <Helmet>
@@ -225,11 +222,11 @@ export default class SignupPageComponent extends Component {
               </div> */}
           <div className='card'>
             <div className='card-body register-card-body'>
-              {this.props.page == 'form' && this._form()}
-              {this.props.page == 'otp' && this._otp()}
-              {this.props.page == 'password' && this._newPassword()}
-              {this.props.page == 'success' && this._result()}
-              {this.props.errors == 'invalid otp' && this._expired()}
+              {this.props.page === 'form' && this._form()}
+              {this.props.page === 'otp' && this._otp()}
+              {this.props.page === 'password' && this._newPassword()}
+              {this.props.page === 'success' && this._result()}
+              {this.props.errors === 'invalid otp' && this._expired()}
             </div>
           </div>
         </div>
@@ -237,3 +234,5 @@ export default class SignupPageComponent extends Component {
     )
   }
 }
+
+export default injectIntl(SignupPageComponent)

@@ -2,7 +2,7 @@ import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 // You'll need to alter this file when you go to connect the api for realsies. Add
 // back the lines ending with with a # (and of course, remove the #) :)
 import API from '../Services/Api'
-import RehydrationServices from '../Services/RehydrationServices'
+// import RehydrationServices from '../Services/RehydrationServices'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 import AppConfig from '../Config/AppConfig'
@@ -11,7 +11,7 @@ import AppConfig from '../Config/AppConfig'
 
 import { LoginTypes } from '../Containers/Login/redux'
 
-import { PaginationTypes, PaginationSelectors } from '../Containers/Pagination/redux'
+// import { PaginationTypes, PaginationSelectors } from '../Containers/Pagination/redux'
 // rp
 import { SignupTypes } from '../features/Signup/redux'
 import { TransactionHistoryTypes } from '../Containers/RpMerchant/Transaction/redux'
@@ -20,11 +20,11 @@ import { PaymentTypes } from '../Containers/RpMerchant/PayBill/redux'
 import { MerchantQrTypes } from '../Containers/RpMerchant/ModalQrMerchant/redux'
 import { MerchantProfileTypes } from '../Containers/RpMerchant/Profile/redux'
 import { ForgetPasswordTypes } from '../Containers/ForgetPassword/redux'
-import { ChangePasswordTypes } from '../Containers/RpMerchant/ModalChangePassword/redux'
+// import { ChangePasswordTypes } from '../Containers/RpMerchant/ModalChangePassword/redux'
 import { DashboardMerchantTypes } from '../Containers/RpMerchant/Dashboard/redux'
 import { SettlementTypes } from '../Containers/RpMerchant/Settlement/redux'
 import { MerchantRelatedInstitutionTypes } from '../Containers/RpMerchant/MerchantRelatedInstitution/redux'
-import { StartupTypes } from '../Redux/StartupRedux'
+// import { StartupTypes } from '../Redux/StartupRedux'
 import { TablepaginationTypes } from '../features/TablePagination/redux'
 import { CourseenrollmentTypes } from '../features/CourseEnrollment/redux'
 import { PrivilegeTypes } from '../features/Privilege/redux'
@@ -42,21 +42,21 @@ import { doPayment, doPaymentByCode } from '../Containers/RpMerchant/PayBill/sag
 import { getMerchantQr } from '../Containers/RpMerchant/ModalQrMerchant/sagas'
 import { fetchMerchantProfile } from '../Containers/RpMerchant/Profile/sagas'
 import { doForgetPassword, doConfirmForgetPassword } from '../Containers/ForgetPassword/sagas'
-import { doChangePassword } from '../Containers/RpMerchant/ModalChangePassword/sagas'
+// import { doChangePassword } from '../Containers/RpMerchant/ModalChangePassword/sagas'
 import { fetchMerchantDashboard } from '../Containers/RpMerchant/Dashboard/sagas'
 import { fetchMerchantSettlement } from '../Containers/RpMerchant/Settlement/sagas'
 import { fetchMerchantRelatedInsitution } from '../Containers/RpMerchant/MerchantRelatedInstitution/sagas'
-import { startup } from './StartupSagas'
+// import { startup } from './StartupSagas'
 
-import { showSagaMessage } from '../Translations/SagaMessages'
+// import { showSagaMessage } from '../Translations/SagaMessages'
 
 // changepassword
 import { ChangepasswordTypes } from '../features/ChangePassword/redux'
 import { changepasswordSubmit } from '../features/ChangePassword/sagas'
 
 // Purchase Order
-import { PurchaseorderTypes } from '../features/PurchaseOrder/redux'
-import { purchaseorderCheckStatusRequestOtp, purchaseorderCheckStatus } from '../features/PurchaseOrder/sagas'
+// import { PurchaseorderTypes } from '../features/PurchaseOrder/redux'
+// import { purchaseorderCheckStatusRequestOtp, purchaseorderCheckStatus } from '../features/PurchaseOrder/sagas'
 
 /* ------------- API ------------- */
 
@@ -68,7 +68,7 @@ const hostBackend = AppConfig.hostBackend
 
 export default ({ externalApi, externalSagas }) => function * root () {
   const apiDashboard = DebugConfig.useFixtures ? FixtureAPI : API.create({ baseURL: hostBackend, externalApi})
-  const apiDashboardPy = DebugConfig.useFixtures ? FixtureAPI : API.create({ baseURL: hostBackend + '', externalApi })
+  // const apiDashboardPy = DebugConfig.useFixtures ? FixtureAPI : API.create({ baseURL: hostBackend + '', externalApi })
   console.log('hallow')
 
   let x = []

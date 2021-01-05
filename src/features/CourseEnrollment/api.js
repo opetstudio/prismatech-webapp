@@ -1,7 +1,5 @@
-import _ from 'lodash'
 import AppConfig from '../../Config/AppConfig'
-import { getSession, generateHmac, generateSha256, getAccessToken } from '../../Utils/Utils'
-import { path } from 'ramda'
+import { generateHmac, getAccessToken } from '../../Utils/Utils'
 export const create = api => ({
   courseenrollmentSubmitEnrollmentRequest: ({ courseId }) => {
     const body = { query: `mutation{submitCourseEnrollmentRequest(course_id: "${courseId}"){ error }}` }

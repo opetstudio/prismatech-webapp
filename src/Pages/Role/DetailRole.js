@@ -1,27 +1,21 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { Table, Detail as Detaildata } from '../../features/TablePagination'
-import CourseenrollmentActions from '../../features/CourseEnrollment/redux'
+import _ from 'lodash'
+import { Detail, Table } from '../../features/TablePagination'
 import LoginCheck from '../../Containers/Login/LoginCheck'
 import ContentHeader from '../../Components/ContentHeader'
 import PrivilegeCheckBox from './PrivilegeCheckBox'
 import Helmet from 'react-helmet'
 import PrivilegeActions from '../../features/Privilege/redux'
-import _ from 'lodash'
 import { path } from 'ramda'
-// import moment from 'moment'
 import Moment from 'moment'
 import AppConfig from '../../Config/AppConfig'
+// import ManifestPrivilege from '../Privilege/Manifest'
 // import EnrollmentList from './components/EnrollmentList'
 // import InstructorList from './components/InstructorList'
 // import ModalEnroll from './components/ModalEnroll'
-const paginationConfig = {
-  serviceName: 'getDetailRole',
-  serviceDeleteName: 'deleteRole',
-  fields: '_id,title,description,privilege_id{_id, title, name},created_at,updated_at,created_by{full_name},updated_by{full_name}'
-}
 const basePath = AppConfig.basePath
 
 // const columns = [
@@ -32,7 +26,7 @@ const basePath = AppConfig.basePath
 //   { Header: 'created at', accessor: 'created_at' },
 //   { Header: 'updated at', accessor: 'updated_at' }
 // ]
-const priv = {}
+// const priv = {}
 
 const getColumns = ({ history, dataDetail, privilege, setPrivilege }) => [
   {
@@ -43,7 +37,7 @@ const getColumns = ({ history, dataDetail, privilege, setPrivilege }) => [
           <span className='sr-only'>Toggle Dropdown</span>
         </button>
         <div className='dropdown-menu' role='menu'>
-          <Link className='dropdown-item' to={`${basePath}/privilege/detail/${dataDetail._id}/${p._id}`}>Detail</Link>
+          <Link className='dropdown-item' to={`${basePath}/privilege/detail/${p._id}`}>Detail</Link>
         </div>
       </div>)
   },
@@ -76,11 +70,61 @@ const getColumns = ({ history, dataDetail, privilege, setPrivilege }) => [
   }
 ]
 
+const DetailContent = (props) => {
+  const {
+    dataDetail,
+    history,
+    privilege, setPrivilege, privilegeCheckboxSubmit, privilegeCheckbox
+  } = props
+  let createdAt = Moment(dataDetail.created_at || 0)
+  if (createdAt && createdAt.isValid()) createdAt = createdAt.format('YYYY-MM-DD HH:mm:ss')
+  else createdAt = ''
+  let updatedAt = Moment(dataDetail.updated_at || 0)
+  if (updatedAt && updatedAt.isValid()) updatedAt = updatedAt.format('YYYY-MM-DD HH:mm:ss')
+  else updatedAt = ''
+  return (
+    <>
+      <dl>
+        <dt>Judul</dt>
+        <dd>{dataDetail.title}</dd>
+        <dt>Description</dt>
+        <dd>{dataDetail.description}</dd>
+        <dt>Description</dt>
+        <dd>{(_.map(dataDetail.privilege_id || [], (v, k) => v.name) || []).join(', ')}</dd>
+        <dt>Diperbaharui Oleh</dt>
+        <dd>{(dataDetail.updated_by || {}).full_name || ''}</dd>
+        <dt>Dibuat Oleh</dt>
+        <dd>{(dataDetail.created_by || {}).full_name || ''}</dd>
+        <dt>Tanggal Pembuatan</dt>
+        <dd>{createdAt}</dd>
+        <dt>Tanggal Diperbaharui</dt>
+        <dd>{updatedAt}</dd>
+      </dl>
+      <Table
+        listallServiceName='getAllPrivileges'
+        fields='_id,title,entity,description,name,updated_at,created_by{full_name},updated_by{full_name}'
+        columns={getColumns({ history, dataDetail, privilege, setPrivilege })}
+        // createHref={upsertPageUrl()}
+        // createNewButtonLabel={createNewButtonLabel}
+        cardTitle='Daftar Privileges'
+        cardHeader={() => {
+          return (
+            <>
+              <button type='button' className='btn btn-info' onClick={() => history.push(`/privilege/upsert?role_id=${dataDetail._id}`)}><i className='fas fa-plus' /> Create New Privilege</button>
+              <button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' onClick={() => privilegeCheckboxSubmit({ privilegeIdsObj: privilegeCheckbox[dataDetail._id] || {}, roleId: dataDetail._id })}><i className='fas fa-plus' /> Submit Privilege </button>
+            </>
+          )
+        }}
+      />
+    </>
+  )
+}
+
 function DetailRole (props) {
-  const { match, history, dataDetail, privilegeCheckbox, privilegeCheckboxSubmit } = props
+  const { history, match, privilegeCheckbox, privilegeCheckboxSubmit } = props
   // console.log('dataDetail=====>', dataDetail)
   const [privilege, setPrivilege] = useState({})
-  const columns = getColumns({ history, dataDetail, privilege, setPrivilege })
+  // const columns = getColumns({ history, dataDetail, privilege, setPrivilege })
   return (
     <>
       <LoginCheck />
@@ -97,89 +141,39 @@ function DetailRole (props) {
           <div className='container-fluid'>
             <div className='row'>
               <div className='col-md-12'>
-                <Detaildata
+                <Detail
+                  detailServiceName='getDetailRole'
+                  deleteServiceName='deleteRole'
+                  fields='_id,title,description,privilege_id{_id, title, name},created_at,updated_at,created_by{full_name},updated_by{full_name}'
                   id={match.params._id}
-                  updateHref={`/role/update/${match.params._id}`}
-                  redirectAfterDelete='/role'
                   formTitle='Detail Role'
-                  paginationConfig={paginationConfig}
-                  child={(dataDetail) => {
-                    let createdAt = Moment(path([paginationConfig.serviceName, 'created_at'], dataDetail))
-                    if (createdAt && createdAt.isValid()) createdAt = createdAt.format('YYYY-MM-DD HH:mm:ss')
-                    else createdAt = ''
-                    let updatedAt = Moment(path([paginationConfig.serviceName, 'updated_at'], dataDetail))
-                    if (updatedAt && updatedAt.isValid()) updatedAt = updatedAt.format('YYYY-MM-DD HH:mm:ss')
-                    else updatedAt = ''
-
-                    return (
-                      <>
-                        <dl>
-                          <dt>Title</dt>
-                          <dd>{path([paginationConfig.serviceName, 'title'], dataDetail) || ''}</dd>
-                          <dt>Description</dt>
-                          <dd>{path([paginationConfig.serviceName, 'description'], dataDetail) || ''}</dd>
-                          <dt>Updated By</dt>
-                          <dd>{path([paginationConfig.serviceName, 'updated_by', 'full_name'], dataDetail) || ''}</dd>
-                          <dt>Created By</dt>
-                          <dd>{path([paginationConfig.serviceName, 'created_by', 'full_name'], dataDetail) || ''}</dd>
-                          <dt>Created At</dt>
-                          <dd>{createdAt}</dd>
-                          <dt>Updated At</dt>
-                          <dd>{updatedAt}</dd>
-                        </dl>
-                      </>
-                    )
-                  }}
-                  footerCard={(dataDetail) => {
-                    return (
-                      <>
-                        <button style={{ width: 100 }} type='button' className='btn bg-gradient-danger' data-toggle='modal' data-target='#modal-danger'>Delete</button>
-                        <button style={{ width: 100, marginLeft: 5 }} onClick={() => history.push(`/role/update/${match.params._id}`)} type='button' className='btn bg-gradient-primary'>Edit</button>
-                      </>
-                    )
-                  }}
-                />
-                {/* <EnrollmentList
-                  courseId={match.params._id}
-                  history={history}
-                />
-                <InstructorList /> */}
-                <Table
-                  paginationConfig={{
-                    serviceName: 'getAllPrivileges',
-                    fields: '_id,title,entity,description,name,updated_at,created_by{full_name},updated_by{full_name}'
-                  }}
-                  // whereCondition={{ role_id: match.params._id }}
-                  columns={columns}
-                  // createHref={`/privilege/create/${match.params._id}`}
-                  // createNewButtonLabel='Set Privileges'
-                  cardHeader={() => {
-                    return (
-                      <>
-                        <button type='button' className='btn btn-info' onClick={() => history.push(`/privilege/create/${match.params._id}`)}><i className='fas fa-plus' /> Create New Privilege</button>
-                        <button type='button' style={{ marginLeft: 5 }} className='btn btn-warning' onClick={() => privilegeCheckboxSubmit({ privilegeIdsObj: privilegeCheckbox[match.params._id] || {}, roleId: match.params._id })}><i className='fas fa-plus' /> Submit Privilege </button>
-                      </>
-                    )
-                  }}
-                />
+                  redirectAfterDelete='/role'
+                  updatePageUrl={`/role/upsert/${match.params._id}`}
+                  createPageUrl='/role/upsert'
+                >
+                  <DetailContent
+                    privilegeCheckbox={privilegeCheckbox}
+                    setPrivilege={setPrivilege}
+                    privilege={privilege}
+                    history={history}
+                    privilegeCheckboxSubmit={privilegeCheckboxSubmit}
+                  />
+                </Detail>
               </div>
             </div>
           </div>
         </section>
       </div>
-      {/* <ModalEnroll
-        courseenrollmentSubmitEnrollmentRequest={courseenrollmentSubmitEnrollmentRequest}
-        courseId={match.params._id}
-      /> */}
+
     </>
   )
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    loading: state.courseenrollment.loading,
+    // loading: state.courseenrollment.loading,
     userPrivileges: state.myprofile,
-    privilegeCheckbox: state.privilege.checkbox,
-    dataDetail: state.tablepagination.dataDetail[paginationConfig.serviceName] || []
+    privilegeCheckbox: state.privilege.checkbox
+    // dataDetail: state.tablepagination.dataDetail[paginationConfig.serviceName] || []
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -1,8 +1,12 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import { merge } from 'ramda'
+// import loadable from '@loadable/component'
 import ApiElectron from '../Services/ApiElectron'
-import {getAccessToken} from '../Utils/Utils'
+// import { getAccessToken } from '../Utils/Utils'
+
+// const TablePaginationApi = loadable(() => require('../features/TablePagination/api'))
+const TablePaginationApi = require('../features/TablePagination/api')
 
 // our "constructor"
 const create = ({ baseURL = 'https://jsonplaceholder.typicode.com/', externalApi }) => {
@@ -78,7 +82,6 @@ const create = ({ baseURL = 'https://jsonplaceholder.typicode.com/', externalApi
   // let neDBDataPath = ''
 
   if (window.require) {
-    
     ipcRenderer = window.require('electron').ipcRenderer
     server = 'electron'
   }
@@ -104,10 +107,10 @@ const create = ({ baseURL = 'https://jsonplaceholder.typicode.com/', externalApi
   apiMerged = merge(apiMerged, require('../Containers/RpMerchant/Dashboard/api').create(api))
   apiMerged = merge(apiMerged, require('../Containers/RpMerchant/Settlement/api').create(api))
   apiMerged = merge(apiMerged, require('../Containers/RpMerchant/MerchantRelatedInstitution/api').create(api))
-  apiMerged = merge(apiMerged, require('../features/TablePagination/api').create(api))
+  apiMerged = merge(apiMerged, TablePaginationApi.create(api))
   apiMerged = merge(apiMerged, require('../features/CourseEnrollment/api').create(api))
   apiMerged = merge(apiMerged, require('../features/ChangePassword/api').create(api))
-  
+
   externalApi.forEach(v => {
     apiMerged = merge(apiMerged, v.create(api))
   })

@@ -4,7 +4,6 @@ import { isEmpty, isNil } from 'ramda'
 import { injectIntl } from 'react-intl'
 // import LoginActions, { LoginSelectors } from './redux'
 import ForgetPassword from '../../Containers/ForgetPassword'
-import { Colors } from '../../Themes'
 
 class PageLogin extends Component {
   isEmptyOrNull (str) {

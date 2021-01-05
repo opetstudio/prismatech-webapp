@@ -6,7 +6,7 @@ import ModalActions from '../Modal/redux'
 import PaginationActions, { PaginationSelectors } from './redux'
 import { LoginSelectors } from '../Login/redux'
 
-const $ = window.jqueryBridge()
+// const $ = window.jqueryBridge()
 const modalContent = [
   'Data akan dihapus dari database.',
   'please wait....'

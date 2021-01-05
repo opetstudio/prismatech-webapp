@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ForgetPassword from '../../Components/ForgetPassword/ForgetPasswordComponent'
 import { isLoggedIn } from '../../Utils/Utils'
-import LoginActions, { LoginSelectors } from '../Login/redux'
+import { LoginSelectors } from '../Login/redux'
 import ForgetActions from './redux'
 import AppConfig from '../../Config/AppConfig'
 const basePath = AppConfig.basePath

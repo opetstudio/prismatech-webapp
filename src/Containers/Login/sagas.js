@@ -1,13 +1,10 @@
-import { call, put, select, delay } from 'redux-saga/effects'
+import { call, put, delay } from 'redux-saga/effects'
 import LoginActions from './redux'
 import MyprofileActions from '../Myprofile/redux'
 import AppActions from '../../Redux/AppRedux'
 import AppConfig from '../../Config/AppConfig'
-import { setSession, getSession, destroySession ,getAccessToken} from '../../Utils/Utils'
-import {getAttributes,updateMulti} from '../../Transforms/TransformAttributes'
-import { merge, path } from 'ramda'
-import { callErrorToast } from '../../Utils/Utils'
-
+import { setSession, destroySession, callErrorToast } from '../../Utils/Utils'
+import { path } from 'ramda'
 import _ from 'lodash'
 import { isNullOrUndefined } from 'util'
 export function * doLogout (api, action) {
@@ -17,21 +14,23 @@ export function * doLogout (api, action) {
   const errors = []
   if (!_.isEmpty(response.problem)) errors.push({ message: response.problem })
   // detect error from body
-  const status = parseInt(path(['data', 'data', 'logout', 'status'], response) || 0)
+  // const status = parseInt(path(['data', 'data', 'logout', 'status'], response) || 0)
   const errorbody = path(['data', 'data', 'logout', 'error'], response) || []
 
   if (errorbody === 'Invalid token') {
     destroySession()
-    window.location.replace(`${AppConfig.basePath}/`)
+    window.location.replace(`${AppConfig.basePath}/login`)
+    yield put(LoginActions.loginDoLogoutSuccess({}))
     yield put(AppActions.reset())
     return
   }
   if (!_.isEmpty(errorbody)) errors.push({ message: errorbody })
 
   // if (status === 200) {
+  yield put(LoginActions.loginDoLogoutSuccess({}))
   yield put(AppActions.reset())
   destroySession()
-  window.location.replace(`${AppConfig.basePath}/`)
+  window.location.replace(`${AppConfig.basePath}/login`)
   // } else {
   //   const responseMessage = ''
   //   console.log('err>>>>', errors[0])
@@ -72,7 +71,7 @@ export function * loginDoLogin (api, action) {
   if (_.isEmpty(errors)) {
     console.log('before setSession. merchant_id=' + merchantIdd + '|token=' + token)
     yield put(MyprofileActions.myprofileSetMyprofile({ myprofile, userPrivileges, role }))
-    yield delay(4000)
+    // yield delay(4000)
     setSession({ [AppConfig.loginFlag]: true, merchant_id: merchantIdd, [AppConfig.sessionToken]: token })
     yield put(
       LoginActions.loginDoLoginSuccess({
@@ -83,6 +82,7 @@ export function * loginDoLogin (api, action) {
         formSubmitMessage: 'success login'
       })
     )
+    // data.history.push(AppConfig.appHomePage)
     window.location.replace(`${AppConfig.basePath}${AppConfig.appHomePage}`)
   } else {
     const responseCode = status

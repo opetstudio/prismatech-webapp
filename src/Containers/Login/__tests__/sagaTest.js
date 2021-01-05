@@ -6,7 +6,7 @@
  *    functions to that file.
  *************************************************************/
 
-import FixtureAPI from '../../../Services/FixtureApi'
+// import FixtureAPI from '../../../Services/FixtureApi'
 import API from '../api'
 import { call, put, select } from 'redux-saga/effects'
 import {

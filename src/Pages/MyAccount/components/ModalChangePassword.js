@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Loader from '../../../Components/Loader/Loader'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import ChangePasswordActions from '../../../features/ChangePassword/redux'
@@ -23,15 +22,15 @@ class ModalChangePassword extends Component {
     //   this._result = this._result.bind(this)
     }
 
-    componentWillMount () {
+    componentDidMount () {
       this.props.reset()
     }
 
     _handleSubmit () {
-      const { pass, err, pass_new, pass_new_conf } = this.state
+      const { pass, pass_new, pass_new_conf } = this.state
       const { userId, doResult } = this.props
       console.log('handle submit')
-      if (pass_new != pass_new_conf) {
+      if (pass_new !== pass_new_conf) {
         this.setState({ err: 'Password doesn\'t match' })
       } else {
         doResult({ password: pass, new_password: pass_new, userId })
@@ -44,7 +43,9 @@ class ModalChangePassword extends Component {
         <div className='modal fade' id='modal-change-password'>
           <div className='z modal-dialog'>
             <div className='modal-content bg-info'>
-              <form role='form'>
+              <form
+                // role='form'
+              >
                 <div className='modal-header'>
                   <h4 className='modal-title'>Ganti Kata Snadi</h4>
                   <button type='button' className='close' data-dismiss='modal' aria-label='Close'>

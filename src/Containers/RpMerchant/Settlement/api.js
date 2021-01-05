@@ -1,9 +1,9 @@
 // a library to wrap and simplify api calls
-import AppConfig from '../../../Config/AppConfig'
-import {getSession,generateHmac, generateSha256 } from '../../../Utils/Utils'
+// import AppConfig from '../../../Config/AppConfig'
+import { generateHmac } from '../../../Utils/Utils'
 
 export const create = api => ({
-  getMerchantSettlement: ({merchant_id}) => {
+  getMerchantSettlement: ({ merchant_id }) => {
     const body = `query{
               getSettlements(id:"${merchant_id}",entity:merchant)
               {
@@ -42,9 +42,9 @@ export const create = api => ({
     //   }
     // }`
     // console.log('body==>', JSON.stringify(body))
-    const query= { query:body }
+    const query = { query: body }
     api.setHeader('hmac', generateHmac(JSON.stringify(query)))
-    console.log("queryhmac===>>>",generateHmac(query))
+    console.log('queryhmac===>>>', generateHmac(query))
     const resp = api.post('/graphql', query)
     return resp
   }

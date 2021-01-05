@@ -15,7 +15,8 @@ export const arrayMerge = (args = []) => {
 }
 export const getParameterByName = (name, url) => {
   if (!url) return ''
-  name = name.replace(/[\[\]]/g, '\\$&')
+  name = name.replace(/[[\]]/g, '\\$&')
+  // name = name.replace(/[\[\]]/g, '\\$&')
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
   var results = regex.exec(url)
   if (!results) return null

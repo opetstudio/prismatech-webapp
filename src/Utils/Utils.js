@@ -1,5 +1,6 @@
 import React from 'react'
 import namor from 'namor'
+// import loadable from '@loadable/component'
 import randomString from 'randomstring'
 import AppConfig from '../Config/AppConfig'
 import Moment from 'moment'
@@ -20,10 +21,24 @@ const MySwal = withReactContent(Swal)
 // import EncUtf8 from 'crypto-js/enc-utf8'
 // import Chance from 'chance'
 
-const basePath = AppConfig.basePath
+// const basePath = AppConfig.basePath
 
+// let AES = loadable(() => require('crypto-js/aes'))
 var AES = require('crypto-js/aes')
+// let AES = loadable(() => import('crypto-js/aes'))
+// let hmacSha256 = loadable(() => require('crypto-js/hmac-sha256'))
+// let hmacSha256 = loadable(() => import('crypto-js/hmac-sha256'))
+// let sha256 = loadable(() => require('crypto-js/sha256'))
+// let sha256 = loadable(() => import('crypto-js/sha256'))
+// let EncUtf8 = loadable(() => require('crypto-js/aes'))
+// let EncUtf8 = loadable(() => import('crypto-js/enc-utf8'))
+
+// var AES = null
+// var hmacSha256 = null
 var hmacSha256 = require('crypto-js/hmac-sha256')
+// var sha256 = null
+// var EncUtf8 = null
+// var hmacSha256 = require('crypto-js/hmac-sha256')
 var sha256 = require('crypto-js/sha256')
 var EncUtf8 = require('crypto-js/enc-utf8')
 
@@ -36,21 +51,21 @@ const userPriv = {
   200: 'Institution Admin',
   100: 'Operator'
 }
-const nativeScript = (bUrl) => [
-  // '/bower_components/jquery/dist/jquery.min.js',
-  // '/bower_components/bootstrap/dist/js/bootstrap.min.js',
-  // '/bower_components/select2/dist/js/select2.full.min.js',
-  // '/bower_components/fastclick/lib/fastclick.js',
-  // '/dist/js/adminlte.min.js'
-  // '/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js',
-  // '/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js',
-  // '/plugins/jvectormap/jquery-jvectormap-world-mill-en.js',
-  // '/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
-  // '/bower_components/chart.js/Chart.js',
-  // '/plugins/iCheck/icheck.min.js',
-  // `${bUrl}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js`,
-  `${bUrl}/native-script.js`
-]
+// const nativeScript = (bUrl) => [
+// '/bower_components/jquery/dist/jquery.min.js',
+// '/bower_components/bootstrap/dist/js/bootstrap.min.js',
+// '/bower_components/select2/dist/js/select2.full.min.js',
+// '/bower_components/fastclick/lib/fastclick.js',
+// '/dist/js/adminlte.min.js'
+// '/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js',
+// '/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js',
+// '/plugins/jvectormap/jquery-jvectormap-world-mill-en.js',
+// '/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
+// '/bower_components/chart.js/Chart.js',
+// '/plugins/iCheck/icheck.min.js',
+// `${bUrl}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js`,
+// `${bUrl}/native-script.js`
+// ]
 
 const range = len => {
   const arr = []
@@ -101,8 +116,9 @@ export const Logo = () => (
   >
     For more examples, visit {''}
     <br />
-    <a href='https://github.com/react-tools/react-table' target='_blank'>
+    <a href='https://github.com/react-tools/react-table' target='_blank' rel='noopener noreferrer'>
       <img
+        alt='-'
         src='https://github.com/react-tools/media/raw/master/logo-react-table.png'
         style={{ width: '150px', margin: '.5em auto .3em' }}
       />
@@ -117,15 +133,15 @@ export const Tips = () => (
 )
 
 export const loadScript = cb => {
-  let bUrl = basePath
-  var url = window.location.href
-  var arr = url.split('/')
-  var result = arr[0] + '//' + arr[2]
+  // let bUrl = basePath
+  // var url = window.location.href
+  // var arr = url.split('/')
+  // var result = arr[0] + '//' + arr[2]
   // console.log('result====>', result)
-  if (result === 'http://localhost:3000') bUrl = ''
+  // if (result === 'http://localhost:3000') bUrl = ''
   // window.recallDatePicker((start, end) => { console.log('start====>', start) })
-  window.collapseBoxRefresh()
-  window.pageReconReport()
+  // window.collapseBoxRefresh()
+  // window.pageReconReport()
   // nativeScript(bUrl).map(str => {
   //   var element = document.querySelector('[src=\'' + str + '\']')
   //   if (element) element.parentNode.removeChild(element)
@@ -174,6 +190,8 @@ export const decryptAt = (msg, key) => {
   const publicToken = window.sessionStorage.getItem(AppConfig.publicToken)
   const sessionToken = window.sessionStorage.getItem(AppConfig.sessionToken)
   if (!publicToken || !sessionToken) return ''
+  if (typeof (AES.decrypt) !== 'function') AES = require('crypto-js/aes')
+  if (EncUtf8 === null) EncUtf8 = require('crypto-js/enc-utf8')
   const str = AES.decrypt(msg, sessionToken)
   var plaintext = str.toString(EncUtf8)
   return plaintext
@@ -184,6 +202,49 @@ export const getUserPrivName = (uPriv) => {
 export const isLoggedIn = (isLoggedInState) => {
   // console.log('isLoggedIn isLoggedInState1===>', isLoggedInState)
   const loginFlag = getSession(AppConfig.loginFlag)
+  console.log('loginFlag===>', loginFlag)
+  if (loginFlag === 'true' || loginFlag === 'false') {
+    console.log('no need call api===>')
+  } else {
+    // need call api
+    const at = getAccessToken()
+    console.log('need call api===>')
+    if (at) return true
+    // fetch(
+    //   AppConfig.hostBackend + '/api/v1/checklogin',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Access-Control-Allow-Origin': '*',
+    //       AccessToken: getAccessToken()
+    //     },
+    //     body: {}
+    //   })
+    //   .then(res => res.json())
+    //   .then(
+    //     (result) => {
+    //       // setSubcurrierIsLoaded(false)
+    //       // console.log('result====>', result)
+    //       // const status = (((result || {}).rajaongkir || {}).status || {}).code
+    //       // const description = (((result || {}).rajaongkir || {}).status || {}).description
+    //       // if (status !== 200) {
+    //       //   if ((description).includes('Weight harus lebih besar dari 0')) return alert('Berat barang tidak boleh kurang dari 1 Gram.')
+    //       //   return alert(description)
+    //       // }
+    //       // setSubCurrierList((((result || {}).rajaongkir || {}).results[0] || {}).costs)
+    //     },
+    //     // Note: it's important to handle errors here
+    //     // instead of a catch() block so that we don't swallow
+    //     // exceptions from actual bugs in components.
+    //     (error) => {
+    //       // setSubcurrierIsLoaded(false)
+    //       // console.log(error)
+    //       // setError(error)
+    //     }
+    //   )
+  }
+
   // isLoggedInState = isLoggedInState || loginFlag || false
   isLoggedInState = loginFlag || false
   if ((isLoggedInState === 'true' || isLoggedInState === true)) isLoggedInState = true
@@ -192,9 +253,11 @@ export const isLoggedIn = (isLoggedInState) => {
   return isLoggedInState
 }
 export const generateHmac = (msg) => {
+  if (hmacSha256 === null) hmacSha256 = require('crypto-js/hmac-sha256')
   return hmacSha256(msg, AppConfig.hostBackend).toString()
 }
 export const generateSha256 = (msg) => {
+  if (sha256 === null) sha256 = require('crypto-js/sha256')
   return sha256(msg).toString()
 }
 export const getUserColumn = () => {
@@ -275,6 +338,8 @@ export const getTransactionColumn = () => {
   }]
 }
 export const setSession = (newSession, cb) => {
+  if (typeof (AES.decrypt) !== 'function') AES = require('crypto-js/aes')
+  if (EncUtf8 === null) EncUtf8 = require('crypto-js/enc-utf8')
   const encryptedCurrentSession = window.localStorage.getItem(AppConfig.sessionData)
   let currentSessionJson = {}
   if (encryptedCurrentSession) {
@@ -291,6 +356,10 @@ export const setSession = (newSession, cb) => {
   if (cb) cb()
 }
 export const getSession = (parameter) => {
+  // if (AES === null) AES = require('crypto-js/aes')
+  if (EncUtf8 === null) EncUtf8 = require('crypto-js/enc-utf8')
+  if (typeof (AES.decrypt) !== 'function') AES = require('crypto-js/aes')
+  // const { decrypt } = AES
   const encryptedCurrentSession = window.localStorage.getItem(AppConfig.sessionData)
   // console.log('encryptedCurrentSession=', encryptedCurrentSession)
   let currentSessionJson = {}
@@ -302,8 +371,8 @@ export const getSession = (parameter) => {
     currentSessionJson = JSON.parse(decryptedData)
   }
   const sessionValue = path([parameter], currentSessionJson) || ''
-  // console.log('getSession parameter=', parameter)
-  // console.log('getSession sessionValue=', sessionValue)
+  console.log('getSession parameter=', parameter)
+  console.log('getSession sessionValue=', sessionValue)
   return sessionValue
 }
 export const destroySession = () => {
@@ -348,7 +417,7 @@ export const callErrorToast = (msg, type) => {
         position: 'top-end',
         icon: 'error',
         title: msg,
-        timer: 1500
+        timer: 3000
       })
       break
     case 'warning':
@@ -361,16 +430,16 @@ export const callErrorToast = (msg, type) => {
         position: 'top-end',
         icon: 'warning',
         title: msg,
-        timer: 1500
+        timer: 3000
       })
       console.log('warning')
       break
-    case 'success':
+    default:
       MySwal.fire({
         position: 'top-end',
         icon: 'success',
         title: msg,
-        timer: 1500
+        timer: 3000
       })
       // $(document).Toasts('create', {
       //     class: 'bg-success',
@@ -378,11 +447,19 @@ export const callErrorToast = (msg, type) => {
       //     body: msg
       //   })
       console.log('sucess')
-      break
+      // break
   }
 }
 
 export const truncate = (str, n, str2) => {
-  if(!str) return ''
-  return (str.length > n) ? str.substr(0, n-1) + str2 : str;
-};
+  if (!str) return ''
+  return (str.length > n) ? str.substr(0, n - 1) + str2 : str
+}
+export const isJsonString = (str) => {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}

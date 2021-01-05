@@ -9,7 +9,7 @@ import { getSession } from '../../Utils/Utils'
 import RelatedActions from '../../Containers/RpMerchant/MerchantRelatedInstitution/redux'
 
 class PageMerchantMyprofile extends Component {
-  componentWillMount () {
+  componentDidMount () {
     const merchant_id = getSession('merchant_id')
     console.log('merchant id di page profile>>>>>', merchant_id)
     this.props.fetchRelateInstitution({ merchant_id })

@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { Create as Createform } from '../../features/TablePagination'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
-import moment from 'moment'
-import { getAccessToken } from '../../Utils/Utils'
-import { path } from 'ramda'
-import { connect } from 'react-redux'
 import AppConfig from '../../Config/AppConfig'
 import { createService, fields, createPageTitle, redirectAfterCreate } from './Manifest'
 
@@ -13,15 +9,9 @@ const paginationConfig = {
   fields: fields
 }
 
-let tablepaginationOnChangeFormFunc = null
 class Comp extends Component {
-  componentDidMount () {
-    const { match } = this.props
-    // tablepaginationOnChangeFormFunc({ serviceName: paginationConfig.serviceName, fieldName: 'role_id', fieldValue: match.params.role_id })
-  }
-
   render () {
-    const { match, history, payload } = this.props
+    const { history } = this.props
     return (
       <ContentWrapper
         pageTitle={createPageTitle}
@@ -36,7 +26,7 @@ class Comp extends Component {
               paginationConfig={paginationConfig}
               redirectAfterCreate={redirectAfterCreate}
               child={(tablepaginationOnChangeForm) => {
-                tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
+                // tablepaginationOnChangeFormFunc = tablepaginationOnChangeForm
                 return (
                   <div className='row'>
                     <div className='col-sm-6'>
@@ -72,14 +62,4 @@ class Comp extends Component {
     )
   }
 }
-// export default CreateTokoProduct
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    payload: state.tablepagination.payload
-  }
-}
-export default connect(
-  mapStateToProps,
-  null
-)(Comp)
+export default Comp

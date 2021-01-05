@@ -1,7 +1,5 @@
-import { call, put, select } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import ForgetActions from './redux'
-import AppConfig from '../../Config/AppConfig'
-import { setSession, getSession, destroySession } from '../../Utils/Utils'
 import _ from 'lodash'
 import { path } from 'ramda'
 import { isNullOrUndefined } from 'util'
@@ -29,7 +27,7 @@ export function * doForgetPassword (api, action) {
     yield put(ForgetActions.doForgetPassDone({ status, isRequesting, otpRefNum, email: data.email }))
     yield put(ForgetActions.doForgetSetPage({ page: 'password' }))
   } else {
-    const errors = ''
+    let errors = ''
     if (!isNullOrUndefined(err[0].message)) { errors = err[0].message } else { errors = err[0] }
     window.callErrorToast('Forget password error. ' + errors, 'error')
     yield put(ForgetActions.doForgetPassFailed({ errors, status }))
@@ -54,7 +52,7 @@ export function * doConfirmForgetPassword (api, action) {
     yield put(ForgetActions.doConfirmForgetPassDone({ status }))
     yield put(ForgetActions.doForgetSetPage({ page: 'success' }))
   } else {
-    const errors = err[0].message
+    let errors = err[0].message
     if (!isNullOrUndefined(err[0].message)) { errors = err[0].message } else { errors = err[0] }
     window.callErrorToast('Confirm forget password error. ' + errors, 'error')
     yield put(ForgetActions.doConfirmForgetPassFailed({ errors, status }))

@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 // Import React Table
 import ReactTable from 'react-table'
-import { generateSha256 } from '../../Utils/Utils'
 import 'react-table/react-table.css'
-
-let hashBefore = ''
 export default class TableContent extends Component {
   // constructor (props) {
   //   super(props)

@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { LoginSelectors } from '../../Containers/Login/redux'
-import { TablepaginationSelectors } from '../../features/TablePagination/redux'
+import { redux } from '../../features/TablePagination'
+// import { redux, { TablepaginationSelectors } } from '../../features/TablePagination'
 import { getUserColumn } from '../../Utils/TableColumn'
 import TablePaginationContainer from '../../features/TablePagination/TablePaginationContainer'
+
+const { TablepaginationSelectors } = redux
 class ContentListUser extends Component {
   render () {
     return (

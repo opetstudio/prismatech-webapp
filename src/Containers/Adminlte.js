@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 // import ReduxPersist from '../Config/ReduxPersist'
-import { ApolloProvider } from '@apollo/react-hooks'
-import ExternalApp from '../../../manifest'
+// import { ApolloProvider } from '@apollo/react-hooks'
+// import ExternalApp from '../../../manifest'
 // import ApolloClient from 'apollo-boost'
 
 // const client = new ApolloClient({
@@ -67,7 +67,7 @@ class Adminlte extends Component {
 
 export default (params) => {
   // console.log('reducerreducerreducerreducerreducerreducer===>', reducer)
-  const exApp = ExternalApp()
+  const exApp = params
   const { store } = createStore({ externalApi: exApp.api, externalRedux: exApp.redux, externalSagas: exApp.sagas })
   return <Adminlte translations={exApp.translations} store={store} sidemenu={exApp.sidemenu} />
 }

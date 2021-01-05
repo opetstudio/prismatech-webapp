@@ -1,133 +1,124 @@
-import React, { Component, memo, useCallback } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import { path } from 'ramda'
-import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import TablepaginationActions from '../redux'
-import Immutable from 'seamless-immutable'
+import TableCon from '../containers/TableCon'
+import TableViewTable from '../components/TableViewTable'
 
-const Styles = styled.div`
-  padding: 1rem;
-  .pagination {
-    padding: 0.5rem;
-  }
-`
-
-function Combobox ({ label, onChange, defaultValue, name, id, child, optionColumnValue, optionColumnLabel, columns, data, fetchData, loading, pageCount: controlledPageCount, count, filter }) {
-  // fetchData({ pageIndex, pageSize })
-  // Listen for changes in pagination and use the state to fetch our new data
-  React.useEffect(() => {
-    // console.log('react effect========pageIndex=', pageIndex)
-    // console.log('react effect========pageSize=', pageSize)
-    fetchData({ filter })
-  }, [fetchData])
-
-  // Render the UI for your table
-  return (
-    <select name={name} id={id} className='form-control' onChange={e => onChange(e)}>
-      <option key='-'>{label}</option>
-      {data.map((v, i) => <option key={i} value={v[optionColumnValue]} selected={defaultValue === v[optionColumnValue]}>{v[optionColumnLabel]}</option>)}
-    </select>
-  )
-}
-
-function App (props) {
+function TableViewCombobox (props) {
   const {
-    columns,
-    paginationConfig,
-    createHref,
-    tablepaginationFetchData,
-    createNewButtonLabel,
-    fetchDataConfig: { whereCondition, fields, serviceName },
-    cardHeader,
-    tableMenus,
-    cardTitle,
-    cardFooter,
-    distinct,
-    maxOptions,
-    child,
-    optionColumnLabel,
+    // From Page
     optionColumnValue,
-    name,
-    id,
-    defaultValue,
-    onChange,
-    label
+    optionColumnLabel,
+    optionsDefaultValue,
+    label,
+    listallServiceName,
+    // inputValue,
+    // placeholder,
+    // onChange,
+    // from TableCon
+    loading,
+    errors,
+    data,
+    headerGroups,
+    getTableProps,
+    getTableBodyProps,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageIndex,
+    pageOptions,
+    gotoPage,
+    pageCount,
+    previousPage,
+    nextPage,
+    pageSize
+    // setPageSize
   } = props
-  const history = useHistory()
-  const loading = path(['loading', serviceName], props)
-  const data = Immutable.asMutable(path(['data', serviceName], props) || [], { deep: true })
-  const count = path(['count', serviceName], props) || []
-  const pageCount = path(['pageCount', serviceName], props) || []
-
-  console.log('App begeeeeeeiinnn')
-  const filter = path(['filter', serviceName], props) || {}
-
-  const doFetchData = React.useCallback(({ filter }) => {
-    console.log('doFetchData filter===>', filter)
-    tablepaginationFetchData({
-      serviceName: serviceName,
-      pageSize: maxOptions,
-      pageIndex: 0,
-      filter: Immutable.asMutable(filter, { deep: true }),
-      fields: fields,
-      history,
-      whereCondition,
-      distinct
-    })
-  }, [])
-
+  const defaultVal = data.filter(v => optionsDefaultValue === '' + v[optionColumnValue])
   return (
     <>
-      <Combobox
-        defaultValue={defaultValue}
-        name={name}
-        id={id}
-        data={Immutable.asMutable(data, { deep: true })}
-        fetchData={doFetchData}
-        optionColumnValue={optionColumnValue}
-        optionColumnLabel={optionColumnLabel}
-        fields={fields}
-        filter={filter}
-        onChange={(e) => onChange(e, data)}
-        label={label}
-      />
-      {/* <Styles>
-        <Combobox
-          columns={columns}
-          data={Immutable.asMutable(data, { deep: true })}
-          fetchData={doFetchData}
-          loading={loading}
-          pageCount={pageCount}
-          count={count}
-          filter={filter}
-          child={child}
-        />
-      </Styles> */}
+      <button type='button' class='btn btn-default' data-toggle='modal' data-target={'#modal-combobox-listitem-table' + listallServiceName}>
+        {(defaultVal[0] || {})[optionColumnLabel] || label}
+      </button>
+      <div className='modal fade bd-example-modal-lg' id={'modal-combobox-listitem-table' + listallServiceName} aria-hidden='true' style={{ display: 'none' }}>
+        <div className='modal-dialog modal-lg'>
+          <div className='modal-content'>
+            <TableViewTable
+              loading={loading}
+              errors={errors}
+              data={data}
+              headerGroups={headerGroups}
+              getTableProps={getTableProps}
+              getTableBodyProps={getTableBodyProps}
+              page={page}
+              prepareRow={prepareRow}
+              canPreviousPage={canPreviousPage}
+              canNextPage={canNextPage}
+              pageIndex={pageIndex}
+              pageOptions={pageOptions}
+              gotoPage={gotoPage}
+              pageCount={pageCount}
+              previousPage={previousPage}
+              nextPage={nextPage}
+              pageSize={pageSize}
+              setPageSize
+            />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    count: state.tablepagination.count,
-    data: state.tablepagination.data,
-    filter: state.tablepagination.filter,
-    loading: state.tablepagination.loading,
-    pageCount: state.tablepagination.pageCount,
-    pageSize: state.tablepagination.pageSize,
-    pageIndex: state.tablepagination.pageIndex
-  }
-}
 
-const mapDispatchToProps = dispatch => {
-  return {
-    tablepaginationFetchData: data => dispatch(TablepaginationActions.tablepaginationFetchData(data))
-    //   resetForm: data => dispatch(LoginActions.loginReset(data)),
-  }
+function Combobox (props) {
+  console.log('Combobox=====', props)
+  // const [currentSelect, setCurrentSelect] = useState(null)
+  const {
+    getColumns,
+    whereCondition,
+    distinct,
+    history,
+    // serviceName,
+    // upsertServiceName,
+    listallServiceName,
+    fields,
+    onChange,
+    defaultValue,
+    optionColumnLabel,
+    label,
+    labelButton,
+    labelColumn,
+    optionColumnValue,
+    inputValue,
+    placeholder
+  } = props
+  return (
+    <TableCon
+      columns={[
+        ...getColumns({ onChange }),
+        { Header: labelColumn, accessor: p => <button type='button' class='btn btn-default' data-dismiss='modal' onClick={() => { onChange({ val: p[optionColumnValue], originalValue: p }) }}>{labelButton}</button> }
+      ]}
+      listallServiceName={listallServiceName}
+      fields={fields}
+      history={history}
+      whereCondition={whereCondition}
+      distinct={distinct}
+    >
+      <TableViewCombobox
+        label={label}
+        listallServiceName={listallServiceName}
+        optionsDefaultValue={defaultValue}
+        inputValue={inputValue}
+        placeholder={placeholder}
+        onChange={onChange}
+        optionColumnValue={optionColumnValue}
+        optionColumnLabel={optionColumnLabel}
+      />
+    </TableCon>
+  )
 }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(App))
+export default injectIntl((props) => {
+  var history = useHistory()
+  return <Combobox history={history} {...props} />
+})

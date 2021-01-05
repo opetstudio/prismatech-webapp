@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Moment from 'moment'
-import { path } from 'ramda'
+// import { path } from 'ramda'
 import ContentWrapper from '../../Components/Layout/ContentWrapper'
-import ContentHeader from '../../Components/ContentHeader'
-import LoginCheck from '../../Containers/Login/LoginCheck'
-import { Table, Filter } from '../../features/TablePagination'
-import _ from 'lodash'
+import { Table } from '../../features/TablePagination'
 import AppConfig from '../../Config/AppConfig'
 const basePath = AppConfig.basePath
 
@@ -52,7 +47,7 @@ const getColumns = (history) => [
   // { Header: 'created at', accessor: 'created_at' },
   // { Header: 'updated at', accessor: 'updated_at' }
 ]
-class PageCourse extends Component {
+class PageRole extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -61,15 +56,6 @@ class PageCourse extends Component {
   }
 
   render () {
-    const { userPrivileges } = this.props
-    // getAllPublishedCourses
-    const paginationConfig = {
-      serviceName: 'getAllRoles',
-      fields: '_id,title,privilege_id{title, name},created_at,updated_at,created_by{full_name},updated_by{full_name}'
-      // fields: _.join(_.map(columns, 'accessor'), ',')
-    }
-    console.log('paginationConfig===>', paginationConfig)
-    console.log('this.props===>', this.props)
     const { columns } = this.state
     return (
       <ContentWrapper
@@ -80,7 +66,7 @@ class PageCourse extends Component {
       >
         <div className='row'>
           <div className='col-md-12'>
-            <Filter
+            {/* <Filter
               paginationConfig={paginationConfig}
               child={(tablepaginationOnChangeFilter, filter) => (
                 <div className='row'>
@@ -92,12 +78,14 @@ class PageCourse extends Component {
                   </div>
                 </div>
               )}
-            />
+            /> */}
             <Table
-              paginationConfig={paginationConfig}
+              listallServiceName='getAllRoles'
+              fields='_id,title,privilege_id{title, name},created_at,updated_at,created_by{full_name},updated_by{full_name}'
               columns={columns}
-              createHref='/role/create'
+              createHref='/role/upsert'
               createNewButtonLabel='Create New Role'
+              cardTitle='Role'
             />
           </div>
         </div>
@@ -105,9 +93,4 @@ class PageCourse extends Component {
     )
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    userPrivileges: state.myprofile.user_privileges
-  }
-}
-export default connect(mapStateToProps)(PageCourse)
+export default PageRole

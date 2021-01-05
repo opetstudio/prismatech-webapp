@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import React, { Suspense } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import LoginActions, { LoginSelectors } from './Login/redux'
@@ -14,11 +14,11 @@ import ModalQrTopup from '../Containers/RpMerchant/ModalQrTopup'
 import ModalQrDynamic from '../Containers/RpMerchant/ModalQrDynamic'
 
 import ModalCommon from './Modal/index'
-import QrMerchantAction from './RpMerchant/ModalQrMerchant/redux'
 import RmAction from './RpMerchant/MerchantRelatedInstitution/redux'
 import ProfileAction from './RpMerchant/Profile/redux'
-import SplashAction from './RpMerchant/SplashScreen/redux'
-import Loader from '../Components/Loader/LoaderFull'
+// import SplashAction from './RpMerchant/SplashScreen/redux'
+// import Loader from '../Components/Loader/LoaderFull'
+
 
 // import Lottie from 'react-lottie'
 // import * as Anim from '../Components/Loader/Loader_asset/Loader-merah.json'
@@ -42,16 +42,17 @@ class AdminlteContainer extends React.PureComponent {
     this.renderUnLoggedIn = this.renderUnLoggedIn.bind(this)
   }
 
-  componentWillMount () {
+  // componentWillMount () {
     // const login=AppConfig.basePath+'/login'
     // if(!getSession(AppConfig.sessionToken))
     // {
     //   this.props.resetfetchProfile()
     //   window.location.replace(login)
     // }
-  }
+  // }
 
   renderLoggedIn (children) {
+    console.log('rendrrrrrlggedinunloggedin1')
     return (
       <div className='wrapper'>
         <Helmet>
@@ -87,6 +88,8 @@ class AdminlteContainer extends React.PureComponent {
   }
 
   renderUnLoggedIn (children) {
+    console.log('rendrrrrrlggedinunloggedin2')
+    if(window.location.pathname !== '/login') return <Redirect to='/login' />
     return (
       <div>
         <div style={{ minHeight: window.innerHeight - 200 }}>{children}</div>
@@ -95,14 +98,15 @@ class AdminlteContainer extends React.PureComponent {
   }
 
   render () {
-    // console.log('render window.location ', window.location.pathname)
+    console.log('============render window.location ', window.location.pathname)
     const loc = window.location.pathname
     const { children } = this.props
-    if (loc.startsWith(AppConfig.basePath + '/login-force'))
-    {
-      return this.renderUnLoggedIn(children)
-    }
+    // if (loc.startsWith(AppConfig.basePath + '/login-force'))
+    // {
+    //   return this.renderUnLoggedIn(children)
+    // }
     if ((isLoggedIn(this.props.isLoggedIn) === true)) return this.renderLoggedIn(children)
+    // if (this.props.isLoggedIn === 'true') return this.renderLoggedIn(children)
     else return this.renderUnLoggedIn(children)
   }
 }

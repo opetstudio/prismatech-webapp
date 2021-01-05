@@ -1,15 +1,5 @@
 import React, { Component } from 'react'
 import { path } from 'ramda'
-import Immutable from 'seamless-immutable'
-import { updateURLParameter } from '../../Utils/Utils'
-import _ from 'lodash'
-
-const firstLoad = true
-
-const cardStyle = {
-  color: '#606066',
-  fontFamily: 'Segoe UI'
-}
 
 export default class Filter extends Component {
   render () {
